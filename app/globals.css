@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap");
+
+:root {
+  --bg: #fffaf7;
+  --fg: #1c1917;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+}
+
+.thai {
+  font-family: "Noto Sans Thai", system-ui, sans-serif;
+}
+
+/* Tone-color coding: low=blue, mid=gray, high=red, falling=purple, rising=green */
+.tone-low { color: #2563eb; }
+.tone-mid { color: #525252; }
+.tone-high { color: #dc2626; }
+.tone-falling { color: #7c3aed; }
+.tone-rising { color: #059669; }
+
+.chip {
+  @apply inline-flex items-center gap-1 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm shadow-sm;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors;
+}
+.btn-primary {
+  @apply btn bg-brand-500 text-white hover:bg-brand-600 disabled:opacity-50;
+}
+.btn-secondary {
+  @apply btn bg-white border border-stone-300 text-stone-800 hover:bg-stone-50;
+}
+.btn-ghost {
+  @apply btn text-stone-600 hover:bg-stone-100;
+}
+
+.card {
+  @apply rounded-2xl border border-stone-200 bg-white p-6 shadow-sm;
+}
