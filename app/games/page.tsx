@@ -2,6 +2,13 @@ import Link from "next/link";
 
 const games = [
   {
+    href: "/games/conversation",
+    emoji: "💬",
+    title: "Conversation",
+    desc: "Someone says something in Thai — pick the right English reply. 3 lives, streak bonuses. The most fun way in.",
+    featured: true,
+  },
+  {
     href: "/games/flashcards",
     emoji: "🃏",
     title: "Flashcards",
@@ -42,10 +49,19 @@ export default function GamesPage() {
           <Link
             key={g.href}
             href={g.href}
-            className="card transition hover:-translate-y-0.5 hover:shadow-md"
+            className={`card transition hover:-translate-y-0.5 hover:shadow-md ${
+              g.featured ? "border-brand-300 bg-brand-50 sm:col-span-2" : ""
+            }`}
           >
             <div className="text-4xl">{g.emoji}</div>
-            <div className="mt-3 font-semibold text-stone-800">{g.title}</div>
+            <div className="mt-3 font-semibold text-stone-800">
+              {g.title}
+              {g.featured && (
+                <span className="ml-2 rounded-full bg-brand-500 px-2 py-0.5 text-xs text-white">
+                  NEW
+                </span>
+              )}
+            </div>
             <div className="mt-1 text-sm text-stone-600">{g.desc}</div>
           </Link>
         ))}

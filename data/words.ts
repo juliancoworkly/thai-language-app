@@ -174,6 +174,85 @@ export const words: Word[] = [
   { id: "tham-ngan", thai: "ทำงาน", phonetic: "tham-ngaan", meaning: "work (verb)", pos: "verb" },
   { id: "reu", thai: "หรือ", phonetic: "rʉ̌ʉ", meaning: "or", pos: "conjunction", tone: "rising" },
   { id: "gap", thai: "กับ", phonetic: "gàp", meaning: "with / and", pos: "conjunction", tone: "low" },
+
+  // Time
+  { id: "tawn-nii", thai: "ตอนนี้", phonetic: "dtɔɔn-níi", meaning: "now", pos: "adverb" },
+  { id: "tawn-chaao", thai: "ตอนเช้า", phonetic: "dtɔɔn-cháao", meaning: "morning", pos: "noun" },
+  { id: "tawn-bai", thai: "ตอนบ่าย", phonetic: "dtɔɔn-bàai", meaning: "afternoon", pos: "noun" },
+  { id: "tawn-yen", thai: "ตอนเย็น", phonetic: "dtɔɔn-yen", meaning: "evening", pos: "noun" },
+  { id: "klang-khuun", thai: "กลางคืน", phonetic: "glaang-khʉʉn", meaning: "night", pos: "noun" },
+  { id: "muea-waan", thai: "เมื่อวาน", phonetic: "mʉ̂a-waan", meaning: "yesterday", pos: "noun" },
+  { id: "aathit", thai: "อาทิตย์", phonetic: "aa-thít", meaning: "week", pos: "noun" },
+  { id: "duean", thai: "เดือน", phonetic: "dʉan", meaning: "month", pos: "noun" },
+  { id: "pii", thai: "ปี", phonetic: "bpii", meaning: "year", pos: "noun", tone: "mid" },
+  { id: "chua-mong", thai: "ชั่วโมง", phonetic: "chûa-moong", meaning: "hour", pos: "noun" },
+  { id: "naa-thii", thai: "นาที", phonetic: "naa-thii", meaning: "minute", pos: "noun" },
+
+  // Common verbs
+  { id: "hen", thai: "เห็น", phonetic: "hěn", meaning: "see", pos: "verb", tone: "rising" },
+  { id: "fang", thai: "ฟัง", phonetic: "fang", meaning: "listen", pos: "verb", tone: "mid" },
+  { id: "dai-yin", thai: "ได้ยิน", phonetic: "dâai-yin", meaning: "hear", pos: "verb" },
+  { id: "hai-give", thai: "ให้", phonetic: "hâi", meaning: "give / let", pos: "verb", tone: "falling" },
+  { id: "rap", thai: "รับ", phonetic: "ráp", meaning: "receive / pick up", pos: "verb", tone: "high" },
+  { id: "suu-buy", thai: "ซื้อ", phonetic: "sʉ́ʉ", meaning: "buy", pos: "verb", tone: "high" },
+  { id: "khai-sell", thai: "ขาย", phonetic: "khǎai", meaning: "sell", pos: "verb", tone: "rising" },
+  { id: "joe", thai: "เจอ", phonetic: "jəə", meaning: "meet / find", pos: "verb", tone: "mid" },
+  { id: "doen", thai: "เดิน", phonetic: "dəən", meaning: "walk", pos: "verb", tone: "mid" },
+  { id: "wing", thai: "วิ่ง", phonetic: "wîng", meaning: "run", pos: "verb", tone: "falling" },
+  { id: "nang", thai: "นั่ง", phonetic: "nâng", meaning: "sit", pos: "verb", tone: "falling" },
+  { id: "yuen", thai: "ยืน", phonetic: "yʉʉn", meaning: "stand", pos: "verb", tone: "mid" },
+  { id: "khap", thai: "ขับ", phonetic: "khàp", meaning: "drive", pos: "verb", tone: "low" },
+  { id: "aan", thai: "อ่าน", phonetic: "àan", meaning: "read", pos: "verb", tone: "low" },
+  { id: "khian", thai: "เขียน", phonetic: "khǐan", meaning: "write", pos: "verb", tone: "rising" },
+  { id: "bpit", thai: "ปิด", phonetic: "bpìt", meaning: "close / turn off", pos: "verb", tone: "low" },
+
+  // Adjectives (everyday)
+  { id: "mai-new", thai: "ใหม่", phonetic: "mài", meaning: "new", pos: "adjective", tone: "low" },
+  { id: "gao-old", thai: "เก่า", phonetic: "gào", meaning: "old (things)", pos: "adjective", tone: "low" },
+  { id: "sa-aat", thai: "สะอาด", phonetic: "sà-àat", meaning: "clean", pos: "adjective" },
+  { id: "reo", thai: "เร็ว", phonetic: "reo", meaning: "fast / quick", pos: "adjective", tone: "mid" },
+  { id: "dii-jai", thai: "ดีใจ", phonetic: "dii-jai", meaning: "happy / glad", pos: "adjective" },
+  { id: "sao", thai: "เศร้า", phonetic: "sâo", meaning: "sad", pos: "adjective", tone: "falling" },
+  { id: "nuai", thai: "เหนื่อย", phonetic: "nʉ̀ai", meaning: "tired", pos: "adjective", tone: "low" },
+  { id: "hiu", thai: "หิว", phonetic: "hǐu", meaning: "hungry", pos: "adjective", tone: "rising" },
+  { id: "hiu-naam", thai: "หิวน้ำ", phonetic: "hǐu-náam", meaning: "thirsty", pos: "adjective" },
+  { id: "im", thai: "อิ่ม", phonetic: "ìm", meaning: "full (belly)", pos: "adjective", tone: "low" },
+  { id: "suai", thai: "สวย", phonetic: "sǔai", meaning: "beautiful / pretty", pos: "adjective", tone: "rising" },
+  { id: "naa-rak", thai: "น่ารัก", phonetic: "nâa-rák", meaning: "cute / lovely", pos: "adjective" },
+
+  // Body
+  { id: "hua", thai: "หัว", phonetic: "hǔa", meaning: "head", pos: "noun", tone: "rising" },
+  { id: "muu-hand", thai: "มือ", phonetic: "mʉʉ", meaning: "hand", pos: "noun", tone: "mid" },
+  { id: "thaao", thai: "เท้า", phonetic: "tháao", meaning: "foot", pos: "noun", tone: "high" },
+  { id: "dtaa", thai: "ตา", phonetic: "dtaa", meaning: "eye", pos: "noun", tone: "mid" },
+  { id: "bpaak", thai: "ปาก", phonetic: "bpàak", meaning: "mouth", pos: "noun", tone: "low" },
+  { id: "thawng", thai: "ท้อง", phonetic: "thɔ́ɔng", meaning: "stomach", pos: "noun", tone: "high" },
+
+  // Weather
+  { id: "fon", thai: "ฝน", phonetic: "fǒn", meaning: "rain", pos: "noun", tone: "rising" },
+  { id: "daet", thai: "แดด", phonetic: "dɛ̀ɛt", meaning: "sunshine", pos: "noun", tone: "low" },
+  { id: "lom", thai: "ลม", phonetic: "lom", meaning: "wind", pos: "noun", tone: "mid" },
+
+  // Colors
+  { id: "sii-color", thai: "สี", phonetic: "sǐi", meaning: "color", pos: "noun", tone: "rising" },
+  { id: "sii-daeng", thai: "สีแดง", phonetic: "sǐi-dɛɛng", meaning: "red", pos: "adjective" },
+  { id: "sii-faa", thai: "สีฟ้า", phonetic: "sǐi-fáa", meaning: "blue (light)", pos: "adjective" },
+  { id: "sii-khiao", thai: "สีเขียว", phonetic: "sǐi-khǐao", meaning: "green", pos: "adjective" },
+  { id: "sii-luang", thai: "สีเหลือง", phonetic: "sǐi-lʉ̌ang", meaning: "yellow", pos: "adjective" },
+  { id: "sii-dam", thai: "สีดำ", phonetic: "sǐi-dam", meaning: "black", pos: "adjective" },
+  { id: "sii-khao-w", thai: "สีขาว", phonetic: "sǐi-khǎao", meaning: "white", pos: "adjective" },
+
+  // Family
+  { id: "phii-chaai", thai: "พี่ชาย", phonetic: "phîi-chaai", meaning: "older brother", pos: "noun" },
+  { id: "phii-saao", thai: "พี่สาว", phonetic: "phîi-sǎao", meaning: "older sister", pos: "noun" },
+  { id: "nawng", thai: "น้อง", phonetic: "nɔ́ɔng", meaning: "younger sibling", pos: "noun", tone: "high" },
+
+  // Places
+  { id: "rongrian", thai: "โรงเรียน", phonetic: "roong-rian", meaning: "school", pos: "noun" },
+  { id: "thana-khan", thai: "ธนาคาร", phonetic: "thá-naa-khaan", meaning: "bank", pos: "noun" },
+  { id: "raan", thai: "ร้าน", phonetic: "ráan", meaning: "shop / store", pos: "noun", tone: "high" },
+  { id: "chaai-haat", thai: "ชายหาด", phonetic: "chaai-hàat", meaning: "beach", pos: "noun" },
+  { id: "wat", thai: "วัด", phonetic: "wát", meaning: "temple", pos: "noun", tone: "high" },
 ];
 
 export const wordById: Record<string, Word> = Object.fromEntries(

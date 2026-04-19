@@ -26,14 +26,17 @@ export default function ReverseHome() {
           Hear it, read the Thai-script pronunciation guide, practice with games.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
-          <Link href="/reverse/flashcards" className="btn bg-white text-brand-700 hover:bg-brand-50">
-            🃏 บัตรคำ Flashcards
+          <Link href="/reverse/conversation" className="btn bg-white text-brand-700 hover:bg-brand-50">
+            💬 สนทนา Conversation <span className="ml-1 rounded-full bg-brand-500 px-1.5 py-0.5 text-[10px] text-white">NEW</span>
+          </Link>
+          <Link href="/reverse/flashcards" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
+            🃏 บัตรคำ
           </Link>
           <Link href="/reverse/matching" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
-            🪞 จับคู่ Matching
+            🪞 จับคู่
           </Link>
           <Link href="/reverse/builder" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
-            🧩 เรียงประโยค Builder
+            🧩 เรียงประโยค
           </Link>
           <Link href="/reverse/words" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
             📚 คลังประโยค ({total})
