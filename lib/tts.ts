@@ -1,59 +1,61 @@
 "use client";
 
-// Browser Speech Synthesis fallback for audio.
-// When you record real clips, drop them in /public/audio/<id>.mp3 and
-// playAudio() will prefer the real file automatically.
+// Browser Speech Synthesis. Drop real mp3s in /public/audio/<id>.mp3
+// and playAudio() will prefer them over TTS.
 
-function pickVoice(lang: "th" | "en"): SpeechSynthesisVoice | undefined {
-  if (typeof window === "undefined") return undefined;
-  const voices = window.speechSynthesis.getVoices();
-  if (voices.length === 0) return undefined;
+type Lang = "th" | "en";
 
-  if (lang === "th") {
-    return (
-      voices.find((v) => v.lang === "th-TH" && /Kanya|Premwadee|Narisa|Google/.test(v.name)) ??
-      voices.find((v) => v.lang === "th-TH") ??
-      voices.find((v) => v.lang.startsWith("th"))
-    );
+let cachedVoices: SpeechSynthesisVoice[] | null = null;
+let chosenThai: SpeechSynthesisVoice | null = null;
+let chosenEnglish: SpeechSynthesisVoice | null = null;
+
+function refreshCache() {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  cachedVoices = window.speechSynthesis.getVoices();
+
+  if (cachedVoices.length > 0) {
+    if (!chosenThai) {
+      chosenThai =
+        cachedVoices.find((v) => v.lang === "th-TH" && /Google|Kanya|Premwadee|Narisa/.test(v.name)) ??
+        cachedVoices.find((v) => v.lang === "th-TH") ??
+        cachedVoices.find((v) => v.lang.startsWith("th")) ??
+        null;
+    }
+    if (!chosenEnglish) {
+      chosenEnglish =
+        cachedVoices.find((v) => /Google US English|Google UK English/.test(v.name)) ??
+        cachedVoices.find((v) => /Samantha|Serena|Karen|Moira|Daniel|Alex/.test(v.name)) ??
+        cachedVoices.find((v) => v.lang === "en-US") ??
+        cachedVoices.find((v) => v.lang === "en-GB") ??
+        cachedVoices.find((v) => v.lang.startsWith("en")) ??
+        null;
+    }
   }
-  // English: prefer natural-sounding named voices over regional defaults
-  return (
-    voices.find((v) => /Google US English|Google UK English|Samantha|Daniel|Karen|Serena|Moira|Alex/.test(v.name)) ??
-    voices.find((v) => v.lang === "en-US") ??
-    voices.find((v) => v.lang === "en-GB") ??
-    voices.find((v) => v.lang.startsWith("en"))
-  );
 }
 
-// Voices load asynchronously on some browsers — warm them up on first import.
 if (typeof window !== "undefined" && "speechSynthesis" in window) {
-  window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged = () => {
-    window.speechSynthesis.getVoices();
-  };
+  refreshCache();
+  window.speechSynthesis.onvoiceschanged = refreshCache;
+}
+
+function speak(text: string, lang: Lang, rate: number) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  if (!cachedVoices) refreshCache();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang === "th" ? "th-TH" : "en-US";
+  u.rate = rate;
+  const voice = lang === "th" ? chosenThai : chosenEnglish;
+  if (voice) u.voice = voice;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
 }
 
 export function speakThai(text: string, rate = 0.85): void {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "th-TH";
-  u.rate = rate;
-  const v = pickVoice("th");
-  if (v) u.voice = v;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
+  speak(text, "th", rate);
 }
 
 export function speakEnglish(text: string, rate = 0.9): void {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
-  u.rate = rate;
-  u.pitch = 1;
-  const v = pickVoice("en");
-  if (v) u.voice = v;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
+  speak(text, "en", rate);
 }
 
 export async function playAudio(id: string, thaiText: string): Promise<void> {
@@ -66,7 +68,7 @@ export async function playAudio(id: string, thaiText: string): Promise<void> {
       return;
     }
   } catch {
-    // fall through to TTS
+    // fall through
   }
   speakThai(thaiText);
 }

@@ -22,6 +22,7 @@ export function Header() {
               <Link href="/reverse/words" className="btn-ghost">คลังประโยค</Link>
               <Link href="/reverse/flashcards" className="btn-ghost">บัตรคำ</Link>
               <Link href="/reverse/matching" className="btn-ghost">จับคู่</Link>
+              <Link href="/reverse/builder" className="btn-ghost">เรียงประโยค</Link>
               <Link href="/" className="btn-ghost">🔁 Thai mode</Link>
             </>
           ) : (

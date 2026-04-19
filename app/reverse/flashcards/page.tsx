@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { reverseSentences } from "@/data/reverse";
-import { speakEnglish } from "@/lib/tts";
+import { speakEnglish, speakThai } from "@/lib/tts";
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -57,13 +57,22 @@ export default function ReverseFlashcards() {
           <div className="text-xs uppercase tracking-wide text-stone-500">
             {current.emoji} {byCat}
           </div>
-          <button
-            onClick={() => speakEnglish(current.english)}
-            className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-500 text-xl text-white shadow hover:bg-brand-600"
-            aria-label="Play English"
-          >
-            🔊
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => speakEnglish(current.english)}
+              className="inline-flex h-10 items-center gap-1 rounded-full bg-brand-500 px-3 text-white shadow hover:bg-brand-600"
+              aria-label="Play English"
+            >
+              🔊 EN
+            </button>
+            <button
+              onClick={() => speakThai(current.meaning)}
+              className="inline-flex h-10 items-center gap-1 rounded-full border border-stone-300 bg-white px-3 text-stone-800 shadow-sm hover:bg-stone-50"
+              aria-label="Play Thai"
+            >
+              🔊 TH
+            </button>
+          </div>
         </div>
 
         <div className="text-center">
