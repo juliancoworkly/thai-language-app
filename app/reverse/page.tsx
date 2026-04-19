@@ -108,10 +108,34 @@ export default function ReversePage() {
           กดปุ่ม 🔊 เพื่อฟังเสียง แล้วพยายามพูดตาม
           เสียงในภาษาอังกฤษที่ไม่มีในภาษาไทย เช่น "th", "v", "z" ให้ฝึกบ่อย ๆ
         </p>
-        <Link href="/" className="btn-ghost mt-3 inline-flex">
-          ← กลับ Thai learning mode
-        </Link>
       </div>
+
+      <section>
+        <h2 className="mb-3 text-lg font-semibold text-stone-700">
+          เกมและคลังคำ / Games & Word bank
+        </h2>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Link href="/reverse/flashcards" className="card transition hover:-translate-y-0.5 hover:shadow-md">
+            <div className="text-3xl">🃏</div>
+            <div className="mt-2 font-semibold">บัตรคำ Flashcards</div>
+            <div className="text-xs text-stone-600">ฟังแล้วทายความหมาย</div>
+          </Link>
+          <Link href="/reverse/matching" className="card transition hover:-translate-y-0.5 hover:shadow-md">
+            <div className="text-3xl">🪞</div>
+            <div className="mt-2 font-semibold">จับคู่ Matching</div>
+            <div className="text-xs text-stone-600">จับคู่อังกฤษ ↔ ไทย</div>
+          </Link>
+          <Link href="/reverse/words" className="card transition hover:-translate-y-0.5 hover:shadow-md">
+            <div className="text-3xl">📚</div>
+            <div className="mt-2 font-semibold">คลังประโยค Word bank</div>
+            <div className="text-xs text-stone-600">ประโยคอังกฤษทั้งหมด</div>
+          </Link>
+        </div>
+      </section>
+
+      <Link href="/" className="btn-ghost inline-flex">
+        ← กลับ Thai learning mode
+      </Link>
     </div>
   );
 }
