@@ -476,7 +476,7 @@ export const reverseSentences: ReverseSentence[] = [
   {
     id: "r-t5",
     english: "That will be 150 baht",
-    thaiPhonetic: "แดท-วิล-บี-วัน-ฮัน-เดรด-ฟิฟ-ที่-บาท",
+    thaiPhonetic: "แดท-วิล-บี-วัน-ฮัน-เดรด-ฟิฟ-ตี้-บาท",
     meaning: "ค่าโดยสารหนึ่งร้อยห้าสิบบาท",
     category: "taxi",
     emoji: "💵",

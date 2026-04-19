@@ -404,11 +404,12 @@ export const sentences: Sentence[] = [
   {
     id: "n6",
     scenario: "numbers",
-    emoji: "2️⃣0️⃣",
-    thai: "สองสิบบาท",
-    phonetic: "sɔ̌ɔng sìp bàat",
-    meaning: "20 baht",
-    words: [{ wordId: "song" }, { wordId: "sip" }, { wordId: "baht" }],
+    emoji: "5️⃣0️⃣0️⃣",
+    thai: "ห้าร้อยบาท",
+    phonetic: "hâa rɔ́ɔi bàat",
+    meaning: "500 baht",
+    words: [{ wordId: "haa" }, { wordId: "roi" }, { wordId: "baht" }],
+    notes: "20 is an exception — it's 'ยี่สิบ' (yîi-sìp), not 'สองสิบ'. Every other ten uses the normal digit.",
   },
 
   // ------------ DIRECTIONS ------------
