@@ -116,10 +116,13 @@ export default function BuilderGame() {
                   <button
                     key={`${idx}-${pos}`}
                     onClick={() => unpick(idx)}
-                    className="chip thai text-lg"
+                    className="flex flex-col items-center rounded-lg border border-stone-300 bg-white px-3 py-1.5 shadow-sm"
                   >
-                    {w.thai}
-                    <span className="ml-1 text-xs text-stone-400">✕</span>
+                    <span className="thai text-lg font-semibold">{w.thai}</span>
+                    <span className="text-[11px] text-stone-500">
+                      <PhoneticText phonetic={w.phonetic} size="sm" />
+                    </span>
+                    <span className="text-[10px] text-stone-400">{w.meaning} ✕</span>
                   </button>
                 );
               })}
@@ -134,9 +137,13 @@ export default function BuilderGame() {
               <button
                 key={idx}
                 onClick={() => pickFromBank(idx)}
-                className="chip thai text-lg hover:bg-stone-50"
+                className="flex flex-col items-center rounded-lg border border-stone-300 bg-white px-3 py-1.5 shadow-sm hover:bg-stone-50"
               >
-                {w.thai}
+                <span className="thai text-lg font-semibold">{w.thai}</span>
+                <span className="text-[11px] text-stone-500">
+                  <PhoneticText phonetic={w.phonetic} size="sm" />
+                </span>
+                <span className="text-[10px] text-stone-400">{w.meaning}</span>
               </button>
             );
           })}

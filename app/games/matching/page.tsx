@@ -127,7 +127,17 @@ export default function MatchingGame() {
               }`}
             >
               {isFlipped ? (
-                card.face === "thai" ? (
+                isMatched ? (
+                  <div className="px-1">
+                    <div className="thai text-base font-bold text-stone-800">
+                      {w.thai}
+                    </div>
+                    <div className="text-[11px] text-stone-500">{w.phonetic}</div>
+                    <div className="mt-1 text-xs font-medium text-green-800">
+                      {w.meaning}
+                    </div>
+                  </div>
+                ) : card.face === "thai" ? (
                   <div>
                     <div className="thai text-xl font-bold text-stone-800">
                       {w.thai}

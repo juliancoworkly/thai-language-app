@@ -127,19 +127,48 @@ export default function TonesGame() {
       </div>
 
       <div className="card">
-        <div className="text-sm font-semibold text-stone-700">Tone cheat-sheet</div>
-        <div className="mt-2 grid grid-cols-5 gap-2 text-xs">
-          {TONES.map((t) => (
-            <div key={t} className="rounded border border-stone-200 p-2 text-center">
-              <div className={`font-semibold ${TONE_COLOR[t]}`}>
-                {TONE_LABEL[t]}
+        <div className="text-sm font-semibold text-stone-700">
+          Tone cheat-sheet — the 5 Thai tones
+        </div>
+        <p className="mt-1 text-xs text-stone-500">
+          Same letters, different tone → different word. Compare the five
+          versions of "maa" below. Each has its own pitch movement.
+        </p>
+
+        <div className="mt-3 grid gap-2 sm:grid-cols-5">
+          {[
+            { tone: "mid" as const, mark: "maa", thai: "มา", mean: "come", shape: "→", desc: "flat, at your normal voice pitch" },
+            { tone: "low" as const, mark: "màa", thai: "หมา̀", mean: "(low-example)", shape: "↘", desc: "flat, lower than normal" },
+            { tone: "falling" as const, mark: "mâa", thai: "ม่า", mean: "(fall-example)", shape: "⌒", desc: "starts high, drops sharply — like 'NO!'" },
+            { tone: "high" as const, mark: "máa", thai: "ม้า", mean: "horse", shape: "↗", desc: "starts high, rises — sounds excited" },
+            { tone: "rising" as const, mark: "mǎa", thai: "หมา", mean: "dog", shape: "⌣", desc: "dips then rises — like asking 'really?'" },
+          ].map((row) => (
+            <div
+              key={row.tone}
+              className="rounded-lg border border-stone-200 p-3"
+            >
+              <div className={`text-2xl font-bold ${TONE_COLOR[row.tone]}`}>
+                {row.mark}
+              </div>
+              <div className={`text-xs font-semibold uppercase ${TONE_COLOR[row.tone]}`}>
+                {row.tone} {row.shape}
+              </div>
+              <div className="mt-1 text-xs text-stone-600">{row.desc}</div>
+              <div className="mt-2 text-[11px] text-stone-500">
+                <span className="thai text-sm">{row.thai}</span> — {row.mean}
               </div>
             </div>
           ))}
         </div>
-        <p className="mt-3 text-xs text-stone-500">
-          Tones change the meaning. Classic example: <span className="thai">มา</span> (<span className="tone-mid">maa</span>) = come · <span className="thai">ม้า</span> (<span className="tone-high">máa</span>) = horse · <span className="thai">หมา</span> (<span className="tone-rising">mǎa</span>) = dog.
-        </p>
+
+        <div className="mt-4 rounded-lg bg-amber-50 p-3 text-xs text-amber-900">
+          <strong>Classic trap:</strong> <span className="thai">มา</span>{" "}
+          <span className="tone-mid font-semibold">maa</span> (come), <span className="thai">ม้า</span>{" "}
+          <span className="tone-high font-semibold">máa</span> (horse), <span className="thai">หมา</span>{" "}
+          <span className="tone-rising font-semibold">mǎa</span> (dog) — same
+          letters, totally different words. If your tone is off, Thais genuinely
+          won't understand what you mean.
+        </div>
       </div>
     </div>
   );
