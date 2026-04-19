@@ -129,6 +129,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=&lt;your-anon-key&gt;
       </div>
 
       <Link href="/" className="btn-ghost inline-flex">← Back</Link>
+      <div className="text-center text-[10px] text-stone-400">build 2026-04-19-1508</div>
     </div>
   );
 }
