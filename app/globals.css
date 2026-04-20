@@ -38,6 +38,39 @@ body {
   @apply inline-flex items-center rounded-full border border-mint-500/30 bg-mint-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-mint-300;
 }
 
+.eyebrow-pill-light {
+  @apply inline-flex items-center rounded-full border border-mint-500/40 bg-mint-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-mint-700;
+}
+
+/* Radial glow variants — layered on dark sections */
+.glow-top {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(52,211,153,.18), transparent 55%),
+    radial-gradient(circle at 20% 30%, rgba(34,211,238,.08), transparent 60%);
+}
+
+.glow-center {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(52,211,153,.15), transparent 60%);
+}
+
+/* Reveal animation for on-load sections */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fadeUp .7s ease-out both;
+}
+.fade-up-d1 { animation-delay: .1s; }
+.fade-up-d2 { animation-delay: .2s; }
+.fade-up-d3 { animation-delay: .3s; }
+.fade-up-d4 { animation-delay: .4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up { animation: none; }
+}
+
 /* Kid mode: scale up text, brighter cards, friendly */
 html.kid-mode body {
   font-size: 18px;
