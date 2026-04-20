@@ -1,6 +1,6 @@
 "use client";
 
-import type { CardState } from "./types";
+import type { CardState, Profile } from "./types";
 import { newCard } from "./srs";
 import { supabase } from "./supabase";
 
@@ -15,6 +15,7 @@ interface Store {
     lastReviewDay: string;
     totalReviews: number;
   };
+  profile?: Profile;
 }
 
 function today(): string {
@@ -67,6 +68,7 @@ function scheduleCloudPush(store: Store): void {
         seen_sentences: store.seenSentences,
         seen_words: store.seenWords,
         stats: store.stats,
+        profile: store.profile ?? null,
       });
     } catch {
       // Offline or transient error — next save will retry.
@@ -86,7 +88,7 @@ export async function pullFromCloud(userId: string): Promise<Store | null> {
   if (!supabase) return null;
   const { data, error } = await supabase
     .from("user_progress")
-    .select("cards, seen_sentences, seen_words, stats")
+    .select("cards, seen_sentences, seen_words, stats, profile")
     .eq("user_id", userId)
     .maybeSingle();
   if (error || !data) return null;
@@ -99,6 +101,7 @@ export async function pullFromCloud(userId: string): Promise<Store | null> {
       lastReviewDay: today(),
       totalReviews: 0,
     },
+    profile: (data.profile as Profile) ?? undefined,
   };
 }
 
@@ -176,6 +179,15 @@ export function markWordSeen(store: Store, id: string): Store {
 export function reset(): void {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(KEY);
+}
+
+export function getProfile(): Profile | null {
+  return load().profile ?? null;
+}
+
+export function saveProfile(profile: Profile): void {
+  const store = load();
+  save({ ...store, profile });
 }
 
 export type { Store };

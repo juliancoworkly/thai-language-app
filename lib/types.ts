@@ -1,5 +1,35 @@
 export type Tone = "low" | "mid" | "high" | "falling" | "rising";
 
+export type Gender = "male" | "female";
+export type Level = 1 | 2 | 3 | 4 | 5;
+export type AgeMode = "kid" | "adult";
+export type Mode = "thai" | "english";
+
+export interface Profile {
+  mode: Mode;            // which side they're learning
+  gender: Gender;        // affects pronouns + polite particles
+  level: Level;          // 1=just arrived, 5=fluency
+  ageMode: AgeMode;      // kid mode = brighter UI, fewer adult notes
+  name?: string;         // optional display name / nickname
+  onboarded: boolean;
+}
+
+export const LEVEL_LABEL: Record<Level, string> = {
+  1: "Just arrived — no Thai yet",
+  2: "I know hello & thanks",
+  3: "I can order food and basics",
+  4: "I can have short chats",
+  5: "Going for fluency",
+};
+
+export const LEVEL_SHORT: Record<Level, string> = {
+  1: "Newbie",
+  2: "Basics",
+  3: "Everyday",
+  4: "Conversational",
+  5: "Fluent",
+};
+
 export type PartOfSpeech =
   | "pronoun"
   | "verb"
@@ -35,8 +65,10 @@ export interface Sentence {
   meaning: string;
   words: SentenceWord[];
   scenario: string;
+  level?: Level;       // 1..5, defaults to 2 if missing
   emoji?: string;
   notes?: string;
+  adultOnly?: boolean; // hidden in kid mode (e.g. bar phrases)
 }
 
 export interface Scenario {

@@ -9,8 +9,12 @@ create table if not exists public.user_progress (
   seen_words text[] not null default '{}',
   stats jsonb not null default
     '{"reviewsToday":0,"lastReviewDay":"","totalReviews":0}'::jsonb,
+  profile jsonb,
   updated_at timestamptz not null default now()
 );
+
+-- Add profile column to existing tables (safe to re-run).
+alter table public.user_progress add column if not exists profile jsonb;
 
 -- 2) Row-level security: every user sees only their own row.
 alter table public.user_progress enable row level security;

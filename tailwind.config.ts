@@ -20,9 +20,26 @@ const config: Config = {
           800: "#8a2b20",
           900: "#73271f",
         },
+        ink: {
+          900: "#0c1825",
+          800: "#101e2f",
+          700: "#172a40",
+          600: "#1f3956",
+        },
+        mint: {
+          300: "#86efac",
+          400: "#4ade80",
+          500: "#34d399",
+          600: "#22c08f",
+          700: "#0ea271",
+        },
       },
       fontFamily: {
         thai: ['"Noto Sans Thai"', "system-ui", "sans-serif"],
+        serif: ['"Instrument Serif"', "Georgia", "serif"],
+      },
+      boxShadow: {
+        glow: "0 0 80px -10px rgba(52,211,153,.4)",
       },
     },
   },

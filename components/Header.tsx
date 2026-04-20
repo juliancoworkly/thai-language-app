@@ -2,53 +2,94 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
+import { getProfile } from "@/lib/storage";
+import type { Profile } from "@/lib/types";
 
 export function Header() {
   const pathname = usePathname() ?? "";
   const inLanding = pathname === "/";
   const inReverse = pathname.startsWith("/reverse");
-  const { user, syncing } = useAuth();
+  const inOnboarding = pathname.startsWith("/onboarding");
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<Profile | null>(null);
 
-  const homeHref = inReverse ? "/reverse" : inLanding ? "/" : "/thai";
-  const title = inReverse
-    ? "อังกฤษสำหรับคนไทย"
-    : inLanding
-    ? "Thai & English"
-    : "Phuut Thai";
+  useEffect(() => {
+    setProfile(getProfile());
+  }, [pathname]);
+
+  if (inOnboarding) {
+    // Minimal header during onboarding
+    return (
+      <header className="border-b border-stone-200 bg-white">
+        <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-2xl">🇹🇭↔🇬🇧</span>
+            <span className="font-bold text-stone-800">Phuut Thai</span>
+          </Link>
+          <Link href="/" className="btn-ghost text-xs">Skip for now</Link>
+        </nav>
+      </header>
+    );
+  }
+
+  if (inLanding) {
+    return (
+      <header className="absolute inset-x-0 top-0 z-20">
+        <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5 text-white">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-mint-400 shadow-[0_0_12px_2px_rgba(52,211,153,.6)]" />
+            <span className="font-bold">Phuut Thai</span>
+          </Link>
+          <div className="flex items-center gap-3 text-sm">
+            <Link href="/reverse" className="hidden text-stone-300 hover:text-white sm:inline">For Thai speakers</Link>
+            {user ? (
+              <Link href="/account" className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs">
+                {user.email?.split("@")[0]}
+              </Link>
+            ) : (
+              <Link href="/login" className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs hover:bg-white/20">
+                Sign in
+              </Link>
+            )}
+            <Link
+              href={profile?.onboarded ? "/thai" : "/onboarding"}
+              className="rounded-full bg-mint-500 px-4 py-1.5 text-xs font-semibold text-ink-900 hover:bg-mint-400"
+            >
+              {profile?.onboarded ? "Continue" : "Get started"}
+            </Link>
+          </div>
+        </nav>
+      </header>
+    );
+  }
+
+  const homeHref = inReverse ? "/reverse" : "/thai";
+  const title = inReverse ? "อังกฤษสำหรับคนไทย" : "Phuut Thai";
 
   const authLink = user ? (
-    <Link
-      href="/account"
-      className="btn-ghost flex items-center gap-1"
-      title={user.email ?? ""}
-    >
-      {syncing ? "⏳" : "👤"}
-      <span className="hidden sm:inline">
-        {user.email?.split("@")[0] ?? "Account"}
-      </span>
+    <Link href="/account" className="btn-ghost flex items-center gap-1" title={user.email ?? ""}>
+      👤 <span className="hidden sm:inline">{user.email?.split("@")[0]}</span>
     </Link>
   ) : (
-    <Link href="/login" className="btn-ghost">
-      Sign in
-    </Link>
+    <Link href="/login" className="btn-ghost">Sign in</Link>
   );
 
   return (
     <header className="sticky top-0 z-10 border-b border-stone-200 bg-white/80 backdrop-blur">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href={homeHref} className="flex items-center gap-2">
-          <span className="text-2xl">{inReverse ? "🇬🇧" : inLanding ? "🇹🇭↔🇬🇧" : "🇹🇭"}</span>
+          <span className="text-2xl">{inReverse ? "🇬🇧" : "🇹🇭"}</span>
           <span className="font-bold text-stone-800">{title}</span>
+          {profile?.level && !inReverse && (
+            <span className="ml-1 rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-semibold text-stone-600">
+              L{profile.level}
+            </span>
+          )}
         </Link>
         <div className="flex items-center gap-1 text-sm">
-          {inLanding ? (
-            <>
-              <Link href="/thai" className="btn-ghost">Learn Thai</Link>
-              <Link href="/reverse" className="btn-ghost">Learn English</Link>
-              {authLink}
-            </>
-          ) : inReverse ? (
+          {inReverse ? (
             <>
               <Link href="/reverse/words" className="btn-ghost">คลังประโยค</Link>
               <Link href="/reverse/flashcards" className="btn-ghost">บัตรคำ</Link>

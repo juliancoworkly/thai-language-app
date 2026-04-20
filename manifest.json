@@ -1,0 +1,20 @@
+{
+  "name": "Thai & English — Phuut Thai",
+  "short_name": "Phuut Thai",
+  "description": "Real, everyday Thai you'll actually use. With memory games and word-by-word breakdowns.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c1825",
+  "theme_color": "#0c1825",
+  "orientation": "portrait-primary",
+  "categories": ["education", "lifestyle", "productivity"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

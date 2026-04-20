@@ -1,4 +1,5 @@
 import type { Sentence } from "@/lib/types";
+import { extraSentences } from "./sentences-extra";
 
 // Each sentence's `words` array references ids in data/words.ts
 // and is ordered to match the Thai sentence.
@@ -637,6 +638,28 @@ export const sentences: Sentence[] = [
   },
 ];
 
+// Merge extras and de-duplicate by id (extras win).
+const merged: Sentence[] = [...sentences];
+for (const ex of extraSentences) {
+  const idx = merged.findIndex((s) => s.id === ex.id);
+  if (idx >= 0) merged[idx] = ex;
+  else merged.push(ex);
+}
+export const allSentences: Sentence[] = merged;
+
 export const sentenceById: Record<string, Sentence> = Object.fromEntries(
-  sentences.map((s) => [s.id, s])
+  allSentences.map((s) => [s.id, s])
 );
+
+// Filter helper used by pages: respect user level + ageMode.
+export function filterByProfile(
+  list: Sentence[],
+  level?: number,
+  ageMode?: "kid" | "adult"
+): Sentence[] {
+  return list.filter((s) => {
+    if (ageMode === "kid" && s.adultOnly) return false;
+    if (level && s.level && s.level > level + 1) return false; // show <= one level above
+    return true;
+  });
+}
