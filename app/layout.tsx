@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { AuthProvider } from "@/components/AuthProvider";
 import { Header } from "@/components/Header";
+import { KidModeBoot } from "@/components/KidModeBoot";
+import { Paywall, TrialBanner } from "@/components/Paywall";
 import { RouteGate } from "@/components/RouteGate";
+import { ServiceWorkerBoot } from "@/components/ServiceWorkerBoot";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -35,9 +38,14 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
+          <KidModeBoot />
+          <ServiceWorkerBoot />
           <RouteGate>
             <Header />
-            <main className="mx-auto max-w-5xl px-4 py-6">{children}</main>
+            <TrialBanner />
+            <main className="mx-auto max-w-5xl px-4 py-6">
+              <Paywall>{children}</Paywall>
+            </main>
           </RouteGate>
           <footer className="border-t border-white/5 bg-ink-900 px-6 py-10 text-center text-xs text-stone-400">
             <div className="mx-auto max-w-5xl space-y-3">

@@ -5,6 +5,24 @@ export type Level = 1 | 2 | 3 | 4 | 5;
 export type AgeMode = "kid" | "adult";
 export type Mode = "thai" | "english";
 
+export type SubscriptionStatus =
+  | "trialing"   // 3-day free trial
+  | "active"    // paid up
+  | "past_due"  // payment failed
+  | "canceled"  // user-cancelled
+  | "expired"   // trial ended without paying
+  | "none";     // never started a trial
+
+export interface Subscription {
+  status: SubscriptionStatus;
+  trialStart?: number;    // ms timestamp
+  trialEnd?: number;      // ms timestamp
+  currentPeriodEnd?: number; // ms timestamp
+  provider?: "paddle" | "stripe" | "manual";
+  customerId?: string;    // Paddle/Stripe customer id
+  subscriptionId?: string;
+}
+
 export interface Profile {
   mode: Mode;            // which side they're learning
   gender: Gender;        // affects pronouns + polite particles
@@ -12,6 +30,8 @@ export interface Profile {
   ageMode: AgeMode;      // kid mode = brighter UI, fewer adult notes
   name?: string;         // optional display name / nickname
   onboarded: boolean;
+  subscription?: Subscription;
+  trialStartedAt?: number; // first time they entered the paid mode
 }
 
 export const LEVEL_LABEL: Record<Level, string> = {

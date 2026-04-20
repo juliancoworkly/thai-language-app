@@ -57,4 +57,32 @@ export const scenarios: Scenario[] = [
     description: "Doctor, hospital, lost, help me.",
     order: 8,
   },
+  {
+    id: "hotel",
+    title: "Hotel & Accommodation",
+    emoji: "🏨",
+    description: "Check-in, room, wifi, late checkout.",
+    order: 9,
+  },
+  {
+    id: "medical",
+    title: "Pharmacy & Medical",
+    emoji: "💊",
+    description: "Headache, pharmacy, medicine, allergic.",
+    order: 10,
+  },
+  {
+    id: "motorbike",
+    title: "Motorbike & Transport",
+    emoji: "🛵",
+    description: "Rent, gas, helmet, deposit.",
+    order: 11,
+  },
+  {
+    id: "beach",
+    title: "Beach & Massage",
+    emoji: "🏖️",
+    description: "Sunscreen, oil massage, beach day.",
+    order: 12,
+  },
 ];

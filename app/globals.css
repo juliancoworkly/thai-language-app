@@ -38,6 +38,23 @@ body {
   @apply inline-flex items-center rounded-full border border-mint-500/30 bg-mint-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-mint-300;
 }
 
+/* Kid mode: scale up text, brighter cards, friendly */
+html.kid-mode body {
+  font-size: 18px;
+}
+html.kid-mode .card {
+  border-width: 3px;
+  border-radius: 1.5rem;
+}
+html.kid-mode .thai {
+  font-size: 1.25em;
+}
+html.kid-mode .btn-primary {
+  @apply text-base font-bold;
+  padding: 0.85rem 1.4rem;
+  border-radius: 9999px;
+}
+
 .thai {
   font-family: "Noto Sans Thai", system-ui, sans-serif;
 }

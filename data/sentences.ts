@@ -1,5 +1,6 @@
 import type { Sentence } from "@/lib/types";
 import { extraSentences } from "./sentences-extra";
+import { extraSentences2 } from "./sentences-extra2";
 
 // Each sentence's `words` array references ids in data/words.ts
 // and is ordered to match the Thai sentence.
@@ -638,9 +639,9 @@ export const sentences: Sentence[] = [
   },
 ];
 
-// Merge extras and de-duplicate by id (extras win).
+// Merge extras and de-duplicate by id (later entries win).
 const merged: Sentence[] = [...sentences];
-for (const ex of extraSentences) {
+for (const ex of [...extraSentences, ...extraSentences2]) {
   const idx = merged.findIndex((s) => s.id === ex.id);
   if (idx >= 0) merged[idx] = ex;
   else merged.push(ex);
