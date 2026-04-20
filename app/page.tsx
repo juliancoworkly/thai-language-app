@@ -34,11 +34,11 @@ export default function Landing() {
         <div className="glow-radial pointer-events-none absolute inset-0" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-mint-500/40 to-transparent" />
 
-        <div className="relative mx-auto max-w-6xl px-6 pt-28 pb-24 sm:pt-36 sm:pb-32">
+        <div className="relative mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-24 sm:pb-20">
           <div className="flex flex-col items-center text-center">
             <span className="section-label">
               <span className="h-1.5 w-1.5 rounded-full bg-mint-400 shadow-[0_0_10px_2px_rgba(52,211,153,.6)]" />
-              Made in Phuket · Built for Thailand
+              By Cultra Lab Limited Partnership · Made in Phuket
             </span>
 
             <h1 className="display-h1 mt-7 max-w-5xl text-balance">
@@ -103,7 +103,7 @@ export default function Landing() {
           </div>
 
           {/* Commitments strip */}
-          <div className="mx-auto mt-20 grid max-w-4xl gap-4 sm:grid-cols-3">
+          <div className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-3">
             <Stat kicker="฿0" label="Our promise: English mode is free for Thai learners, forever" />
             <Stat kicker="Our aim" label="Every membership helps fund free English for Thailand" />
             <Stat kicker="No" label="Ads · upsells · dark patterns" />
@@ -129,7 +129,7 @@ export default function Landing() {
       </section>
 
       {/* MANIFESTO ================================================ */}
-      <section className="relative bg-stone-50 px-6 py-28 text-stone-900">
+      <section className="relative bg-stone-50 px-6 py-20 text-stone-900">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <span className="eyebrow-pill-light">Our mission</span>
@@ -164,7 +164,7 @@ export default function Landing() {
       </section>
 
       {/* WHAT'S DIFFERENT ========================================== */}
-      <section className="grain relative overflow-hidden bg-ink-900 px-6 py-28 text-white">
+      <section className="grain relative overflow-hidden bg-ink-900 px-6 py-20 text-white">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
@@ -181,7 +181,7 @@ export default function Landing() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-4 sm:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
             <Feature
               n="01"
               icon="💬"
@@ -208,7 +208,7 @@ export default function Landing() {
       </section>
 
       {/* WHY WE BUILT IT ========================================== */}
-      <section className="relative bg-stone-50 px-6 py-28 text-stone-900">
+      <section className="relative bg-stone-50 px-6 py-20 text-stone-900">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <span className="eyebrow-pill-light">Why we built it</span>
@@ -237,7 +237,7 @@ export default function Landing() {
       </section>
 
       {/* HOW IT WORKS ========================================== */}
-      <section className="grain relative overflow-hidden bg-ink-900 px-6 py-28 text-white">
+      <section className="grain relative overflow-hidden bg-ink-900 px-6 py-20 text-white">
         <div className="mx-auto max-w-6xl">
           <div className="max-w-2xl">
             <span className="section-label">03 · How it works</span>
@@ -247,7 +247,7 @@ export default function Landing() {
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-4 sm:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
             <Step
               n="1"
               title="Tell us about you"
@@ -268,7 +268,7 @@ export default function Landing() {
       </section>
 
       {/* FOR SCHOOLS ========================================== */}
-      <section className="relative bg-stone-50 px-6 py-28 text-stone-900">
+      <section className="relative bg-stone-50 px-6 py-20 text-stone-900">
         <div className="mx-auto max-w-6xl">
           <div className="relative overflow-hidden rounded-3xl border border-stone-200 bg-white p-8 sm:p-14">
             <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-mint-500/20 blur-3xl" />
@@ -368,14 +368,15 @@ export default function Landing() {
           </div>
 
           <p className="mx-auto mt-6 max-w-xl text-center text-xs text-stone-500">
-            Built by Cultra Lab — a tiny team in Phuket. You're not buying a
-            product, you're funding a mission.
+            Built by <span className="font-semibold text-stone-700">Cultra Lab Limited Partnership</span>
+            {" "}— a tiny team in Phuket. You're not buying a product,
+            you're funding a mission.
           </p>
         </div>
       </section>
 
       {/* CTA ========================================== */}
-      <section className="grain relative overflow-hidden bg-ink-900 px-6 py-32 text-center text-white">
+      <section className="grain relative overflow-hidden bg-ink-900 px-6 py-24 text-center text-white">
         <div className="glow-radial pointer-events-none absolute inset-0 opacity-80" />
         <div className="relative mx-auto max-w-3xl">
           <span className="section-label justify-center">The last step</span>

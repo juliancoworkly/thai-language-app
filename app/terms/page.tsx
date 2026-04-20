@@ -14,7 +14,7 @@ export default function Terms() {
         These Terms of Service (&quot;Terms&quot;) govern your access to and
         use of the website <strong>thaiandenglish.com</strong> and the
         associated application &quot;Phuut Thai&quot; (the &quot;Service&quot;),
-        operated by <strong>Cultra Lab Ltd Part</strong> (&quot;we&quot;,
+        operated by <strong>Cultra Lab Limited Partnership</strong> (&quot;we&quot;,
         &quot;us&quot;, or &quot;our&quot;), a Limited Partnership registered
         in Thailand at <strong>1st Floor, PKCD Building, 9, 8 Muang Naka Rd,
         Phuket 83000, Thailand</strong>. By creating an account or using the
@@ -78,7 +78,7 @@ export default function Terms() {
       <h2 className="pt-4 text-xl font-bold">6. Intellectual Property</h2>
       <p>
         All content in the Service — including the sentence database, audio,
-        graphics, code, and design — is the property of Cultra Lab Ltd Part
+        graphics, code, and design — is the property of Cultra Lab Limited Partnership
         or its licensors and is protected by copyright. You are granted a
         personal, non-transferable, non-exclusive license to use the Service
         for your own language-learning purposes only. Screenshotting individual
@@ -104,7 +104,7 @@ export default function Terms() {
 
       <h2 className="pt-4 text-xl font-bold">9. Limitation of Liability</h2>
       <p>
-        To the maximum extent permitted by law, Cultra Lab Ltd Part shall not
+        To the maximum extent permitted by law, Cultra Lab Limited Partnership shall not
         be liable for any indirect, incidental, consequential, or punitive
         damages arising from your use of the Service. Our total liability in
         any event shall not exceed the amount paid by you to us in the twelve
@@ -135,14 +135,14 @@ export default function Terms() {
 
       <h2 className="pt-4 text-xl font-bold">13. Contact</h2>
       <address className="not-italic">
-        Cultra Lab Ltd Part<br />
+        Cultra Lab Limited Partnership<br />
         1st Floor, PKCD Building, 9, 8 Muang Naka Rd<br />
         Phuket 83000, Thailand<br />
         Email: <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
       </address>
 
       <p className="pt-6 text-xs text-stone-500">
-        © Cultra Lab Ltd Part. All rights reserved.
+        © Cultra Lab Limited Partnership. All rights reserved.
       </p>
     </article>
   );

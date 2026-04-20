@@ -52,6 +52,8 @@ export default function RootLayout({
               <div className="flex items-center justify-center gap-2 text-mint-400">
                 <span className="h-2 w-2 rounded-full bg-mint-400" />
                 <span className="font-bold tracking-wide">Phuut Thai</span>
+                <span className="text-stone-500">·</span>
+                <span className="text-stone-400">Cultra Lab Limited Partnership</span>
               </div>
               <div className="flex flex-wrap justify-center gap-4 text-[11px]">
                 <a href="/" className="hover:text-white">Home</a>
@@ -66,7 +68,7 @@ export default function RootLayout({
                 <a href="mailto:hello@thaiandenglish.com" className="hover:text-white">Contact</a>
               </div>
               <div className="text-[11px]">
-                © {new Date().getFullYear()} Cultra Lab Ltd Part. All rights reserved.
+                © {new Date().getFullYear()} Cultra Lab Limited Partnership. All rights reserved.
               </div>
               <div className="text-[11px] text-stone-500">
                 1st Floor, PKCD Building, 9, 8 Muang Naka Rd, Phuket 83000, Thailand
