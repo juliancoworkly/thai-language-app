@@ -59,6 +59,12 @@ export default function RootLayout({
                 <a href="/reverse" className="hover:text-white">Free for Thais</a>
                 <a href="/login" className="hover:text-white">Sign in</a>
               </div>
+              <div className="flex flex-wrap justify-center gap-4 text-[11px] text-stone-500">
+                <a href="/terms" className="hover:text-white">Terms of Service</a>
+                <a href="/privacy" className="hover:text-white">Privacy Policy</a>
+                <a href="/refund" className="hover:text-white">Refund Policy</a>
+                <a href="mailto:hello@thaiandenglish.com" className="hover:text-white">Contact</a>
+              </div>
               <div className="text-[11px]">
                 © {new Date().getFullYear()} Cultra Lab Ltd Part. All rights reserved.
               </div>

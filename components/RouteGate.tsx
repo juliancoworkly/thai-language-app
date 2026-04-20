@@ -16,6 +16,7 @@ const PUBLIC_PATHS = [
   "/onboarding",
   "/privacy",
   "/terms",
+  "/refund",
 ];
 
 function matchesAny(pathname: string, prefixes: string[]) {
