@@ -64,11 +64,12 @@ export default function Refund() {
       </p>
 
       <h2 className="pt-4 text-xl font-bold">7. Contact</h2>
-      <p>
-        Email{" "}
-        <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>{" "}
-        with your account email and we&apos;ll sort it out.
-      </p>
+      <address className="not-italic">
+        Cultra Lab Ltd Part<br />
+        1st Floor, PKCD Building, 9, 8 Muang Naka Rd<br />
+        Phuket 83000, Thailand<br />
+        Email: <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
+      </address>
 
       <p className="pt-6 text-xs text-stone-500">
         © Cultra Lab Ltd Part. All rights reserved.

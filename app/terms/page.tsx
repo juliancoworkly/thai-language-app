@@ -15,9 +15,11 @@ export default function Terms() {
         use of the website <strong>thaiandenglish.com</strong> and the
         associated application &quot;Phuut Thai&quot; (the &quot;Service&quot;),
         operated by <strong>Cultra Lab Ltd Part</strong> (&quot;we&quot;,
-        &quot;us&quot;, or &quot;our&quot;), a registered partnership in
-        Thailand. By creating an account or using the Service you agree to be
-        bound by these Terms. If you do not agree, do not use the Service.
+        &quot;us&quot;, or &quot;our&quot;), a Limited Partnership registered
+        in Thailand at <strong>1st Floor, PKCD Building, 9, 8 Muang Naka Rd,
+        Phuket 83000, Thailand</strong>. By creating an account or using the
+        Service you agree to be bound by these Terms. If you do not agree,
+        do not use the Service.
       </p>
 
       <h2 className="pt-4 text-xl font-bold">1. The Service</h2>
@@ -132,9 +134,12 @@ export default function Terms() {
       </p>
 
       <h2 className="pt-4 text-xl font-bold">13. Contact</h2>
-      <p>
-        Questions? Email <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>.
-      </p>
+      <address className="not-italic">
+        Cultra Lab Ltd Part<br />
+        1st Floor, PKCD Building, 9, 8 Muang Naka Rd<br />
+        Phuket 83000, Thailand<br />
+        Email: <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
+      </address>
 
       <p className="pt-6 text-xs text-stone-500">
         © Cultra Lab Ltd Part. All rights reserved.

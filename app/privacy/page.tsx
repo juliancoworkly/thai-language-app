@@ -10,7 +10,9 @@ export default function Privacy() {
 
       <p>
         This Privacy Policy explains how <strong>Cultra Lab Ltd Part</strong>
-        (&quot;we&quot;, &quot;us&quot;) collects and uses your information
+        (&quot;we&quot;, &quot;us&quot;), a Limited Partnership registered in
+        Thailand at <strong>1st Floor, PKCD Building, 9, 8 Muang Naka Rd,
+        Phuket 83000, Thailand</strong>, collects and uses your information
         when you use thaiandenglish.com or the Phuut Thai application (the
         &quot;Service&quot;). We take privacy seriously and try to keep what
         we store to the minimum needed to make the app work.
@@ -118,10 +120,12 @@ export default function Privacy() {
       </p>
 
       <h2 className="pt-4 text-xl font-bold">11. Contact</h2>
-      <p>
-        Questions? Email{" "}
-        <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>.
-      </p>
+      <address className="not-italic">
+        Cultra Lab Ltd Part<br />
+        1st Floor, PKCD Building, 9, 8 Muang Naka Rd<br />
+        Phuket 83000, Thailand<br />
+        Email: <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
+      </address>
 
       <p className="pt-6 text-xs text-stone-500">
         © Cultra Lab Ltd Part. All rights reserved.

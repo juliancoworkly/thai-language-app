@@ -68,6 +68,9 @@ export default function RootLayout({
               <div className="text-[11px]">
                 © {new Date().getFullYear()} Cultra Lab Ltd Part. All rights reserved.
               </div>
+              <div className="text-[11px] text-stone-500">
+                1st Floor, PKCD Building, 9, 8 Muang Naka Rd, Phuket 83000, Thailand
+              </div>
             </div>
           </footer>
         </AuthProvider>
