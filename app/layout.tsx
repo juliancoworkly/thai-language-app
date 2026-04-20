@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { AuthProvider } from "@/components/AuthProvider";
 import { Header } from "@/components/Header";
+import { RouteGate } from "@/components/RouteGate";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -34,8 +35,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          <Header />
-          <main className="mx-auto max-w-5xl px-4 py-6">{children}</main>
+          <RouteGate>
+            <Header />
+            <main className="mx-auto max-w-5xl px-4 py-6">{children}</main>
+          </RouteGate>
           <footer className="border-t border-white/5 bg-ink-900 px-6 py-10 text-center text-xs text-stone-400">
             <div className="mx-auto max-w-5xl space-y-3">
               <div className="flex items-center justify-center gap-2 text-mint-400">

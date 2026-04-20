@@ -16,8 +16,6 @@ import {
 
 type Step = "mode" | "gender" | "level" | "age" | "name" | "done";
 
-const STEP_ORDER: Step[] = ["mode", "gender", "level", "age", "name", "done"];
-
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("mode");
@@ -29,14 +27,21 @@ export default function OnboardingPage() {
     if (existing) setDraft(existing);
   }, []);
 
+  const isThaiSpeaker = draft.mode === "english";
+  // Thai speakers don't need to pick gender (they already know the particles
+  // ครับ/ค่ะ) and level is their English level. Simpler flow.
+  const stepOrder: Step[] = isThaiSpeaker
+    ? ["mode", "level", "age", "name", "done"]
+    : ["mode", "gender", "level", "age", "name", "done"];
+
   function next() {
-    const idx = STEP_ORDER.indexOf(step);
-    if (idx < STEP_ORDER.length - 1) setStep(STEP_ORDER[idx + 1]);
+    const idx = stepOrder.indexOf(step);
+    if (idx < stepOrder.length - 1) setStep(stepOrder[idx + 1]);
   }
 
   function back() {
-    const idx = STEP_ORDER.indexOf(step);
-    if (idx > 0) setStep(STEP_ORDER[idx - 1]);
+    const idx = stepOrder.indexOf(step);
+    if (idx > 0) setStep(stepOrder[idx - 1]);
   }
 
   function pick(field: keyof Profile, value: string | number) {
@@ -57,32 +62,39 @@ export default function OnboardingPage() {
     router.push(profile.mode === "thai" ? "/thai" : "/reverse");
   }
 
+  // Labels in the right language for each step
+  const L = isThaiSpeaker ? TH : EN;
+
   return (
     <div className="mx-auto max-w-2xl space-y-6 py-4">
-      <ProgressBar step={step} />
+      <ProgressBar step={step} stepOrder={stepOrder} />
 
       {step === "mode" && (
-        <Card title="What do you want to learn?" subtitle="คุณอยากเรียนภาษาอะไร">
+        <Card title="Choose your language / เลือกภาษาของคุณ" subtitle="This locks the app to one mode. You can change it later in your account.">
           <div className="grid gap-3 sm:grid-cols-2">
             <Choice
-              emoji="🇹🇭"
-              title="Learn Thai"
-              subtitle="For English speakers in Thailand"
+              emoji="🇬🇧 → 🇹🇭"
+              title="I speak English"
+              subtitle="Learn Thai — ฿1,000/yr, 3-day free trial"
               selected={draft.mode === "thai"}
               onClick={() => pick("mode", "thai")}
             />
             <Choice
-              emoji="🇬🇧"
-              title="Learn English"
-              subtitle="ฟรีสำหรับคนไทย — Free for Thai nationals"
+              emoji="🇹🇭 → 🇬🇧"
+              title="ฉันเป็นคนไทย"
+              subtitle="Learn English — ฟรีตลอดไป · Free forever"
               selected={draft.mode === "english"}
               onClick={() => pick("mode", "english")}
             />
           </div>
+          <p className="mt-4 text-xs text-stone-500">
+            You'll only see the mode you pick. Switch anytime by signing out
+            or from your account page.
+          </p>
         </Card>
       )}
 
-      {step === "gender" && (
+      {step === "gender" && !isThaiSpeaker && (
         <Card
           title="Are you male or female?"
           subtitle="Thai changes 'I' and the polite particle based on the speaker."
@@ -108,8 +120,8 @@ export default function OnboardingPage() {
 
       {step === "level" && (
         <Card
-          title="What's your Thai level?"
-          subtitle="We'll start you on sentences that match. Change anytime in your account."
+          title={L.levelTitle}
+          subtitle={L.levelSub}
         >
           <div className="grid gap-2">
             {([1, 2, 3, 4, 5] as Level[]).map((lvl) => (
@@ -127,10 +139,10 @@ export default function OnboardingPage() {
                 </div>
                 <div>
                   <div className="font-semibold text-stone-800">
-                    {LEVEL_SHORT[lvl]}
+                    {isThaiSpeaker ? L.levelShort[lvl] : LEVEL_SHORT[lvl]}
                   </div>
                   <div className="text-sm text-stone-500">
-                    {LEVEL_LABEL[lvl]}
+                    {isThaiSpeaker ? L.levelLabel[lvl] : LEVEL_LABEL[lvl]}
                   </div>
                 </div>
               </button>
@@ -140,19 +152,19 @@ export default function OnboardingPage() {
       )}
 
       {step === "age" && (
-        <Card title="Are you under 18?" subtitle="We'll hide adult-context examples in kid mode.">
+        <Card title={L.ageTitle} subtitle={L.ageSub}>
           <div className="grid gap-3 sm:grid-cols-2">
             <Choice
               emoji="🧒"
-              title="Under 18"
-              subtitle="Kid mode — bigger UI, no bar/dating phrases"
+              title={L.ageKidTitle}
+              subtitle={L.ageKidSub}
               selected={draft.ageMode === "kid"}
               onClick={() => pick("ageMode", "kid")}
             />
             <Choice
               emoji="🧑"
-              title="18+"
-              subtitle="Standard mode"
+              title={L.ageAdultTitle}
+              subtitle={L.ageAdultSub}
               selected={draft.ageMode === "adult"}
               onClick={() => pick("ageMode", "adult")}
             />
@@ -161,49 +173,113 @@ export default function OnboardingPage() {
       )}
 
       {step === "name" && (
-        <Card
-          title="What should we call you?"
-          subtitle="Optional — used in greetings only. You can skip."
-        >
+        <Card title={L.nameTitle} subtitle={L.nameSub}>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Nickname"
+            placeholder={L.namePlaceholder}
             className="w-full rounded-xl border border-stone-300 px-4 py-3 text-lg"
             autoFocus
           />
           <div className="mt-4 flex gap-2">
-            <button onClick={back} className="btn-secondary">← Back</button>
+            <button onClick={back} className="btn-secondary">← {L.back}</button>
             <button onClick={next} className="btn-primary flex-1">
-              {name.trim() ? "Continue →" : "Skip →"}
+              {name.trim() ? `${L.continue} →` : `${L.skip} →`}
             </button>
           </div>
         </Card>
       )}
 
       {step === "done" && (
-        <Card
-          title={`Welcome${name ? ", " + name : ""}!`}
-          subtitle="You're all set. Your settings are saved on this device (and synced if you're signed in)."
-        >
+        <Card title={`${L.welcome}${name ? ", " + name : ""}!`} subtitle={L.doneSub}>
           <div className="space-y-2 rounded-xl bg-stone-50 p-4 text-sm">
-            <Row label="Learning" value={draft.mode === "english" ? "English (free for Thai nationals)" : "Thai"} />
-            <Row label="Pronoun" value={draft.gender === "female" ? "ฉัน / ค่ะ" : "ผม / ครับ"} />
-            <Row label="Level" value={draft.level ? `${LEVEL_SHORT[draft.level as Level]} — ${LEVEL_LABEL[draft.level as Level]}` : ""} />
-            <Row label="Mode" value={draft.ageMode === "kid" ? "Kid mode" : "Standard"} />
+            <Row label={L.learning} value={isThaiSpeaker ? "ภาษาอังกฤษ (ฟรี)" : "Thai"} />
+            {!isThaiSpeaker && (
+              <Row label="Pronoun" value={draft.gender === "female" ? "ฉัน / ค่ะ" : "ผม / ครับ"} />
+            )}
+            <Row label="Level" value={draft.level ? `${isThaiSpeaker ? L.levelShort[draft.level as Level] : LEVEL_SHORT[draft.level as Level]}` : ""} />
+            <Row label="Mode" value={draft.ageMode === "kid" ? L.kid : L.standard} />
           </div>
           <button onClick={finish} className="btn-primary mt-4 w-full">
-            Start learning →
+            {L.start} →
           </button>
-          <Link href="#" onClick={(e) => { e.preventDefault(); setStep("mode"); }} className="mt-2 block text-center text-xs text-stone-500">
-            Change something
-          </Link>
+          <button onClick={() => setStep("mode")} className="mt-2 block w-full text-center text-xs text-stone-500">
+            {L.changeSomething}
+          </button>
         </Card>
       )}
     </div>
   );
 }
+
+// --- i18n for onboarding ---
+
+const EN = {
+  levelTitle: "What's your Thai level?",
+  levelSub: "We'll start you on sentences that match. Change anytime in your account.",
+  levelShort: LEVEL_SHORT,
+  levelLabel: LEVEL_LABEL,
+  ageTitle: "Are you under 18?",
+  ageSub: "We'll hide adult-context examples in kid mode.",
+  ageKidTitle: "Under 18",
+  ageKidSub: "Kid mode — bigger UI, no bar/dating phrases",
+  ageAdultTitle: "18+",
+  ageAdultSub: "Standard mode",
+  nameTitle: "What should we call you?",
+  nameSub: "Optional — used in greetings only. You can skip.",
+  namePlaceholder: "Nickname",
+  back: "Back",
+  continue: "Continue",
+  skip: "Skip",
+  welcome: "Welcome",
+  doneSub: "You're all set. Your settings are saved on this device (and synced if you're signed in).",
+  learning: "Learning",
+  kid: "Kid mode",
+  standard: "Standard",
+  start: "Start learning",
+  changeSomething: "Change something",
+};
+
+const TH = {
+  levelTitle: "ภาษาอังกฤษของคุณอยู่ระดับไหน",
+  levelSub: "เราจะเริ่มให้คุณเรียนประโยคที่เหมาะกับระดับ เปลี่ยนได้ทุกเมื่อ",
+  levelShort: {
+    1: "เริ่มต้น",
+    2: "พื้นฐาน",
+    3: "ใช้ในชีวิตประจำวัน",
+    4: "สนทนาได้",
+    5: "คล่อง",
+  } as Record<Level, string>,
+  levelLabel: {
+    1: "ยังพูดไม่เป็นเลย",
+    2: "รู้คำทักทาย ขอบคุณ",
+    3: "สั่งอาหารและซื้อของได้",
+    4: "คุยเล่นง่าย ๆ ได้",
+    5: "พูดคล่อง อยากพัฒนาต่อ",
+  } as Record<Level, string>,
+  ageTitle: "อายุต่ำกว่า 18 ไหม",
+  ageSub: "เราจะซ่อนเนื้อหาสำหรับผู้ใหญ่ในโหมดเด็ก",
+  ageKidTitle: "ต่ำกว่า 18",
+  ageKidSub: "โหมดเด็ก — ตัวอักษรใหญ่ ไม่มีประโยคบาร์/นัดเจอ",
+  ageAdultTitle: "18 ปีขึ้นไป",
+  ageAdultSub: "โหมดมาตรฐาน",
+  nameTitle: "ให้เราเรียกคุณว่าอะไรดี",
+  nameSub: "ไม่ใส่ก็ได้ ใช้สำหรับทักทายเฉย ๆ",
+  namePlaceholder: "ชื่อเล่น",
+  back: "ย้อนกลับ",
+  continue: "ต่อไป",
+  skip: "ข้าม",
+  welcome: "ยินดีต้อนรับ",
+  doneSub: "ตั้งค่าเสร็จแล้ว ข้อมูลจะถูกบันทึกในเครื่องนี้ (และซิงค์ถ้าคุณเข้าสู่ระบบ)",
+  learning: "กำลังเรียน",
+  kid: "โหมดเด็ก",
+  standard: "มาตรฐาน",
+  start: "เริ่มเรียน",
+  changeSomething: "แก้ไขบางอย่าง",
+};
+
+// --- UI atoms ---
 
 function Card({
   title,
@@ -216,8 +292,8 @@ function Card({
 }) {
   return (
     <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
-      <h1 className="text-2xl font-bold text-stone-800 sm:text-3xl">{title}</h1>
-      {subtitle && <p className="mt-1 text-stone-600">{subtitle}</p>}
+      <h1 className="thai text-2xl font-bold text-stone-800 sm:text-3xl">{title}</h1>
+      {subtitle && <p className="thai mt-1 text-stone-600">{subtitle}</p>}
       <div className="mt-6">{children}</div>
     </div>
   );
@@ -244,8 +320,8 @@ function Choice({
       }`}
     >
       <div className="text-4xl">{emoji}</div>
-      <div className="mt-3 font-semibold text-stone-800">{title}</div>
-      <div className="mt-1 text-sm text-stone-500">{subtitle}</div>
+      <div className="thai mt-3 font-semibold text-stone-800">{title}</div>
+      <div className="thai mt-1 text-sm text-stone-500">{subtitle}</div>
     </button>
   );
 }
@@ -253,15 +329,15 @@ function Choice({
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between gap-4">
-      <span className="text-stone-500">{label}</span>
-      <span className="font-medium text-stone-800">{value}</span>
+      <span className="thai text-stone-500">{label}</span>
+      <span className="thai font-medium text-stone-800">{value}</span>
     </div>
   );
 }
 
-function ProgressBar({ step }: { step: Step }) {
-  const idx = STEP_ORDER.indexOf(step);
-  const pct = Math.round(((idx + 1) / STEP_ORDER.length) * 100);
+function ProgressBar({ step, stepOrder }: { step: Step; stepOrder: Step[] }) {
+  const idx = stepOrder.indexOf(step);
+  const pct = Math.round(((idx + 1) / stepOrder.length) * 100);
   return (
     <div className="h-1.5 w-full overflow-hidden rounded-full bg-stone-200">
       <div

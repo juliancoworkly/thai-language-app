@@ -37,22 +37,27 @@ export default function Landing() {
             memory games. Not cartoon owls. Not "the spider drinks milk."
             The phrases that get you through your day in Thailand.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <div className="mt-10 grid gap-3 sm:grid-cols-2">
             <Link
-              href={startHref}
-              className="rounded-full bg-mint-500 px-6 py-3 font-semibold text-ink-900 shadow-glow transition hover:scale-105 hover:bg-mint-400"
+              href={hasProfile ? startHref : "/onboarding"}
+              className="group rounded-2xl bg-mint-500 p-5 text-left text-ink-900 shadow-glow transition hover:scale-[1.02] hover:bg-mint-400"
             >
-              {hasProfile ? "Continue learning →" : "Start learning Thai →"}
+              <div className="text-sm font-semibold opacity-80">🇬🇧 → 🇹🇭</div>
+              <div className="mt-1 text-xl font-bold">I speak English</div>
+              <div className="text-sm">Learn Thai → ฿1,000/yr · 3-day trial</div>
             </Link>
             <Link
-              href={englishHref}
-              className="rounded-full border border-white/30 bg-white/5 px-6 py-3 font-semibold text-white backdrop-blur transition hover:bg-white/10"
+              href={hasProfile ? "/reverse" : "/onboarding"}
+              className="group rounded-2xl border border-white/30 bg-white/5 p-5 text-left text-white backdrop-blur transition hover:scale-[1.02] hover:bg-white/10"
             >
-              🇹🇭 ฟรีสำหรับคนไทย — Free for Thais
+              <div className="text-sm font-semibold opacity-80">🇹🇭 → 🇬🇧</div>
+              <div className="thai mt-1 text-xl font-bold">ฉันเป็นคนไทย</div>
+              <div className="thai text-sm">เรียนภาษาอังกฤษ · ฟรีตลอดไป</div>
             </Link>
           </div>
           <p className="mt-6 text-xs text-stone-400">
-            No card required. 3-day free trial of all features.
+            Pick one — the app locks to your chosen side. You get the language
+            you need, nothing you don't.
           </p>
         </div>
       </section>
