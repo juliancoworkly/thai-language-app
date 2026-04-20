@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CheckoutButton } from "@/components/CheckoutButton";
 import { getProfile, saveProfile } from "@/lib/storage";
 import { trialDaysLeft } from "@/lib/subscription";
 import type { Profile } from "@/lib/types";
@@ -86,15 +87,12 @@ export default function BillingPage() {
               <div className="text-xs text-stone-500">≈ $28 USD</div>
             </div>
           </div>
-          <button
-            disabled
-            className="mt-4 w-full cursor-not-allowed rounded-full bg-mint-500 px-6 py-3 font-semibold text-ink-900 opacity-60"
-          >
-            Pay with card (Paddle — coming soon)
-          </button>
+          <div className="mt-4">
+            <CheckoutButton />
+          </div>
           <p className="mt-2 text-center text-[11px] text-stone-500">
-            Card processing wires up via Paddle once your Paddle account is
-            connected.
+            Secure card processing by Paddle. Cancel anytime during trial —
+            no charge.
           </p>
         </div>
 
