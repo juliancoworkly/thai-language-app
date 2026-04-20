@@ -50,8 +50,8 @@ export default function Landing() {
 
             <p className="mx-auto mt-7 max-w-2xl text-lg text-stone-300 sm:text-xl">
               English — <span className="text-mint-300">free, forever</span>{" "}
-              for every Thai student. Thai — honestly priced for the rest of us.
-              Every membership puts more English into Thai classrooms.
+              for every Thai learner. Thai — honestly priced for the rest of us.
+              Our aim: every membership helps put more English into Thai classrooms.
             </p>
 
             {/* Dual CTA */}
@@ -102,11 +102,11 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Stat strip */}
+          {/* Commitments strip */}
           <div className="mx-auto mt-20 grid max-w-4xl gap-4 sm:grid-cols-3">
-            <Stat kicker="฿0" label="For every Thai learner, forever" />
-            <Stat kicker="100%" label="Of memberships fund free English" />
-            <Stat kicker="0" label="Ads · upsells · dark patterns" />
+            <Stat kicker="฿0" label="Our promise: English mode is free for Thai learners, forever" />
+            <Stat kicker="Our aim" label="Every membership helps fund free English for Thailand" />
+            <Stat kicker="No" label="Ads · upsells · dark patterns" />
           </div>
         </div>
 
@@ -145,7 +145,7 @@ export default function Landing() {
               learning apps cost more than a school lunch.
             </p>
             <p>
-              So we made a deal with ourselves.{" "}
+              So we made a promise to ourselves.{" "}
               <span className="font-semibold text-stone-900">
                 English mode stays free, forever, for every Thai learner.
               </span>{" "}
@@ -153,11 +153,11 @@ export default function Landing() {
             </p>
             <p>
               Thai learners (expats, travellers, curious humans) pay once a year.
-              That revenue keeps the Thai side alive — and funds free English
-              for every student who needs it.
+              That revenue keeps the Thai side alive — and our aim is to use
+              it to put free English in front of every Thai learner who wants it.
             </p>
             <p className="font-medium text-stone-900">
-              Buy a year of Thai. Teach a year of English. That's the trade.
+              Buy a year of Thai. Help fund English for Thailand. That's the idea.
             </p>
           </div>
         </div>
@@ -276,13 +276,13 @@ export default function Landing() {
               <div className="lg:col-span-7">
                 <span className="eyebrow-pill-light">For schools & teachers</span>
                 <h2 className="display-h2 mt-6">
-                  Coming to classrooms{" "}
+                  Our aim: classrooms{" "}
                   <span className="serif-i text-stone-500">across Thailand</span>.
                 </h2>
                 <p className="mt-5 max-w-xl text-lg text-stone-700">
-                  Our goal is simple — the number-one free English resource for
-                  Thai learners, from Bangkok to Betong. Teachers get class
-                  codes, shared progress, and curriculum-matched scenarios.
+                  We want Phuut Thai to be the first free English resource any
+                  Thai teacher reaches for — from Bangkok to Betong. If you
+                  teach, tell us what would help and we'll build it with you.
                 </p>
                 <div className="mt-7 flex flex-wrap gap-3">
                   <a
@@ -302,12 +302,12 @@ export default function Landing() {
 
               <div className="grid gap-3 lg:col-span-5">
                 <MiniStat
-                  kicker="Forever free"
-                  body="English mode costs Thai students nothing. Period."
+                  kicker="Our promise"
+                  body="English mode costs Thai learners nothing — forever."
                 />
                 <MiniStat
-                  kicker="Updated weekly"
-                  body="New scenarios and vocabulary ship every week."
+                  kicker="Our aim"
+                  body="Keep shipping — new scenarios, vocab, and games as fast as we can."
                 />
                 <MiniStat
                   kicker="Works offline"
@@ -358,7 +358,7 @@ export default function Landing() {
                 "Everything in the free side",
                 "All Thai content + future updates",
                 "Cloud sync across devices",
-                "Funds free English for Thai students",
+                "Helps fund free English for Thailand",
                 "Cancel any time during trial",
               ]}
               ctaText={hasProfile ? "Continue →" : "Start free trial →"}
