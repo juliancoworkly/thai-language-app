@@ -144,4 +144,43 @@ export const reverseEssentials: ReverseEssential[] = [
     descriptionEn: "Common everyday professions.",
     order: 15,
   },
+  {
+    id: "tenses",
+    title: "กาล",
+    subtitle: "Tenses",
+    emoji: "⏱️",
+    description:
+      "ปัจจุบัน อดีต อนาคต และ -ing ภาษาอังกฤษต้องเปลี่ยนรูปกริยา ไม่เหมือนไทย",
+    descriptionEn: "Present, past, future, and -ing. English changes the verb shape.",
+    order: 16,
+  },
+  {
+    id: "negation",
+    title: "ปฏิเสธ",
+    subtitle: "Negation",
+    emoji: "🚫",
+    description:
+      "not, don't, didn't, won't, can't, never ทุกแบบของการพูดปฏิเสธในภาษาอังกฤษ",
+    descriptionEn: "not, don't, didn't, won't, can't, never. All the ways English says no.",
+    order: 17,
+  },
+  {
+    id: "comparatives",
+    title: "เปรียบเทียบ",
+    subtitle: "Comparatives",
+    emoji: "📈",
+    description:
+      "bigger, biggest, more expensive ข้อกำหนดสำหรับเติม -er / -est หรือใช้ more / most",
+    descriptionEn: "bigger, biggest, more expensive. When to add -er / -est vs more / most.",
+    order: 18,
+  },
+  {
+    id: "plurals",
+    title: "พหูพจน์และกรรมสิทธิ์",
+    subtitle: "Plurals & possessives",
+    emoji: "👥",
+    description: "cat/cats, child/children, Dad's car ตัวเอสทั้งสองแบบต่างกันยังไง",
+    descriptionEn: "cat/cats, child/children, Dad's car. Two kinds of 's' that aren't the same.",
+    order: 19,
+  },
 ];

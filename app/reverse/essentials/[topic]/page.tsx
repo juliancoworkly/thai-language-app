@@ -16,6 +16,10 @@ import { GrammarContent } from "./content/grammar";
 import { SchoolContent } from "./content/school";
 import { ClothesContent } from "./content/clothes";
 import { JobsContent } from "./content/jobs";
+import { TensesContent } from "./content/tenses";
+import { NegationContent } from "./content/negation";
+import { ComparativesContent } from "./content/comparatives";
+import { PluralsContent } from "./content/plurals";
 
 export function generateStaticParams() {
   return reverseEssentials.map((e) => ({ topic: e.id }));
@@ -37,6 +41,10 @@ const CONTENT: Record<string, () => JSX.Element> = {
   school: SchoolContent,
   clothes: ClothesContent,
   jobs: JobsContent,
+  tenses: TensesContent,
+  negation: NegationContent,
+  comparatives: ComparativesContent,
+  plurals: PluralsContent,
 };
 
 export default function ReverseEssentialPage({

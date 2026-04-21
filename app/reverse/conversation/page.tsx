@@ -2,12 +2,26 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { conversations, type ConversationTurn } from "@/data/conversations";
+import {
+  conversations,
+  levelOf,
+  type ConversationTurn,
+} from "@/data/conversations";
 import { speakEnglish, speakThai } from "@/lib/tts";
+import type { Level } from "@/lib/types";
 
-// For Thai speakers learning English: prompt is in English, they pick the
-// correct Thai reply. We invert the "direction" of the same conversation
-// pairs so the same data powers both games.
+// For Thai speakers learning English: prompt is in English, they pick
+// the correct Thai reply. Level-gated so a beginner isn't buried.
+
+type Difficulty = "easy" | "medium" | "hard" | "mixed";
+
+const DIFFICULTY_RANGES: Record<Difficulty, [Level, Level]> = {
+  easy: [1, 2],
+  medium: [3, 3],
+  hard: [4, 5],
+  mixed: [1, 5],
+};
+
 const ENCOURAGEMENTS = ["🔥 เก่งมาก!", "🚀 ถูกต้อง!", "🎯 แม่นยำ!", "✨ สุดยอด!", "🎉 ใช่แล้ว!"];
 const COMMISERATIONS = ["😬 ลองใหม่", "💡 เกือบแล้ว", "📝 จำไว้นะ", "🤏 ใกล้แล้ว"];
 
@@ -20,41 +34,33 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-// For the reverse game: the prompt is the original Thai speaker's line translated
-// to English, and the reply is the Thai translation of the English response.
-// So we construct a "flipped turn":
-//   prompt (English) = the original Thai line's English gloss
-//   correct reply (Thai-script phonetic / English-pronunciation?) - we'll
-//   use the English text's natural Thai equivalent. For simplicity the
-//   correct answer is the English reply, shown as "how you'd say it in English".
-// Actually the user wants: guess the response in the OTHER language.
-// For Thai speakers learning English: hear/see an English prompt, pick the
-// correct English reply (from 4 options). So we just swap prompt/response:
-//   Prompt = something said to them in English (use our 'thai' field meaning
-//   as a translated English "they say")
-//   Correct reply = the English reply.
-// Simpler approach: use the same mechanic but flip: prompt is the English
-// sentence that would be said TO the Thai speaker, correct reply is the Thai
-// response. We derive "prompt in English" from the existing conversation turn's
-// thai→english translation? We only have the Thai sentence's meaning in
-// English via original turn.english. Let's present it as: Thai learner hears
-// the Thai-prompt-in-English form, then picks the Thai reply.
-// We'll present: show current.english as the prompt (what a Thai-speaker might
-// say in English), and pick from 4 Thai replies (other conversations' thai
-// fields). Keep it simple.
+function filterByDifficulty(d: Difficulty): ConversationTurn[] {
+  const [min, max] = DIFFICULTY_RANGES[d];
+  return conversations.filter((c) => {
+    const lvl = levelOf(c);
+    return lvl >= min && lvl <= max;
+  });
+}
 
-function pickOptions(correct: ConversationTurn): ConversationTurn[] {
-  const same = conversations.filter(
+function pickOptions(
+  correct: ConversationTurn,
+  pool: ConversationTurn[]
+): ConversationTurn[] {
+  const same = pool.filter(
     (c) => c.id !== correct.id && c.category === correct.category
   );
-  const others = conversations.filter(
+  const others = pool.filter(
     (c) => c.id !== correct.id && c.category !== correct.category
   );
-  const distractors = [...shuffle(same).slice(0, 2), ...shuffle(others).slice(0, 1)].slice(0, 3);
+  const distractors = [
+    ...shuffle(same).slice(0, 2),
+    ...shuffle(others).slice(0, 1),
+  ].slice(0, 3);
   return shuffle([correct, ...distractors]);
 }
 
 export default function ReverseConversationGame() {
+  const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [queue, setQueue] = useState<ConversationTurn[]>([]);
   const [i, setI] = useState(0);
   const [lives, setLives] = useState(3);
@@ -65,12 +71,22 @@ export default function ReverseConversationGame() {
   const [reaction, setReaction] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
 
+  const pool = useMemo(
+    () => (difficulty ? filterByDifficulty(difficulty) : []),
+    [difficulty]
+  );
+
   useEffect(() => {
-    setQueue(shuffle(conversations));
-  }, []);
+    if (difficulty) setQueue(shuffle(pool));
+  }, [difficulty, pool]);
+
+  if (!difficulty) return <DifficultyPicker onPick={setDifficulty} />;
 
   const current = queue[i];
-  const options = useMemo(() => (current ? pickOptions(current) : []), [current]);
+  const options = useMemo(
+    () => (current ? pickOptions(current, pool) : []),
+    [current, pool]
+  );
 
   if (!current) return <div className="card text-center">Loading…</div>;
 
@@ -83,13 +99,17 @@ export default function ReverseConversationGame() {
       const ns = streak + 1;
       setStreak(ns);
       if (ns > best) setBest(ns);
-      setReaction(ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]);
+      setReaction(
+        ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]
+      );
       speakThai(c.thai);
     } else {
       const remaining = lives - 1;
       setLives(remaining);
       setStreak(0);
-      setReaction(COMMISERATIONS[Math.floor(Math.random() * COMMISERATIONS.length)]);
+      setReaction(
+        COMMISERATIONS[Math.floor(Math.random() * COMMISERATIONS.length)]
+      );
       if (remaining <= 0) setTimeout(() => setGameOver(true), 900);
     }
   }
@@ -98,13 +118,13 @@ export default function ReverseConversationGame() {
     setPicked(null);
     setReaction(null);
     if (i + 1 >= queue.length) {
-      setQueue(shuffle(conversations));
+      setQueue(shuffle(pool));
       setI(0);
     } else setI(i + 1);
   }
 
   function restart() {
-    setQueue(shuffle(conversations));
+    setQueue(shuffle(pool));
     setI(0);
     setLives(3);
     setScore(0);
@@ -118,14 +138,17 @@ export default function ReverseConversationGame() {
     return (
       <div className="card space-y-4 text-center">
         <div className="text-6xl">💀</div>
-        <h1 className="text-2xl font-bold">หัวใจหมดแล้ว!</h1>
-        <div className="text-stone-600">
+        <h1 className="thai text-2xl font-bold">หัวใจหมดแล้ว!</h1>
+        <div className="thai text-stone-600">
           คะแนน: <strong className="text-2xl text-mint-700">{score}</strong>
         </div>
-        <div className="text-sm text-stone-500">สถิติต่อเนื่อง: {best}</div>
+        <div className="thai text-sm text-stone-500">สถิติต่อเนื่อง: {best}</div>
         <div className="flex justify-center gap-2 pt-2">
-          <button onClick={restart} className="btn-primary">🔄 เล่นใหม่</button>
-          <Link href="/reverse" className="btn-secondary">กลับ</Link>
+          <button onClick={restart} className="btn-primary thai">🔄 เล่นใหม่</button>
+          <button onClick={() => setDifficulty(null)} className="btn-secondary thai">
+            เปลี่ยนระดับ
+          </button>
+          <Link href="/reverse" className="btn-secondary thai">กลับ</Link>
         </div>
       </div>
     );
@@ -134,8 +157,15 @@ export default function ReverseConversationGame() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <Link href="/reverse" className="btn-ghost">← กลับ / Back</Link>
+        <Link href="/reverse" className="btn-ghost thai">← กลับ</Link>
         <div className="flex items-center gap-3 text-sm">
+          <button
+            onClick={() => setDifficulty(null)}
+            className="thai rounded-full border border-stone-300 bg-white px-3 py-1 text-xs font-semibold text-stone-700 hover:bg-stone-50"
+            title="เปลี่ยนระดับ"
+          >
+            {difficultyLabel(difficulty)}
+          </button>
           <span className="text-xl">
             {"❤️".repeat(lives)}
             <span className="opacity-20">{"🖤".repeat(3 - lives)}</span>
@@ -152,16 +182,16 @@ export default function ReverseConversationGame() {
       </div>
 
       <div>
-        <h1 className="text-2xl font-bold text-stone-800">💬 เกมสนทนา Conversation</h1>
-        <p className="text-stone-600">
-          คนพูดภาษาอังกฤษนี้กับคุณ — ควรตอบเป็นภาษาไทยอย่างไร
+        <h1 className="thai text-2xl font-bold text-stone-800">💬 เกมสนทนา</h1>
+        <p className="thai text-stone-600">
+          คนพูดภาษาอังกฤษกับคุณ ตอบเป็นภาษาไทยให้ถูก
         </p>
       </div>
 
       <div className="card space-y-4">
         <div className="flex items-start justify-between">
-          <div className="text-xs uppercase tracking-wide text-stone-500">
-            {current.emoji} เขาพูดว่า / They say
+          <div className="thai text-xs uppercase tracking-wide text-stone-500">
+            {current.emoji} เขาพูดว่า
           </div>
           <button
             onClick={() => speakEnglish(current.english)}
@@ -173,11 +203,13 @@ export default function ReverseConversationGame() {
         </div>
 
         <div className="rounded-2xl bg-stone-50 p-5 text-center">
-          <div className="text-3xl font-bold text-stone-800">{current.english}</div>
+          <div className="text-3xl font-bold text-stone-800">
+            {current.english}
+          </div>
         </div>
 
-        <div className="text-center text-sm font-medium text-stone-700">
-          คำตอบที่ถูก ↓
+        <div className="thai text-center text-sm font-medium text-stone-700">
+          เลือกคำตอบที่ถูก ↓
         </div>
 
         <div className="grid gap-2">
@@ -210,9 +242,96 @@ export default function ReverseConversationGame() {
         {picked && (
           <div className="space-y-3 text-center">
             <div className="text-lg font-semibold">{reaction}</div>
-            <button onClick={next} className="btn-primary">ต่อไป / Next →</button>
+            <button onClick={next} className="btn-primary thai">
+              ต่อไป →
+            </button>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function difficultyLabel(d: Difficulty): string {
+  switch (d) {
+    case "easy":
+      return "ง่าย · L1-2";
+    case "medium":
+      return "กลาง · L3";
+    case "hard":
+      return "ยาก · L4-5";
+    case "mixed":
+      return "รวม";
+  }
+}
+
+function DifficultyPicker({
+  onPick,
+}: {
+  onPick: (d: Difficulty) => void;
+}) {
+  const options: {
+    id: Difficulty;
+    label: string;
+    desc: string;
+    count: number;
+    emoji: string;
+  }[] = (["easy", "medium", "hard", "mixed"] as Difficulty[]).map((d) => ({
+    id: d,
+    label:
+      d === "easy" ? "ง่าย" : d === "medium" ? "กลาง" : d === "hard" ? "ยาก" : "รวม",
+    desc:
+      d === "easy"
+        ? "ทักทาย กิน พื้นฐาน · ระดับ 1-2"
+        : d === "medium"
+        ? "ทิศทาง บริการ แท็กซี่ · ระดับ 3"
+        : d === "hard"
+        ? "ภาษาคล่อง · ระดับ 4-5"
+        : "ทุกระดับปนกัน · 1-5",
+    count: filterByDifficulty(d).length,
+    emoji:
+      d === "easy" ? "🌱" : d === "medium" ? "🌿" : d === "hard" ? "🌳" : "🎲",
+  }));
+
+  return (
+    <div className="space-y-6 py-4">
+      <Link href="/reverse" className="thai btn-ghost inline-flex">
+        ← กลับ
+      </Link>
+
+      <div>
+        <span className="eyebrow-pill-light thai">เกมสนทนา</span>
+        <h1 className="thai display-h2 mt-4 text-stone-900">
+          เลือก{" "}
+          <span className="serif-i text-mint-700">ระดับ</span> ของคุณ
+        </h1>
+        <p className="thai mt-3 max-w-xl text-stone-600">
+          3 หัวใจ ตอบถูกต่อเนื่องได้แต้มเพิ่ม เริ่มจากระดับที่สบายใจ
+          เปลี่ยนได้ทุกเมื่อระหว่างเล่น
+        </p>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        {options.map((o) => (
+          <button
+            key={o.id}
+            onClick={() => onPick(o.id)}
+            className="group relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-mint-300 hover:shadow-md"
+          >
+            <div className="flex items-start justify-between">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-mint-50 text-2xl">
+                {o.emoji}
+              </div>
+              <span className="thai rounded-full border border-mint-500/25 bg-mint-50 px-2.5 py-1 text-[11px] font-mono text-mint-700">
+                {o.count} ข้อ
+              </span>
+            </div>
+            <div className="thai mt-4 text-xl font-bold text-stone-900">
+              {o.label}
+            </div>
+            <div className="thai mt-1 text-sm text-stone-500">{o.desc}</div>
+          </button>
+        ))}
       </div>
     </div>
   );

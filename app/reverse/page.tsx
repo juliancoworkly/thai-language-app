@@ -1,11 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { reverseCategories, reverseSentences } from "@/data/reverse";
 import { reverseEssentials } from "@/data/reverse-essentials";
+import { load, type Store } from "@/lib/storage";
 
 export default function ReverseHome() {
+  const [store, setStore] = useState<Store | null>(null);
+  useEffect(() => {
+    setStore(load());
+  }, []);
+
   const counts = useMemo(() => {
     const c: Record<string, number> = {};
     for (const cat of reverseCategories) c[cat.id] = 0;
@@ -16,6 +22,10 @@ export default function ReverseHome() {
   const total = reverseSentences.length;
   const visibleCategories = reverseCategories.filter((c) => counts[c.id] > 0);
   const topEssentials = reverseEssentials.slice().sort((a, b) => a.order - b.order).slice(0, 4);
+  const totalEssentials = reverseEssentials.length;
+  const isNewLearner = store
+    ? Object.keys(store.cards).length === 0 && store.seenSentences.length === 0
+    : true;
 
   return (
     <div className="space-y-12 py-4">
@@ -46,6 +56,72 @@ export default function ReverseHome() {
         </div>
       </section>
 
+      {/* START HERE NUDGE ========================================= */}
+      {isNewLearner && (
+        <section>
+          <div className="thai text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+            เริ่มที่นี่
+          </div>
+          <h2 className="thai mt-2 text-xl font-black tracking-tight text-stone-900 sm:text-2xl">
+            สองหน้าสำหรับเริ่มต้น
+          </h2>
+          <p className="thai mt-1 text-sm text-stone-600">
+            เริ่มจากตัวอักษรก่อน แล้วค่อยไปที่คำทักทายพื้นฐาน
+            ช้าๆ แต่แน่นอน
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <Link
+              href="/reverse/essentials/alphabet"
+              className="group rounded-2xl border border-mint-500/30 bg-mint-50 p-5 transition hover:border-mint-500 hover:bg-mint-100"
+            >
+              <div className="flex items-center gap-3">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl shadow-sm">
+                  🔤
+                </div>
+                <div>
+                  <div className="thai text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+                    ขั้นที่ 1
+                  </div>
+                  <div className="font-semibold text-stone-900">
+                    A B C
+                    <span className="thai ml-2 text-sm text-mint-700">
+                      ตัวอักษร
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <p className="thai mt-3 text-sm text-stone-700">
+                26 ตัวอักษรภาษาอังกฤษ รู้ก่อน อ่านได้ก่อน
+              </p>
+            </Link>
+            <Link
+              href="/reverse/essentials/greetings"
+              className="group rounded-2xl border border-stone-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-mint-300 hover:shadow-sm"
+            >
+              <div className="flex items-center gap-3">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-mint-50 text-2xl">
+                  👋
+                </div>
+                <div>
+                  <div className="thai text-[11px] font-mono uppercase tracking-[0.2em] text-stone-500">
+                    ขั้นที่ 2
+                  </div>
+                  <div className="font-semibold text-stone-900">
+                    Greetings
+                    <span className="thai ml-2 text-sm text-mint-700">
+                      ทักทาย
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <p className="thai mt-3 text-sm text-stone-600">
+                Hello, Thank you, Sorry คำทักทายและคำสุภาพที่ใช้ทุกวัน
+              </p>
+            </Link>
+          </div>
+        </section>
+      )}
+
       {/* ESSENTIALS ============================================== */}
       <section>
         <div className="flex items-end justify-between gap-4">
@@ -63,7 +139,7 @@ export default function ReverseHome() {
             href="/reverse/essentials"
             className="thai hidden text-sm font-semibold text-mint-700 hover:text-mint-800 sm:inline"
           >
-            ดูทั้งหมด 11 หน้า →
+            ดูทั้งหมด {totalEssentials} หน้า →
           </Link>
         </div>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -87,7 +163,7 @@ export default function ReverseHome() {
           href="/reverse/essentials"
           className="thai mt-4 inline-flex text-sm font-semibold text-mint-700 hover:text-mint-800 sm:hidden"
         >
-          ดูทั้งหมด 11 หน้า →
+          ดูทั้งหมด {totalEssentials} หน้า →
         </Link>
       </section>
 

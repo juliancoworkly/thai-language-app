@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useMemo, useState } from "react";
 import { reverseCategories, reverseSentences } from "@/data/reverse";
+import { reverseScripts } from "@/data/reverse-scripts";
 import { speakEnglish, speakThai } from "@/lib/tts";
 
 export default function LearnClient({ categoryId }: { categoryId: string }) {
@@ -114,6 +115,39 @@ export default function LearnClient({ categoryId }: { categoryId: string }) {
           </Link>
         )}
       </div>
+
+      <CategoryScripts categoryId={categoryId} />
     </div>
+  );
+}
+
+function CategoryScripts({ categoryId }: { categoryId: string }) {
+  const matching = reverseScripts.filter((s) => s.category === categoryId);
+  if (matching.length === 0) return null;
+
+  return (
+    <section className="rounded-2xl border border-mint-500/30 bg-mint-50 p-5">
+      <div className="thai text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+        บทสนทนาเต็มๆ
+      </div>
+      <h2 className="thai mt-2 text-xl font-black tracking-tight text-stone-900">
+        ลองอ่านบทสนทนาจริง
+      </h2>
+      <p className="thai mt-2 text-sm text-stone-700">
+        บทสนทนาทั้งหมดมีคำอ่านภาษาไทยและความหมายครบ
+        จะเห็นว่าประโยคเรียงต่อกันยังไงในสถานการณ์จริง
+      </p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {matching.map((s) => (
+          <Link
+            key={s.id}
+            href={`/reverse/scripts/${s.id}`}
+            className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-800 transition hover:border-mint-400"
+          >
+            {s.emoji} {s.title} →
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
