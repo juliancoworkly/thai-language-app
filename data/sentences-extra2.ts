@@ -82,4 +82,32 @@ export const extraSentences2: Sentence[] = [
   { id: "g-x2", scenario: "greetings", level: 2, emoji: "🌙", thai: "ราตรีสวัสดิ์", phonetic: "raa-dtrii sà-wàt", meaning: "Good night (formal)", words: [] },
   { id: "g-x3", scenario: "greetings", level: 2, emoji: "👋", thai: "ลาก่อน", phonetic: "laa gɔ̀ɔn", meaning: "Goodbye", words: [] },
   { id: "g-x4", scenario: "greetings", level: 3, emoji: "🤗", thai: "นานๆเจอกันที", phonetic: "naan-naan jəə gan thii", meaning: "Long time no see", words: [{ wordId: "joe" }, { wordId: "gan" }] },
+
+  // ============== LEVEL 5 — GOING FOR FLUENCY ==============
+  // Opinion, nuance, conditionals, and socially fluent moves
+  { id: "l5-s1", scenario: "smalltalk", level: 5, emoji: "💭", thai: "ถ้าถามผมนะ ผมว่าน่าลองดู", phonetic: "thâa thǎam phǒm ná, phǒm wâa nâa lɔɔng duu", meaning: "If you ask me, I'd say it's worth trying (male)", words: [{ wordId: "phom" }, { wordId: "na" }] },
+  { id: "l5-s2", scenario: "smalltalk", level: 5, emoji: "🤷", thai: "ก็แล้วแต่สถานการณ์นะ", phonetic: "gɔ̂ɔ lɛ́ɛo-tɛ̀ɛ sà-thǎa-ná-gaan ná", meaning: "It depends on the situation", words: [{ wordId: "gaw" }, { wordId: "laew" }, { wordId: "na" }] },
+  { id: "l5-s3", scenario: "smalltalk", level: 5, emoji: "😬", thai: "พูดตรงๆ นะ มันพูดง่ายกว่าทำ", phonetic: "phûut dtrong-dtrong ná, man phûut ngâai gwàa tham", meaning: "Honestly, that's easier said than done", words: [{ wordId: "na" }, { wordId: "man" }] },
+  { id: "l5-s4", scenario: "smalltalk", level: 5, emoji: "🎯", thai: "ช่วยไม่ได้จริงๆ ครับ ขอโทษด้วย", phonetic: "chûai mâi dâai jing-jing khráp, khɔ̌ɔ-thôot dûai", meaning: "I really can't help, sorry (male)", words: [{ wordId: "mai-neg" }, { wordId: "khrap" }, { wordId: "khothot" }, { wordId: "duai" }] },
+  { id: "l5-s5", scenario: "smalltalk", level: 5, emoji: "💬", thai: "ผมไม่ได้ตั้งใจจะหมายความอย่างนั้น", phonetic: "phǒm mâi dâai dtâng-jai jà mǎai-khwaam yàang-nán", meaning: "I didn't mean it that way (male)", words: [{ wordId: "phom" }, { wordId: "mai-neg" }] },
+  { id: "l5-s6", scenario: "smalltalk", level: 5, emoji: "🤔", thai: "มองอีกมุมก็น่าสนใจนะ", phonetic: "mɔɔng ìik mum gɔ̂ɔ nâa-sǒn-jai ná", meaning: "Looking at it from another angle, it's actually interesting", words: [{ wordId: "gaw" }, { wordId: "na" }] },
+
+  { id: "l5-f1", scenario: "food", level: 5, emoji: "🍽️", thai: "ปกติไม่กินเผ็ดแต่จานนี้โอเคครับ", phonetic: "bpà-gà-dtì mâi gin phèt, dtɛ̀ɛ jaan níi oo-kee khráp", meaning: "I don't normally eat spicy, but this dish is fine (male)", words: [{ wordId: "mai-neg" }, { wordId: "phet" }, { wordId: "khrap" }] },
+  { id: "l5-f2", scenario: "food", level: 5, emoji: "🌶️", thai: "เผ็ดกำลังดี ไม่มากไป ไม่น้อยไป", phonetic: "phèt gam-lang dii, mâi mâak bpai, mâi nɔ́i bpai", meaning: "The spice is just right, not too much, not too little", words: [{ wordId: "phet" }, { wordId: "dii" }, { wordId: "mai-neg" }] },
+  { id: "l5-f3", scenario: "food", level: 5, emoji: "🙏", thai: "ขอบคุณสำหรับคำแนะนำนะครับ", phonetic: "khɔ̀ɔp-khun sǎm-ràp kham-nɛ́-nam ná khráp", meaning: "Thank you for the recommendation (male)", words: [{ wordId: "khopkhun" }, { wordId: "na" }, { wordId: "khrap" }] },
+
+  { id: "l5-sh1", scenario: "shopping", level: 5, emoji: "🤝", thai: "ถ้าลดอีกร้อยหนึ่งจะรับเลย", phonetic: "thâa lót ìik rɔ́ɔi nɯ̀ng, jà ráp ləəi", meaning: "If you knock off another hundred I'll take it", words: [{ wordId: "roi" }, { wordId: "neung" }, { wordId: "loei" }] },
+  { id: "l5-sh2", scenario: "shopping", level: 5, emoji: "💭", thai: "ขอคิดดูก่อนนะครับ เดี๋ยวกลับมา", phonetic: "khɔ̌ɔ khít duu gɔ̀ɔn ná khráp, dǐao glàp maa", meaning: "Let me think about it, I'll come back (male)", words: [{ wordId: "na" }, { wordId: "khrap" }] },
+  { id: "l5-sh3", scenario: "shopping", level: 5, emoji: "🎁", thai: "ช่วยห่อเป็นของขวัญได้ไหมครับ", phonetic: "chûai hɔ̀ɔ bpen khɔ̌ɔng-khwǎn dâai mǎi khráp", meaning: "Could you wrap it as a gift please? (male)", words: [{ wordId: "mai-q" }, { wordId: "khrap" }] },
+
+  { id: "l5-t1", scenario: "taxi", level: 5, emoji: "🛣️", thai: "ถ้าทางนี้รถติดเกินไปเปลี่ยนทางได้นะครับ", phonetic: "thâa thaang-níi rót-dtìt gəən bpai, bplìian thaang dâai ná khráp", meaning: "If the traffic is too heavy this way, you can take another route (male)", words: [{ wordId: "na" }, { wordId: "khrap" }] },
+  { id: "l5-t2", scenario: "taxi", level: 5, emoji: "🕐", thai: "ขอจอดรอประมาณสิบนาทีได้ไหมครับ", phonetic: "khɔ̌ɔ jɔ̀ɔt rɔɔ bprà-maan sìp naa-thii dâai mǎi khráp", meaning: "Could you wait about 10 minutes please? (male)", words: [{ wordId: "sip" }, { wordId: "mai-q" }, { wordId: "khrap" }] },
+
+  { id: "l5-e1", scenario: "emergency", level: 5, emoji: "🆘", thai: "ขอโทษครับ มีเหตุฉุกเฉิน ต้องรีบไปโรงพยาบาล", phonetic: "khɔ̌ɔ-thôot khráp, mii hèet chùk-chə̌ən, dtɔ̂ng rîip bpai roong-phá-yaa-baan", meaning: "Sorry, there's an emergency, I need to rush to hospital (male)", words: [{ wordId: "khothot" }, { wordId: "khrap" }] },
+
+  { id: "l5-so1", scenario: "smalltalk", level: 5, emoji: "🌏", thai: "อยู่เมืองไทยมานานก็รู้สึกเหมือนบ้าน", phonetic: "yùu mɯang-thai maa naan, gɔ̂ɔ rúu-sɯ̀k mɯ̌an bâan", meaning: "I've been in Thailand so long, it feels like home", words: [{ wordId: "gaw" }] },
+  { id: "l5-so2", scenario: "smalltalk", level: 5, emoji: "😂", thai: "ยังไม่ถึงขั้นคล่อง แต่พอเอาตัวรอดได้", phonetic: "yang mâi thɯ̌ng khán khlɔ̂ng, dtɛ̀ɛ phɔɔ ao dtua rɔ̂ɔt dâai", meaning: "Not fluent yet, but enough to get by", words: [{ wordId: "mai-neg" }] },
+  { id: "l5-so3", scenario: "smalltalk", level: 5, emoji: "👨‍👩‍👧", thai: "ว่าจะพาครอบครัวกลับมาเที่ยวอีก", phonetic: "wâa jà phaa khrɔ̂ɔp-khrua glàp maa thîao ìik", meaning: "Thinking of bringing the family back for another trip", words: [] },
+  { id: "l5-so4", scenario: "smalltalk", level: 5, emoji: "🙇", thai: "ขอบคุณนะครับ ซึ้งใจจริงๆ", phonetic: "khɔ̀ɔp-khun ná khráp, sɯ̂ng-jai jing-jing", meaning: "Thank you, I truly appreciate it (male)", words: [{ wordId: "khopkhun" }, { wordId: "na" }, { wordId: "khrap" }] },
+  { id: "l5-so5", scenario: "smalltalk", level: 5, emoji: "⏳", thai: "ถ้ามีอะไรให้ช่วยบอกได้เลยนะ", phonetic: "thâa mii à-rai hâi chûai, bɔ̀ɔk dâai ləəi ná", meaning: "If there's anything I can help with, just say", words: [{ wordId: "loei" }, { wordId: "na" }] },
 ];

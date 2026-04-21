@@ -107,11 +107,10 @@ export function Header() {
         <div className="flex items-center gap-1 text-sm">
           {inReverse ? (
             <>
-              <Link href="/reverse/words" className="btn-ghost">คลังประโยค</Link>
-              <Link href="/reverse/flashcards" className="btn-ghost">บัตรคำ</Link>
-              <Link href="/reverse/conversation" className="btn-ghost">สนทนา</Link>
-              <Link href="/reverse/matching" className="btn-ghost">จับคู่</Link>
-              <Link href="/reverse/builder" className="btn-ghost">เรียงประโยค</Link>
+              <Link href="/reverse/essentials" className="btn-ghost thai">พื้นฐาน</Link>
+              <Link href="/reverse/words" className="btn-ghost thai">คลังประโยค</Link>
+              <Link href="/reverse/conversation" className="btn-ghost thai">สนทนา</Link>
+              <Link href="/reverse" className="btn-ghost">🎮</Link>
               {authLink}
               <Link href="/" className="btn-ghost">🏠</Link>
             </>

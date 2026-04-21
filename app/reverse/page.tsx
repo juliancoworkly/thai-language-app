@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { reverseCategories, reverseSentences } from "@/data/reverse";
+import { reverseEssentials } from "@/data/reverse-essentials";
 
 export default function ReverseHome() {
   const counts = useMemo(() => {
@@ -14,6 +15,7 @@ export default function ReverseHome() {
 
   const total = reverseSentences.length;
   const visibleCategories = reverseCategories.filter((c) => counts[c.id] > 0);
+  const topEssentials = reverseEssentials.slice().sort((a, b) => a.order - b.order).slice(0, 4);
 
   return (
     <div className="space-y-12 py-4">
@@ -42,6 +44,51 @@ export default function ReverseHome() {
           <GhostLink href="/reverse/builder">🧩 เรียงประโยค</GhostLink>
           <GhostLink href="/reverse/words">📚 คลังประโยค ({total})</GhostLink>
         </div>
+      </section>
+
+      {/* ESSENTIALS ============================================== */}
+      <section>
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <span className="section-label text-mint-700 thai">
+              <span className="h-1.5 w-1.5 rounded-full bg-mint-500" />
+              พื้นฐาน · Essentials
+            </span>
+            <h2 className="thai mt-2 text-2xl font-black tracking-tight text-stone-900 sm:text-3xl">
+              สำหรับเด็กและ{" "}
+              <span className="serif-i text-mint-700">ผู้เริ่มต้น</span>
+            </h2>
+          </div>
+          <Link
+            href="/reverse/essentials"
+            className="thai hidden text-sm font-semibold text-mint-700 hover:text-mint-800 sm:inline"
+          >
+            ดูทั้งหมด 11 หน้า →
+          </Link>
+        </div>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {topEssentials.map((e) => (
+            <Link
+              key={e.id}
+              href={`/reverse/essentials/${e.id}`}
+              className="group rounded-2xl border border-stone-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-mint-300 hover:shadow-sm"
+            >
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-mint-50 text-xl">
+                {e.emoji}
+              </div>
+              <div className="mt-3 font-semibold text-stone-900">
+                {e.subtitle}
+              </div>
+              <div className="thai mt-0.5 text-xs text-mint-700">{e.title}</div>
+            </Link>
+          ))}
+        </div>
+        <Link
+          href="/reverse/essentials"
+          className="thai mt-4 inline-flex text-sm font-semibold text-mint-700 hover:text-mint-800 sm:hidden"
+        >
+          ดูทั้งหมด 11 หน้า →
+        </Link>
       </section>
 
       {/* CATEGORIES =============================================== */}
