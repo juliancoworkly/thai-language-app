@@ -17,6 +17,34 @@ const SCENARIOS = [
   "Tell a joke",
 ];
 
+const GAMES = [
+  {
+    emoji: "💬",
+    title: "Conversation",
+    body: "Someone says something in Thai, you pick the right English reply. 3 lives, streak bonuses. The most fun way in.",
+  },
+  {
+    emoji: "🧩",
+    title: "Sentence Builder",
+    body: "Scrambled word chips, drag them into order. Shows you how Thai sentences actually assemble.",
+  },
+  {
+    emoji: "🪞",
+    title: "Matching Pairs",
+    body: "Classic flip-card memory. Thai to English. Quick visual drilling for new vocabulary.",
+  },
+  {
+    emoji: "🃏",
+    title: "Flashcards",
+    body: "See a sentence, recall the meaning. Rate how well you knew it. Spaced repetition queues it back at the right moment.",
+  },
+  {
+    emoji: "🎵",
+    title: "Tone Trainer",
+    body: "Hear a word, pick the tone. Thai has five. Get them wrong, nobody understands. This drills them in.",
+  },
+];
+
 export default function Landing() {
   const [hasProfile, setHasProfile] = useState(false);
 
@@ -28,20 +56,15 @@ export default function Landing() {
   const startHref = hasProfile ? "/thai" : "/onboarding";
 
   return (
-    <div className="-mx-4 -my-6">
+    <div className="full-bleed -my-6">
       {/* HERO ====================================================== */}
       <section className="grain relative overflow-hidden bg-ink-900 text-white">
         <div className="glow-radial pointer-events-none absolute inset-0" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-mint-500/40 to-transparent" />
 
-        <div className="relative mx-auto max-w-6xl px-6 pt-20 pb-16 sm:pt-24 sm:pb-20">
+        <div className="relative mx-auto max-w-6xl px-6 pt-24 pb-16 sm:pt-28 sm:pb-20">
           <div className="flex flex-col items-center text-center">
-            <span className="section-label">
-              <span className="h-1.5 w-1.5 rounded-full bg-mint-400 shadow-[0_0_10px_2px_rgba(52,211,153,.6)]" />
-              By Cultra Lab Limited Partnership · Made in Phuket
-            </span>
-
-            <h1 className="display-h1 mt-7 max-w-5xl text-balance">
+            <h1 className="display-h1 mt-4 max-w-5xl text-balance">
               Two languages.{" "}
               <span className="serif-i gradient-mint-text">One bridge.</span>
               <br className="hidden sm:block" />
@@ -49,9 +72,11 @@ export default function Landing() {
             </h1>
 
             <p className="mx-auto mt-7 max-w-2xl text-lg text-stone-300 sm:text-xl">
-              English — <span className="text-mint-300">free, forever</span>{" "}
-              for every Thai learner. Thai — honestly priced for the rest of us.
-              Our aim: every membership helps put more English into Thai classrooms.
+              English is{" "}
+              <span className="text-mint-300">free, forever</span> for every
+              Thai learner. Thai is honestly priced for the rest of us. Our
+              aim: every membership helps put more English into Thai
+              classrooms.
             </p>
 
             {/* Dual CTA */}
@@ -61,7 +86,7 @@ export default function Landing() {
                 className="group relative overflow-hidden rounded-2xl bg-mint-500 p-5 text-left text-ink-900 shadow-glow transition hover:scale-[1.015] hover:bg-mint-400"
               >
                 <div className="text-[11px] font-mono uppercase tracking-[0.2em] opacity-70">
-                  🇬🇧 → 🇹🇭 · I speak English
+                  🇬🇧 · I speak English
                 </div>
                 <div className="mt-2 text-xl font-bold">Learn Thai that works</div>
                 <div className="text-sm opacity-90">
@@ -80,7 +105,7 @@ export default function Landing() {
                 className="group relative overflow-hidden rounded-2xl border border-white/20 bg-white/5 p-5 text-left text-white backdrop-blur transition hover:scale-[1.015] hover:border-white/40 hover:bg-white/10"
               >
                 <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-300">
-                  🇹🇭 → 🇬🇧 · ฉันเป็นคนไทย
+                  🇹🇭 · ฉันเป็นคนไทย
                 </div>
                 <div className="thai mt-2 text-xl font-bold">
                   เรียนภาษาอังกฤษฟรี
@@ -106,7 +131,7 @@ export default function Landing() {
           <div className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-3">
             <Stat kicker="฿0" label="Our promise: English mode is free for Thai learners, forever" />
             <Stat kicker="Our aim" label="Every membership helps fund free English for Thailand" />
-            <Stat kicker="No" label="Ads · upsells · dark patterns" />
+            <Stat kicker="No" label="Ads, upsells, or dark patterns" />
           </div>
         </div>
 
@@ -128,56 +153,63 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* MANIFESTO ================================================ */}
+      {/* OUR STORY ================================================ */}
       <section className="relative bg-stone-50 px-6 py-20 text-stone-900">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <span className="eyebrow-pill-light">Our mission</span>
+            <span className="eyebrow-pill-light">Our story</span>
             <h2 className="display-h2 mt-6">
-              English should be{" "}
-              <span className="serif-i text-stone-500">free</span> in Thailand.
+              A British and Thai{" "}
+              <span className="serif-i text-stone-500">couple</span>. Two
+              languages. One idea.
             </h2>
           </div>
           <div className="space-y-5 text-lg text-stone-700 lg:col-span-7">
             <p>
-              In Thailand, a kid's future often hinges on one thing — English.
-              Better jobs, better universities, more options. But the best
-              learning apps cost more than a school lunch.
+              We started trying to learn each other&apos;s languages. We
+              quickly noticed that a lot of apps don&apos;t really teach the
+              kind of language people use in everyday life. They felt built to
+              keep you subscribed, not to help you build real confidence in
+              speaking.
             </p>
             <p>
-              So we made a promise to ourselves.{" "}
-              <span className="font-semibold text-stone-900">
-                English mode stays free, forever, for every Thai learner.
-              </span>{" "}
-              No ads. No upsells. No account required.
-            </p>
-            <p>
-              Thai learners (expats, travellers, curious humans) pay once a year.
-              That revenue keeps the Thai side alive — and our aim is to use
-              it to put free English in front of every Thai learner who wants it.
+              At the same time, most of our own family members in Thailand
+              don&apos;t speak English, and they can&apos;t afford classes,
+              tutors, or expensive language apps. That stayed with us. It made
+              us realise how unfair language learning can be. For some people,
+              English opens up more confidence, more opportunities, and a
+              better future. For others, that access just isn&apos;t there.
             </p>
             <p className="font-medium text-stone-900">
-              Buy a year of Thai. Help fund English for Thailand. That's the idea.
+              So we built thaiandenglish.com. A place where tourists and
+              expats can learn real, conversational Thai at an affordable
+              price, while helping support free English learning for Thai
+              people.
+            </p>
+            <p>
+              Our hope is that, over time, this grows into something that
+              helps children in local schools, and adults who want to improve
+              their English but never had the same opportunities.
             </p>
           </div>
         </div>
       </section>
 
-      {/* WHAT'S DIFFERENT ========================================== */}
+      {/* MORE THAN FLASHCARDS ====================================== */}
       <section className="grain relative overflow-hidden bg-ink-900 px-6 py-20 text-white">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
             <div>
-              <span className="section-label">02 · Why it works</span>
+              <span className="section-label">01 · Why it works</span>
               <h2 className="display-h2 mt-4 max-w-2xl">
                 More than{" "}
                 <span className="serif-i gradient-mint-text">flashcards</span>.
               </h2>
             </div>
             <p className="max-w-md text-stone-400">
-              Three things that make this different from every other language app
-              on your phone.
+              Other apps teach you pointless words that keep you a paying
+              customer for longer. We focus on useful, everyday Thai.
             </p>
           </div>
 
@@ -185,7 +217,7 @@ export default function Landing() {
             <Feature
               n="01"
               icon="💬"
-              title="Conversations, not flashcards"
+              title="Conversations, not padding"
               body="Hear a real Thai phrase, pick the right reply. 3 lives. Streak bonuses. The drill format you already play for fun."
               chips={["3 lives", "streak bonus", "60+ exchanges"]}
             />
@@ -207,25 +239,49 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* WHY WE BUILT IT ========================================== */}
+      {/* ALL FIVE GAMES =========================================== */}
+      <section className="grain relative overflow-hidden bg-ink-900 px-6 pb-20 text-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-2xl">
+            <span className="section-label">02 · The games</span>
+            <h2 className="display-h2 mt-4">
+              Five ways to{" "}
+              <span className="serif-i gradient-mint-text">drill</span> the
+              same sentences.
+            </h2>
+            <p className="mt-4 text-stone-400">
+              Switch formats and your brain learns faster. Every game pulls
+              from the same live vocabulary, so progress follows you
+              everywhere.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {GAMES.map((g) => (
+              <GameCard key={g.title} {...g} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OTHER APPS =============================================== */}
       <section className="relative bg-stone-50 px-6 py-20 text-stone-900">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <span className="eyebrow-pill-light">Why we built it</span>
+            <span className="eyebrow-pill-light">The problem</span>
             <h2 className="display-h2 mt-6">
               Other apps teach{" "}
-              <span className="serif-i text-stone-500">"the spider drinks milk"</span>.
+              <span className="serif-i text-stone-500">&quot;the spider drinks milk&quot;</span>.
             </h2>
           </div>
           <div className="space-y-5 text-lg text-stone-700 lg:col-span-7">
             <p>
-              We tried Duolingo. Spent hours learning sentences nobody says.
-              Then walked into a 7-Eleven and froze.
+              Pointless words. Padded lessons. Daily streaks. It&apos;s all
+              designed to keep you subscribed, not to help you speak.
             </p>
             <p>
-              The problem is structure. Apps optimise for daily streaks,
-              not real conversations. We built the opposite — every sentence
-              in here is something you'll actually need{" "}
+              We went the other way. Every sentence in here is something
+              you&apos;ll actually need{" "}
               <em className="serif-i">this week</em> in Thailand.
             </p>
             <p className="font-medium text-stone-900">
@@ -274,15 +330,15 @@ export default function Landing() {
             <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-mint-500/20 blur-3xl" />
             <div className="relative grid gap-10 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-7">
-                <span className="eyebrow-pill-light">For schools & teachers</span>
+                <span className="eyebrow-pill-light">For schools &amp; teachers</span>
                 <h2 className="display-h2 mt-6">
                   Our aim: classrooms{" "}
                   <span className="serif-i text-stone-500">across Thailand</span>.
                 </h2>
                 <p className="mt-5 max-w-xl text-lg text-stone-700">
-                  We want Phuut Thai to be the first free English resource any
-                  Thai teacher reaches for — from Bangkok to Betong. If you
-                  teach, tell us what would help and we'll build it with you.
+                  We want this to be the first free English resource any Thai
+                  teacher reaches for, from Bangkok to Betong. If you teach,
+                  tell us what would help and we&apos;ll build it with you.
                 </p>
                 <div className="mt-7 flex flex-wrap gap-3">
                   <a
@@ -303,11 +359,11 @@ export default function Landing() {
               <div className="grid gap-3 lg:col-span-5">
                 <MiniStat
                   kicker="Our promise"
-                  body="English mode costs Thai learners nothing — forever."
+                  body="English mode costs Thai learners nothing, forever."
                 />
                 <MiniStat
                   kicker="Our aim"
-                  body="Keep shipping — new scenarios, vocab, and games as fast as we can."
+                  body="Keep shipping. New scenarios, vocabulary, and games as fast as we can."
                 />
                 <MiniStat
                   kicker="Works offline"
@@ -320,17 +376,18 @@ export default function Landing() {
       </section>
 
       {/* PRICING ========================================== */}
-      <section className="relative bg-stone-50 px-6 pb-28 text-stone-900">
+      <section className="relative bg-stone-50 px-6 pb-20 text-stone-900">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <span className="eyebrow-pill-light">Honest pricing</span>
             <h2 className="display-h2 mt-6">
               One price. One{" "}
-              <span className="serif-i text-stone-500">payment</span>. A year.
+              <span className="serif-i text-stone-500">annual</span> payment.
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-stone-600">
-              No subscriptions stacking up. No "Premium Plus Ultra" tiers. And
-              English mode stays free for Thai nationals — forever.
+              No subscriptions stacking up. No &quot;Premium Plus Ultra&quot;
+              tiers. No hidden extras. No constant pressure to spend more.
+              And English mode stays free for Thai nationals, forever.
             </p>
           </div>
 
@@ -366,28 +423,23 @@ export default function Landing() {
               highlighted
             />
           </div>
-
-          <p className="mx-auto mt-6 max-w-xl text-center text-xs text-stone-500">
-            Built by <span className="font-semibold text-stone-700">Cultra Lab Limited Partnership</span>
-            {" "}— a tiny team in Phuket. You're not buying a product,
-            you're funding a mission.
-          </p>
         </div>
       </section>
 
-      {/* CTA ========================================== */}
+      {/* FEEDBACK / CLOSING ======================================= */}
       <section className="grain relative overflow-hidden bg-ink-900 px-6 py-24 text-center text-white">
         <div className="glow-radial pointer-events-none absolute inset-0 opacity-80" />
         <div className="relative mx-auto max-w-3xl">
-          <span className="section-label justify-center">The last step</span>
+          <span className="section-label justify-center">Help us build this</span>
           <h2 className="display-h2 mt-5">
             Built for{" "}
             <span className="serif-i gradient-mint-text">living</span> in
             Thailand.
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-stone-400">
-            Made by someone here, for everyone here. Install it as an app,
-            learn on the BTS, speak Thai by Sunday.
+            We are still growing and still improving. If you try this, we
+            would love your thoughts and feedback on how to make it the
+            number one language app in Thailand.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link
@@ -403,6 +455,15 @@ export default function Landing() {
               เรียนอังกฤษฟรี →
             </Link>
           </div>
+          <p className="mx-auto mt-8 max-w-xl text-xs text-stone-500">
+            Send feedback to{" "}
+            <a
+              href="mailto:hello@thaiandenglish.com"
+              className="text-mint-400 hover:text-mint-300"
+            >
+              hello@thaiandenglish.com
+            </a>
+          </p>
         </div>
       </section>
     </div>
@@ -468,6 +529,26 @@ function Feature({
           </span>
         ))}
       </div>
+    </div>
+  );
+}
+
+function GameCard({
+  emoji,
+  title,
+  body,
+}: {
+  emoji: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur transition hover:border-mint-500/30 hover:bg-white/[0.06]">
+      <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-mint-500/20 text-2xl">
+        {emoji}
+      </div>
+      <h3 className="mt-4 text-base font-bold">{title}</h3>
+      <p className="mt-2 text-xs leading-relaxed text-stone-400">{body}</p>
     </div>
   );
 }

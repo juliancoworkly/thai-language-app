@@ -15,6 +15,18 @@ body {
   color: var(--fg);
   min-height: 100vh;
   font-family: "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Full-viewport-width breakout for landing sections that sit inside a
+   max-width container. Use on a wrapper to bleed edge to edge. */
+.full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .serif-i {
