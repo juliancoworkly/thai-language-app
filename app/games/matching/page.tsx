@@ -96,7 +96,7 @@ export default function MatchingGame() {
             key={n}
             onClick={() => setPairCount(n)}
             className={`rounded-full px-3 py-1 ${
-              pairCount === n ? "bg-brand-500 text-white" : "bg-stone-100 text-stone-700"
+              pairCount === n ? "bg-mint-500 text-ink-900" : "bg-stone-100 text-stone-700"
             }`}
           >
             {n} pairs
@@ -122,8 +122,8 @@ export default function MatchingGame() {
                 isFlipped
                   ? isMatched
                     ? "border-green-300 bg-green-50"
-                    : "border-brand-300 bg-white"
-                  : "border-stone-200 bg-brand-500 text-white hover:bg-brand-600"
+                    : "border-mint-300 bg-white"
+                  : "border-stone-200 bg-mint-500 text-ink-900 hover:bg-mint-400"
               }`}
             >
               {isFlipped ? (

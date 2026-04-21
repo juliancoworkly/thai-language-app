@@ -63,10 +63,10 @@ export default function ReverseWords() {
                   <span className="text-2xl">{s.emoji}</span>
                   <div className="flex-1">
                     <div className="font-semibold text-stone-800">{s.english}</div>
-                    <div className="thai text-xs text-brand-700">{s.thaiPhonetic}</div>
+                    <div className="thai text-xs text-mint-700">{s.thaiPhonetic}</div>
                     <div className="thai text-xs text-stone-600">= {s.meaning}</div>
                   </div>
-                  <span className="text-brand-500">🔊</span>
+                  <span className="text-mint-500">🔊</span>
                 </button>
               ))}
             </div>

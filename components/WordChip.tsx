@@ -28,7 +28,7 @@ export function WordChip({
       onClick={handleClick}
       className={`group text-left rounded-xl border p-3 transition hover:shadow-md ${
         highlight
-          ? "border-brand-500 bg-brand-50"
+          ? "border-mint-500 bg-mint-50"
           : "border-stone-200 bg-white"
       }`}
     >

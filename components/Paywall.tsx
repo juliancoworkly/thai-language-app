@@ -44,15 +44,20 @@ export function Paywall({ children }: { children: React.ReactNode }) {
 
 function TrialEndedScreen({ profile: _profile }: { profile: Profile }) {
   return (
-    <div className="mx-auto max-w-lg space-y-4 py-8">
-      <div className="rounded-3xl border border-stone-200 bg-white p-8 text-center shadow-sm">
-        <div className="text-6xl">🔒</div>
-        <h1 className="mt-4 text-2xl font-bold text-stone-800">
-          Your free trial has ended
+    <div className="mx-auto max-w-lg space-y-4 py-10">
+      <div className="relative overflow-hidden rounded-3xl border-2 border-mint-500 bg-white p-8 text-center shadow-glow">
+        <div
+          className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-mint-500/15 blur-3xl"
+          aria-hidden
+        />
+        <span className="eyebrow-pill-light">Trial ended</span>
+        <h1 className="mt-5 text-3xl font-black leading-tight tracking-tight text-stone-900 sm:text-4xl">
+          Keep going,{" "}
+          <span className="serif-i text-stone-500">properly</span>.
         </h1>
-        <p className="mt-2 text-stone-600">
-          Continue learning Thai for ฿1,000 per year — about ฿85 per month, or
-          one massage. Unlocks all content + cloud sync forever.
+        <p className="mt-3 text-stone-600">
+          Continue learning Thai for ฿1,000 per year. About ฿85 per month, or
+          one massage. Unlocks all content plus cloud sync forever.
         </p>
         <div className="mt-6 flex items-baseline justify-center gap-2">
           <span className="text-5xl font-black text-stone-900">฿1,000</span>
@@ -60,11 +65,14 @@ function TrialEndedScreen({ profile: _profile }: { profile: Profile }) {
         </div>
         <Link
           href="/account/billing"
-          className="mt-6 inline-flex w-full justify-center rounded-full bg-mint-500 px-6 py-3 font-semibold text-ink-900 hover:bg-mint-400"
+          className="mt-6 inline-flex w-full justify-center rounded-full bg-mint-500 px-6 py-3 font-semibold text-ink-900 transition hover:scale-[1.01] hover:bg-mint-400"
         >
           Subscribe →
         </Link>
-        <Link href="/account" className="mt-3 block text-xs text-stone-500 hover:text-stone-700">
+        <Link
+          href="/account"
+          className="mt-3 block text-xs text-stone-500 hover:text-stone-700"
+        >
           Or manage your account
         </Link>
       </div>
@@ -84,12 +92,22 @@ export function TrialBanner() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-2">
-      <div className="flex items-center justify-between rounded-full bg-amber-50 px-4 py-2 text-xs text-amber-900">
-        <span>
-          🎁 Trial — <strong>{days} day{days === 1 ? "" : "s"} left</strong>
+      <div className="flex items-center justify-between gap-3 rounded-full border border-mint-500/30 bg-mint-50 px-4 py-2 text-xs text-mint-800">
+        <span className="flex items-center gap-2">
+          <span
+            className="h-1.5 w-1.5 rounded-full bg-mint-500 shadow-[0_0_8px_1px_rgba(52,211,153,.6)]"
+            aria-hidden
+          />
+          Free trial
+          <strong className="text-stone-900">
+            {days} day{days === 1 ? "" : "s"} left
+          </strong>
         </span>
-        <Link href="/account/billing" className="font-semibold underline">
-          Subscribe
+        <Link
+          href="/account/billing"
+          className="rounded-full bg-ink-900 px-3 py-1 font-semibold text-mint-300 hover:bg-ink-800"
+        >
+          Subscribe →
         </Link>
       </div>
     </div>

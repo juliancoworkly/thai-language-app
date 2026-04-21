@@ -16,18 +16,18 @@ export default function ReverseHome() {
 
   return (
     <div className="space-y-8">
-      <section className="rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 p-8 text-white shadow-lg">
+      <section className="rounded-2xl bg-gradient-to-br from-mint-500 to-mint-700 p-8 text-white shadow-lg">
         <h1 className="text-3xl font-bold">
           ภาษาอังกฤษที่ใช้ในชีวิตประจำวัน
         </h1>
-        <p className="mt-2 max-w-2xl text-brand-50">
+        <p className="mt-2 max-w-2xl text-mint-50">
           English phrases for everyday life in Thailand — for shop staff,
           drivers, waiters, and anyone who wants to speak English to tourists.
           Hear it, read the Thai-script pronunciation guide, practice with games.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
-          <Link href="/reverse/conversation" className="btn bg-white text-brand-700 hover:bg-brand-50">
-            💬 สนทนา Conversation <span className="ml-1 rounded-full bg-brand-500 px-1.5 py-0.5 text-[10px] text-white">NEW</span>
+          <Link href="/reverse/conversation" className="btn bg-white text-mint-700 hover:bg-mint-50">
+            💬 สนทนา Conversation <span className="ml-1 rounded-full bg-mint-500 px-1.5 py-0.5 text-[10px] text-ink-900">NEW</span>
           </Link>
           <Link href="/reverse/flashcards" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
             🃏 บัตรคำ

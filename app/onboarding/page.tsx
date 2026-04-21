@@ -130,11 +130,11 @@ export default function OnboardingPage() {
                 onClick={() => pick("level", lvl)}
                 className={`flex items-center gap-4 rounded-2xl border-2 p-4 text-left transition ${
                   draft.level === lvl
-                    ? "border-brand-500 bg-brand-50"
+                    ? "border-mint-500 bg-mint-50"
                     : "border-stone-200 bg-white hover:border-stone-300"
                 }`}
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500 font-bold text-white">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-mint-500 font-bold text-ink-900">
                   {lvl}
                 </div>
                 <div>
@@ -316,7 +316,7 @@ function Choice({
     <button
       onClick={onClick}
       className={`group rounded-2xl border-2 p-5 text-left transition hover:-translate-y-0.5 hover:shadow-md ${
-        selected ? "border-brand-500 bg-brand-50" : "border-stone-200 bg-white"
+        selected ? "border-mint-500 bg-mint-50" : "border-stone-200 bg-white"
       }`}
     >
       <div className="text-4xl">{emoji}</div>
@@ -341,7 +341,7 @@ function ProgressBar({ step, stepOrder }: { step: Step; stepOrder: Step[] }) {
   return (
     <div className="h-1.5 w-full overflow-hidden rounded-full bg-stone-200">
       <div
-        className="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-700 transition-all"
+        className="h-full rounded-full bg-gradient-to-r from-mint-500 to-mint-700 transition-all"
         style={{ width: `${pct}%` }}
       />
     </div>

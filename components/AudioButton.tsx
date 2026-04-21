@@ -25,7 +25,7 @@ export function AudioButton({
       type="button"
       aria-label={label ?? `Play ${thai}`}
       onClick={() => playAudio(id, thai)}
-      className={`inline-flex ${sizeClass} items-center justify-center rounded-full bg-brand-500 text-white shadow-sm transition hover:bg-brand-600 active:scale-95`}
+      className={`inline-flex ${sizeClass} items-center justify-center rounded-full bg-mint-500 text-ink-900 shadow-sm transition hover:bg-mint-400 active:scale-95`}
     >
       🔊
     </button>

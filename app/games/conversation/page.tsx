@@ -118,7 +118,7 @@ export default function ConversationGame() {
         <div className="text-6xl">💀</div>
         <h1 className="text-2xl font-bold">Out of lives!</h1>
         <div className="text-stone-600">
-          Final score: <strong className="text-2xl text-brand-700">{score}</strong>
+          Final score: <strong className="text-2xl text-mint-700">{score}</strong>
         </div>
         <div className="text-sm text-stone-500">Best streak: {best}</div>
         <div className="flex justify-center gap-2 pt-2">
@@ -169,7 +169,7 @@ export default function ConversationGame() {
           </div>
           <button
             onClick={() => speakThai(current.thai)}
-            className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-500 text-xl text-white shadow hover:bg-brand-600"
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-mint-500 text-xl text-ink-900 shadow hover:bg-mint-400"
             aria-label="Play Thai"
           >
             🔊
@@ -201,7 +201,7 @@ export default function ConversationGame() {
                 disabled={!!picked}
                 className={`rounded-xl border-2 p-3 text-left transition ${
                   !show
-                    ? "border-stone-200 bg-white hover:border-brand-300 hover:bg-brand-50"
+                    ? "border-stone-200 bg-white hover:border-mint-300 hover:bg-mint-50"
                     : isCorrect
                     ? "border-green-500 bg-green-50 text-green-900"
                     : isPicked

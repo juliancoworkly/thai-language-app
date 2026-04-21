@@ -60,7 +60,7 @@ export default function ReverseFlashcards() {
           <div className="flex gap-2">
             <button
               onClick={() => speakEnglish(current.english)}
-              className="inline-flex h-10 items-center gap-1 rounded-full bg-brand-500 px-3 text-white shadow hover:bg-brand-600"
+              className="inline-flex h-10 items-center gap-1 rounded-full bg-mint-500 px-3 text-ink-900 shadow hover:bg-mint-400"
               aria-label="Play English"
             >
               🔊 EN
@@ -77,7 +77,7 @@ export default function ReverseFlashcards() {
 
         <div className="text-center">
           <div className="text-3xl font-bold text-stone-800">{current.english}</div>
-          <div className="thai mt-2 text-lg text-brand-700">{current.thaiPhonetic}</div>
+          <div className="thai mt-2 text-lg text-mint-700">{current.thaiPhonetic}</div>
           <div className="text-xs text-stone-500">(การออกเสียงแบบไทย)</div>
 
           {revealed ? (

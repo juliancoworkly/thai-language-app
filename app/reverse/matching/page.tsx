@@ -102,7 +102,7 @@ export default function ReverseMatching() {
             key={n}
             onClick={() => setPairCount(n)}
             className={`rounded-full px-3 py-1 ${
-              pairCount === n ? "bg-brand-500 text-white" : "bg-stone-100 text-stone-700"
+              pairCount === n ? "bg-mint-500 text-ink-900" : "bg-stone-100 text-stone-700"
             }`}
           >
             {n} pairs
@@ -126,21 +126,21 @@ export default function ReverseMatching() {
                 isFlipped
                   ? isMatched
                     ? "border-green-300 bg-green-50"
-                    : "border-brand-300 bg-white"
-                  : "border-stone-200 bg-brand-500 text-white hover:bg-brand-600"
+                    : "border-mint-300 bg-white"
+                  : "border-stone-200 bg-mint-500 text-ink-900 hover:bg-mint-400"
               }`}
             >
               {isFlipped ? (
                 isMatched ? (
                   <div className="space-y-0.5 px-1">
                     <div className="text-sm font-bold text-stone-800">{s.english}</div>
-                    <div className="thai text-xs text-brand-700">{s.thaiPhonetic}</div>
+                    <div className="thai text-xs text-mint-700">{s.thaiPhonetic}</div>
                     <div className="thai text-xs text-green-800">= {s.meaning}</div>
                   </div>
                 ) : card.face === "en" ? (
                   <div>
                     <div className="text-sm font-bold text-stone-800">{s.english}</div>
-                    <div className="thai mt-1 text-xs text-brand-700">{s.thaiPhonetic}</div>
+                    <div className="thai mt-1 text-xs text-mint-700">{s.thaiPhonetic}</div>
                   </div>
                 ) : (
                   <div className="thai text-base text-stone-800">{s.meaning}</div>

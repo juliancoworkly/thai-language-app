@@ -73,7 +73,7 @@ export default function TonesGame() {
 
         <button
           onClick={() => speakThai(current.word.thai)}
-          className="mx-auto mt-6 flex h-24 w-24 items-center justify-center rounded-full bg-brand-500 text-4xl text-white shadow-lg transition hover:scale-105 active:scale-95"
+          className="mx-auto mt-6 flex h-24 w-24 items-center justify-center rounded-full bg-mint-500 text-4xl text-ink-900 shadow-lg transition hover:scale-105 active:scale-95"
           aria-label="Play word"
         >
           🔊

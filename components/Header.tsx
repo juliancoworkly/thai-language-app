@@ -25,8 +25,13 @@ export function Header() {
       <header className="border-b border-stone-200 bg-white">
         <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🇹🇭↔🇬🇧</span>
-            <span className="font-bold text-stone-800">Phuut Thai</span>
+            <span
+              className="h-2 w-2 rounded-full bg-mint-500 shadow-[0_0_8px_1px_rgba(52,211,153,.6)]"
+              aria-hidden
+            />
+            <span className="font-bold tracking-tight text-stone-900">
+              Phuut <span className="serif-i text-mint-700">Thai</span>
+            </span>
           </Link>
           <Link href="/" className="btn-ghost text-xs">Skip for now</Link>
         </nav>
@@ -80,10 +85,21 @@ export function Header() {
     <header className="sticky top-0 z-10 border-b border-stone-200 bg-white/80 backdrop-blur">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href={homeHref} className="flex items-center gap-2">
-          <span className="text-2xl">{inReverse ? "🇬🇧" : "🇹🇭"}</span>
-          <span className="font-bold text-stone-800">{title}</span>
+          <span
+            className="h-2 w-2 rounded-full bg-mint-500 shadow-[0_0_8px_1px_rgba(52,211,153,.6)]"
+            aria-hidden
+          />
+          <span className="font-bold tracking-tight text-stone-900">
+            {inReverse ? (
+              <span className="thai">{title}</span>
+            ) : (
+              <>
+                Phuut <span className="serif-i text-mint-700">Thai</span>
+              </>
+            )}
+          </span>
           {profile?.level && !inReverse && (
-            <span className="ml-1 rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-semibold text-stone-600">
+            <span className="ml-1 rounded-full border border-mint-500/30 bg-mint-50 px-2 py-0.5 text-[10px] font-semibold text-mint-700">
               L{profile.level}
             </span>
           )}

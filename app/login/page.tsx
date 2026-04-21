@@ -39,7 +39,7 @@ export default function LoginPage() {
             this browser's storage. To enable cross-device sync:
           </p>
           <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-stone-700">
-            <li>Create a free project at <a className="text-brand-700 underline" href="https://supabase.com" target="_blank" rel="noreferrer">supabase.com</a></li>
+            <li>Create a free project at <a className="text-mint-700 underline" href="https://supabase.com" target="_blank" rel="noreferrer">supabase.com</a></li>
             <li>
               In <strong>Settings → API</strong>, copy the <code>Project URL</code> and the <code>anon public</code> key
             </li>

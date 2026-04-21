@@ -26,15 +26,15 @@ export default function Home() {
 
   return (
     <div className="space-y-8">
-      <section className="rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 p-8 text-white shadow-lg">
+      <section className="rounded-2xl bg-gradient-to-br from-mint-500 to-mint-700 p-8 text-white shadow-lg">
         <h1 className="text-3xl font-bold">Learn Thai you'll actually use.</h1>
-        <p className="mt-2 max-w-2xl text-brand-50">
+        <p className="mt-2 max-w-2xl text-mint-50">
           Real sentences first, then broken down word-by-word so you can
           remix your own. No cartoon owls, no streaks nagging you. Just the
           phrases that get you through your day in Thailand.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
-          <Link href="/games" className="btn bg-white text-brand-700 hover:bg-brand-50">
+          <Link href="/games" className="btn bg-white text-mint-700 hover:bg-mint-50">
             🎮 Start a game
           </Link>
           <Link href="/words" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
@@ -79,7 +79,7 @@ export default function Home() {
                   </div>
                   <div className="mt-3 h-1.5 w-full rounded-full bg-stone-100">
                     <div
-                      className="h-full rounded-full bg-brand-500 transition-all"
+                      className="h-full rounded-full bg-mint-500 transition-all"
                       style={{ width: `${pct}%` }}
                     />
                   </div>

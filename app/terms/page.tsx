@@ -64,7 +64,7 @@ export default function Terms() {
       <h2 className="pt-4 text-xl font-bold">4. Refunds</h2>
       <p>
         Refund eligibility is described in our{" "}
-        <a className="text-brand-700 underline" href="/refund">Refund Policy</a>.
+        <a className="text-mint-700 underline" href="/refund">Refund Policy</a>.
       </p>
 
       <h2 className="pt-4 text-xl font-bold">5. Acceptable Use</h2>
@@ -138,7 +138,7 @@ export default function Terms() {
         Cultra Lab Limited Partnership<br />
         1st Floor, PKCD Building, 9, 8 Muang Naka Rd<br />
         Phuket 83000, Thailand<br />
-        Email: <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
+        Email: <a className="text-mint-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
       </address>
 
       <p className="pt-6 text-xs text-stone-500">

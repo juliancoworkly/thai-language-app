@@ -50,14 +50,14 @@ export default function GamesPage() {
             key={g.href}
             href={g.href}
             className={`card transition hover:-translate-y-0.5 hover:shadow-md ${
-              g.featured ? "border-brand-300 bg-brand-50 sm:col-span-2" : ""
+              g.featured ? "border-mint-300 bg-mint-50 sm:col-span-2" : ""
             }`}
           >
             <div className="text-4xl">{g.emoji}</div>
             <div className="mt-3 font-semibold text-stone-800">
               {g.title}
               {g.featured && (
-                <span className="ml-2 rounded-full bg-brand-500 px-2 py-0.5 text-xs text-white">
+                <span className="ml-2 rounded-full bg-mint-500 px-2 py-0.5 text-xs text-ink-900">
                   NEW
                 </span>
               )}

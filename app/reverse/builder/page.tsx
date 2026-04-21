@@ -189,7 +189,7 @@ export default function ReverseBuilder() {
               </div>
               <button
                 onClick={() => speakEnglish(current.english)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-500 text-white hover:bg-brand-600"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-mint-500 text-ink-900 hover:bg-mint-400"
               >
                 🔊
               </button>

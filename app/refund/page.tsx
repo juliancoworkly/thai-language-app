@@ -28,7 +28,7 @@ export default function Refund() {
       <p>
         If you were charged at the end of the trial and realise within{" "}
         <strong>14 days</strong> that the product isn&apos;t for you, email{" "}
-        <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>{" "}
+        <a className="text-mint-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>{" "}
         with the email address on your account. We will issue a full refund
         via our payment processor (Paddle), no reasons required.
       </p>
@@ -68,7 +68,7 @@ export default function Refund() {
         Cultra Lab Limited Partnership<br />
         1st Floor, PKCD Building, 9, 8 Muang Naka Rd<br />
         Phuket 83000, Thailand<br />
-        Email: <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
+        Email: <a className="text-mint-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
       </address>
 
       <p className="pt-6 text-xs text-stone-500">

@@ -92,7 +92,7 @@ export default function Privacy() {
       <p>
         You can access, correct, export, or delete your data at any time from
         your account page, or by emailing{" "}
-        <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>.
+        <a className="text-mint-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>.
         If you are a resident of a jurisdiction with specific data-subject
         rights (EU, UK, etc.), we honor those requests without additional
         verification requirements beyond confirming you control the account.
@@ -124,7 +124,7 @@ export default function Privacy() {
         Cultra Lab Limited Partnership<br />
         1st Floor, PKCD Building, 9, 8 Muang Naka Rd<br />
         Phuket 83000, Thailand<br />
-        Email: <a className="text-brand-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
+        Email: <a className="text-mint-700 underline" href="mailto:hello@thaiandenglish.com">hello@thaiandenglish.com</a>
       </address>
 
       <p className="pt-6 text-xs text-stone-500">
