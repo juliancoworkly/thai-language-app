@@ -144,7 +144,7 @@ export default function ReverseConversationGame() {
             💎 {score}
           </span>
           {streak >= 2 && (
-            <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-800">
+            <span className="rounded-full border border-mint-500/30 bg-mint-50 px-3 py-1 text-mint-800">
               🔥 {streak}
             </span>
           )}

@@ -42,19 +42,40 @@ export default function LearnClient({ scenario }: { scenario: string }) {
 
   const current = list[i];
 
+  const pct = Math.round(((i + 1) / list.length) * 100);
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 py-4">
       <div className="flex items-center justify-between">
-        <Link href="/" className="btn-ghost">← All scenarios</Link>
-        <div className="text-sm text-stone-500">
-          {i + 1} / {list.length}
+        <Link href="/thai" className="btn-ghost">← All scenarios</Link>
+        <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+          {i + 1} <span className="text-stone-400">/ {list.length}</span>
         </div>
       </div>
 
+      <div className="h-1 w-full overflow-hidden rounded-full bg-stone-200">
+        <div
+          className="h-full rounded-full bg-mint-500 shadow-[0_0_6px_rgba(52,211,153,.5)] transition-all"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+
       <div>
-        <div className="text-2xl">{info.emoji}</div>
-        <h1 className="text-2xl font-bold text-stone-800">{info.title}</h1>
-        <p className="text-stone-600">{info.description}</p>
+        <span className="section-label text-mint-700">
+          <span className="h-1.5 w-1.5 rounded-full bg-mint-500" />
+          Scenario
+        </span>
+        <div className="mt-3 flex items-start gap-4">
+          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-mint-50 text-3xl">
+            {info.emoji}
+          </div>
+          <div>
+            <h1 className="text-2xl font-black tracking-tight text-stone-900 sm:text-3xl">
+              {info.title}
+            </h1>
+            <p className="mt-1 text-stone-600">{info.description}</p>
+          </div>
+        </div>
       </div>
 
       <SentenceBreakdown sentence={current} />

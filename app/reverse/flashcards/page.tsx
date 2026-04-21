@@ -95,13 +95,13 @@ export default function ReverseFlashcards() {
           <div className="flex justify-center gap-2 pt-2">
             <button
               onClick={() => rate(false)}
-              className="btn bg-red-100 text-red-800 hover:bg-red-200"
+              className="btn bg-stone-200 text-stone-800 hover:bg-stone-300"
             >
               😵 ยังไม่รู้
             </button>
             <button
               onClick={() => rate(true)}
-              className="btn bg-green-100 text-green-800 hover:bg-green-200"
+              className="btn bg-mint-500 text-ink-900 hover:bg-mint-400"
             >
               😎 รู้แล้ว
             </button>

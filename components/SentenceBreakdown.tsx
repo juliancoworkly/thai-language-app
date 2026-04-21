@@ -58,7 +58,7 @@ export function SentenceBreakdown({
       </div>
 
       {sentence.notes && (
-        <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+        <div className="rounded-md border border-mint-500/25 bg-mint-50 p-3 text-sm text-mint-800">
           💡 {sentence.notes}
         </div>
       )}

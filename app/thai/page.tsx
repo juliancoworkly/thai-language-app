@@ -24,84 +24,180 @@ export default function Home() {
     ? Object.values(store.cards).filter((c) => c.dueAt <= Date.now()).length
     : 0;
 
+  const sortedScenarios = scenarios.slice().sort((a, b) => a.order - b.order);
+
   return (
-    <div className="space-y-8">
-      <section className="rounded-2xl bg-gradient-to-br from-mint-500 to-mint-700 p-8 text-white shadow-lg">
-        <h1 className="text-3xl font-bold">Learn Thai you'll actually use.</h1>
-        <p className="mt-2 max-w-2xl text-mint-50">
-          Real sentences first, then broken down word-by-word so you can
-          remix your own. No cartoon owls, no streaks nagging you. Just the
-          phrases that get you through your day in Thailand.
+    <div className="space-y-12 py-4">
+      {/* HERO ===================================================== */}
+      <section>
+        <span className="eyebrow-pill-light">Your learning home</span>
+        <h1 className="display-h2 mt-5 text-stone-900">
+          Everyday Thai,{" "}
+          <span className="serif-i text-mint-700">actually useful</span>.
+        </h1>
+        <p className="mt-4 max-w-2xl text-lg text-stone-600">
+          Real sentences first, broken down word-by-word. No streaks nagging
+          you, no pointless vocabulary. Just what you need this week.
         </p>
-        <div className="mt-5 flex flex-wrap gap-2">
-          <Link href="/games" className="btn bg-white text-mint-700 hover:bg-mint-50">
+        <div className="mt-6 flex flex-wrap gap-2">
+          <Link
+            href="/games"
+            className="rounded-full bg-mint-500 px-5 py-2.5 text-sm font-semibold text-ink-900 shadow-glow transition hover:scale-[1.02] hover:bg-mint-400"
+          >
             🎮 Start a game
           </Link>
-          <Link href="/words" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
+          <Link
+            href="/words"
+            className="rounded-full border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 transition hover:bg-stone-50"
+          >
             📚 Word bank
           </Link>
-          {store && (
-            <span className="btn border border-white/30 bg-white/10 text-white">
-              🔥 {store.stats.totalReviews} total reviews
-              {due > 0 && <> &middot; {due} due now</>}
-            </span>
-          )}
         </div>
       </section>
 
+      {/* STATS STRIP (single dark accent) ========================= */}
+      {store && (
+        <section className="grain relative overflow-hidden rounded-3xl bg-ink-900 p-6 text-white sm:p-8">
+          <div
+            className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-mint-500/20 blur-3xl"
+            aria-hidden
+          />
+          <div className="relative grid gap-6 sm:grid-cols-3">
+            <HomeStat
+              kicker={String(store.seenSentences.length)}
+              label="Sentences met"
+            />
+            <HomeStat
+              kicker={String(store.stats.totalReviews)}
+              label="Total reviews"
+            />
+            <HomeStat
+              kicker={String(due)}
+              label={
+                due === 0 ? "No cards due right now" : "Cards due to review"
+              }
+              cta={
+                due > 0 ? (
+                  <Link
+                    href="/games/flashcards"
+                    className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-mint-300 hover:text-mint-200"
+                  >
+                    Review now →
+                  </Link>
+                ) : null
+              }
+            />
+          </div>
+        </section>
+      )}
+
+      {/* SCENARIOS ================================================ */}
       <section>
-        <h2 className="mb-3 text-lg font-semibold text-stone-700">
-          Pick a scenario
-        </h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {scenarios
-            .sort((a, b) => a.order - b.order)
-            .map((s) => {
-              const { total, seen } = counts[s.id];
-              const pct = total ? Math.round((seen / total) * 100) : 0;
-              return (
-                <Link
-                  key={s.id}
-                  href={`/learn/${s.id}`}
-                  className="card group transition hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="text-4xl">{s.emoji}</div>
-                    <span className="text-xs text-stone-500">
-                      {seen}/{total}
-                    </span>
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <span className="section-label text-mint-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-mint-500" />
+              Pick a scenario
+            </span>
+            <h2 className="mt-2 text-2xl font-black tracking-tight text-stone-900 sm:text-3xl">
+              Twelve moments you'll live{" "}
+              <span className="serif-i text-stone-500">this week</span>.
+            </h2>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {sortedScenarios.map((s, idx) => {
+            const { total, seen } = counts[s.id];
+            const pct = total ? Math.round((seen / total) * 100) : 0;
+            const complete = pct >= 100;
+            return (
+              <Link
+                key={s.id}
+                href={`/learn/${s.id}`}
+                className="group relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-mint-300 hover:shadow-md"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-mint-50 text-2xl">
+                    {s.emoji}
                   </div>
-                  <div className="mt-3 font-semibold text-stone-800">
-                    {s.title}
-                  </div>
-                  <div className="mt-1 text-sm text-stone-500">
-                    {s.description}
-                  </div>
-                  <div className="mt-3 h-1.5 w-full rounded-full bg-stone-100">
+                  <span className="font-mono text-xs tracking-wider text-stone-400">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <div className="mt-4 font-semibold text-stone-900">
+                  {s.title}
+                </div>
+                <div className="mt-1 text-sm text-stone-500">
+                  {s.description}
+                </div>
+                <div className="mt-5 flex items-center gap-2">
+                  <div className="h-1.5 flex-1 rounded-full bg-stone-100">
                     <div
                       className="h-full rounded-full bg-mint-500 transition-all"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
-                </Link>
-              );
-            })}
+                  <span
+                    className={`text-[11px] font-mono tabular-nums ${
+                      complete ? "text-mint-700" : "text-stone-500"
+                    }`}
+                  >
+                    {seen}/{total}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <section className="rounded-2xl border border-stone-200 bg-stone-50 p-6">
-        <h2 className="text-lg font-semibold text-stone-700">
-          How this app is different
+      {/* WHY IT'S DIFFERENT ====================================== */}
+      <section className="rounded-2xl border border-stone-200 bg-white p-6 sm:p-8">
+        <span className="eyebrow-pill-light">Why it works</span>
+        <h2 className="mt-5 text-2xl font-black tracking-tight text-stone-900 sm:text-3xl">
+          Six habits baked into every lesson.
         </h2>
-        <ul className="mt-3 grid gap-2 text-sm text-stone-700 sm:grid-cols-2">
-          <li>✅ Sentence-first: learn whole phrases you'll use today</li>
-          <li>✅ Tap any word in a sentence to see its meaning + role</li>
-          <li>✅ Tone-coloured phonetics so your mouth knows what to do</li>
-          <li>✅ Memory games: flashcards, tone trainer, sentence builder, pairs</li>
-          <li>✅ Spaced repetition: hard words come back, easy ones don't</li>
-          <li>✅ Works offline after first load &middot; your progress stays on your device</li>
+        <ul className="mt-5 grid gap-2 text-sm text-stone-700 sm:grid-cols-2">
+          <WhyLi>Sentence-first. Learn whole phrases you'll use today.</WhyLi>
+          <WhyLi>Tap any word to see its meaning, role, and tone.</WhyLi>
+          <WhyLi>Tone-coloured phonetics so your mouth knows what to do.</WhyLi>
+          <WhyLi>
+            Five memory games: flashcards, tone trainer, builder, pairs,
+            conversation.
+          </WhyLi>
+          <WhyLi>Spaced repetition. Hard words come back, easy ones don't.</WhyLi>
+          <WhyLi>Works offline. Progress syncs across your devices.</WhyLi>
         </ul>
       </section>
     </div>
+  );
+}
+
+function HomeStat({
+  kicker,
+  label,
+  cta,
+}: {
+  kicker: string;
+  label: string;
+  cta?: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="text-3xl font-black text-white sm:text-4xl">{kicker}</div>
+      <div className="mt-1 text-xs uppercase tracking-wider text-stone-400">
+        {label}
+      </div>
+      {cta}
+    </div>
+  );
+}
+
+function WhyLi({ children }: { children: React.ReactNode }) {
+  return (
+    <li className="flex items-start gap-2">
+      <span className="mt-0.5 text-mint-600">✓</span>
+      <span>{children}</span>
+    </li>
   );
 }

@@ -13,62 +13,72 @@ export default function ReverseHome() {
   }, []);
 
   const total = reverseSentences.length;
+  const visibleCategories = reverseCategories.filter((c) => counts[c.id] > 0);
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-2xl bg-gradient-to-br from-mint-500 to-mint-700 p-8 text-white shadow-lg">
-        <h1 className="text-3xl font-bold">
-          ภาษาอังกฤษที่ใช้ในชีวิตประจำวัน
+    <div className="space-y-12 py-4">
+      {/* HERO ===================================================== */}
+      <section>
+        <span className="eyebrow-pill-light">ฟรีตลอดไป · Free forever</span>
+        <h1 className="thai display-h2 mt-5 text-stone-900">
+          ภาษาอังกฤษที่ใช้{" "}
+          <span className="serif-i text-mint-700">จริง</span>
         </h1>
-        <p className="mt-2 max-w-2xl text-mint-50">
-          English phrases for everyday life in Thailand — for shop staff,
-          drivers, waiters, and anyone who wants to speak English to tourists.
-          Hear it, read the Thai-script pronunciation guide, practice with games.
+        <p className="thai mt-4 max-w-2xl text-lg text-stone-600">
+          ประโยคภาษาอังกฤษสำหรับใช้ในชีวิตประจำวัน สำหรับพนักงานร้าน คนขับรถ
+          พนักงานเสิร์ฟ และคนที่อยากคุยกับนักท่องเที่ยว ฟังเสียง
+          อ่านคำอ่านภาษาไทย ฝึกผ่านเกมความจำ
         </p>
-        <div className="mt-5 flex flex-wrap gap-2">
-          <Link href="/reverse/conversation" className="btn bg-white text-mint-700 hover:bg-mint-50">
-            💬 สนทนา Conversation <span className="ml-1 rounded-full bg-mint-500 px-1.5 py-0.5 text-[10px] text-ink-900">NEW</span>
+
+        <div className="mt-6 flex flex-wrap gap-2">
+          <Link
+            href="/reverse/conversation"
+            className="thai rounded-full bg-mint-500 px-5 py-2.5 text-sm font-semibold text-ink-900 shadow-glow transition hover:scale-[1.02] hover:bg-mint-400"
+          >
+            💬 สนทนา
           </Link>
-          <Link href="/reverse/flashcards" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
-            🃏 บัตรคำ
-          </Link>
-          <Link href="/reverse/matching" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
-            🪞 จับคู่
-          </Link>
-          <Link href="/reverse/builder" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
-            🧩 เรียงประโยค
-          </Link>
-          <Link href="/reverse/words" className="btn border border-white/30 bg-white/10 text-white hover:bg-white/20">
-            📚 คลังประโยค ({total})
-          </Link>
+          <GhostLink href="/reverse/flashcards">🃏 บัตรคำ</GhostLink>
+          <GhostLink href="/reverse/matching">🪞 จับคู่</GhostLink>
+          <GhostLink href="/reverse/builder">🧩 เรียงประโยค</GhostLink>
+          <GhostLink href="/reverse/words">📚 คลังประโยค ({total})</GhostLink>
         </div>
       </section>
 
+      {/* CATEGORIES =============================================== */}
       <section>
-        <h2 className="mb-3 text-lg font-semibold text-stone-700">
-          เลือกหมวดหมู่ / Pick a category
-        </h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {reverseCategories
-            .filter((c) => counts[c.id] > 0)
-            .map((c) => (
-              <Link
-                key={c.id}
-                href={`/reverse/learn/${c.id}`}
-                className="card group transition hover:-translate-y-0.5 hover:shadow-md"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="text-4xl">{c.emoji}</div>
-                  <span className="text-xs text-stone-500">
-                    {counts[c.id]} ประโยค
-                  </span>
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <span className="section-label text-mint-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-mint-500" />
+              เลือกหมวดหมู่ · Pick a category
+            </span>
+            <h2 className="thai mt-2 text-2xl font-black tracking-tight text-stone-900 sm:text-3xl">
+              เลือกสิ่งที่คุณอยากพูด
+            </h2>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {visibleCategories.map((c, idx) => (
+            <Link
+              key={c.id}
+              href={`/reverse/learn/${c.id}`}
+              className="group relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-mint-300 hover:shadow-md"
+            >
+              <div className="flex items-start justify-between">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-mint-50 text-2xl">
+                  {c.emoji}
                 </div>
-                <div className="mt-3 font-semibold text-stone-800">{c.title}</div>
-                <div className="mt-1 text-sm text-stone-500">
-                  {c.description}
-                </div>
-              </Link>
-            ))}
+                <span className="font-mono text-xs tracking-wider text-stone-400">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <div className="mt-4 font-semibold text-stone-900">{c.title}</div>
+              <div className="mt-1 text-sm text-stone-500">{c.description}</div>
+              <div className="thai mt-4 text-xs text-mint-700">
+                {counts[c.id]} ประโยค →
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -76,5 +86,22 @@ export default function ReverseHome() {
         ← กลับ Thai learning mode
       </Link>
     </div>
+  );
+}
+
+function GhostLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="thai rounded-full border border-stone-300 bg-white px-4 py-2.5 text-sm font-semibold text-stone-800 transition hover:bg-stone-50"
+    >
+      {children}
+    </Link>
   );
 }

@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   async function signIn(e: React.FormEvent) {
     e.preventDefault();
@@ -76,60 +77,86 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=&lt;your-anon-key&gt;
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-4">
-      <div className="card">
-        <h1 className="text-2xl font-bold text-stone-800">Sign in</h1>
-        <p className="mt-1 text-stone-600">
-          Enter your email — we'll send you a one-tap login link. No password
-          to remember.
+    <div className="mx-auto max-w-lg space-y-4 py-4">
+      <div>
+        <span className="eyebrow-pill-light">Sign in</span>
+        <h1 className="display-h2 mt-4 text-stone-900">
+          One tap,{" "}
+          <span className="serif-i text-mint-700">no password</span>.
+        </h1>
+        <p className="mt-3 text-stone-600">
+          Enter your email and we'll send a one-tap login link. Your progress
+          follows you to any device.
         </p>
+      </div>
 
+      <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
         {sent ? (
-          <div className="mt-4 rounded-lg border border-green-200 bg-green-50 p-4 text-green-900">
+          <div className="rounded-2xl border border-mint-500/30 bg-mint-50 p-5 text-mint-800">
             <div className="text-2xl">📬</div>
-            <p className="mt-2 font-semibold">Check your email</p>
-            <p className="text-sm">
+            <p className="mt-2 font-semibold text-stone-900">
+              Check your email
+            </p>
+            <p className="mt-1 text-sm text-stone-700">
               We sent a login link to <strong>{email}</strong>. Open it on this
-              device — it'll sign you in and sync your progress to the cloud.
+              device, it'll sign you in and sync your progress to the cloud.
             </p>
           </div>
         ) : (
-          <form onSubmit={signIn} className="mt-4 space-y-3">
+          <form onSubmit={signIn} className="space-y-4">
             <label className="block">
-              <span className="text-sm text-stone-600">Email</span>
+              <span className="text-sm font-medium text-stone-700">Email</span>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2"
+                className="mt-1 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base focus:border-mint-500 focus:outline-none focus:ring-2 focus:ring-mint-500/20"
                 autoFocus
               />
             </label>
+            <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-stone-200 bg-stone-50 p-3 text-sm text-stone-700">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 h-4 w-4 flex-none accent-mint-500"
+              />
+              <span>
+                I agree to the{" "}
+                <Link href="/terms" className="text-mint-700 underline">
+                  Terms of Service
+                </Link>{" "}
+                and the{" "}
+                <Link href="/privacy" className="text-mint-700 underline">
+                  Privacy Policy
+                </Link>
+                .
+              </span>
+            </label>
             {error && (
-              <div className="rounded-md border border-red-200 bg-red-50 p-2 text-sm text-red-900">
+              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-900">
                 {error}
               </div>
             )}
             <button
               type="submit"
-              disabled={submitting || !email}
-              className="btn-primary w-full"
+              disabled={submitting || !email || !agreed}
+              className="btn-primary w-full disabled:cursor-not-allowed"
             >
-              {submitting ? "Sending…" : "Send magic link"}
+              {submitting ? "Sending…" : "Send magic link →"}
             </button>
           </form>
         )}
 
-        <p className="mt-4 text-xs text-stone-500">
+        <p className="mt-5 text-xs text-stone-500">
           Your existing progress on this device will be merged into your
           account the first time you sign in.
         </p>
       </div>
 
       <Link href="/" className="btn-ghost inline-flex">← Back</Link>
-      <div className="text-center text-[10px] text-stone-400">build 2026-04-19-1508</div>
     </div>
   );
 }

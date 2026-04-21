@@ -48,19 +48,23 @@ export default function WordBank() {
     : [];
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-end justify-between gap-3">
+    <div className="space-y-8 py-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-stone-800">Word bank</h1>
-          <p className="text-stone-600">
-            Every word in the app. Tap one to hear it and see sentences that use it.
+          <span className="eyebrow-pill-light">Word bank</span>
+          <h1 className="display-h2 mt-4 text-stone-900">
+            Every word,{" "}
+            <span className="serif-i text-mint-700">searchable</span>.
+          </h1>
+          <p className="mt-3 max-w-xl text-stone-600">
+            Tap one to hear it and see every sentence it appears in.
           </p>
         </div>
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search Thai, phonetic, or meaning…"
-          className="w-64 rounded-lg border border-stone-300 px-3 py-2 text-sm"
+          className="w-full rounded-full border border-stone-300 bg-white px-5 py-3 text-sm shadow-sm focus:border-mint-500 focus:outline-none focus:ring-2 focus:ring-mint-500/20 sm:w-72"
         />
       </div>
 
@@ -97,9 +101,14 @@ export default function WordBank() {
 
       {Object.entries(groups).map(([pos, list]) => (
         <section key={pos}>
-          <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-stone-500">
-            {POS_LABEL[pos as PartOfSpeech]} ({list!.length})
-          </h2>
+          <div className="section-label mb-3 text-mint-700">
+            <span className="h-1 w-1 rounded-full bg-mint-500" />
+            {POS_LABEL[pos as PartOfSpeech]}
+            <span className="text-stone-400">·</span>
+            <span className="font-sans font-semibold text-stone-500">
+              {list!.length}
+            </span>
+          </div>
           <div className="grid gap-2 sm:grid-cols-3 md:grid-cols-4">
             {list!.map((w) => (
               <WordChip

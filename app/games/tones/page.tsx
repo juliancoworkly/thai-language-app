@@ -161,11 +161,11 @@ export default function TonesGame() {
           ))}
         </div>
 
-        <div className="mt-4 rounded-lg bg-amber-50 p-3 text-xs text-amber-900">
+        <div className="mt-4 rounded-lg border border-mint-500/20 bg-mint-50 p-3 text-xs text-mint-800">
           <strong>Classic trap:</strong> <span className="thai">มา</span>{" "}
           <span className="tone-mid font-semibold">maa</span> (come), <span className="thai">ม้า</span>{" "}
           <span className="tone-high font-semibold">máa</span> (horse), <span className="thai">หมา</span>{" "}
-          <span className="tone-rising font-semibold">mǎa</span> (dog) — same
+          <span className="tone-rising font-semibold">mǎa</span> (dog). Same
           letters, totally different words. If your tone is off, Thais genuinely
           won't understand what you mean.
         </div>

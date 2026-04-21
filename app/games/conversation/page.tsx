@@ -146,7 +146,7 @@ export default function ConversationGame() {
             💎 {score}
           </span>
           {streak >= 2 && (
-            <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-800">
+            <span className="rounded-full border border-mint-500/30 bg-mint-50 px-3 py-1 text-mint-800">
               🔥 {streak}
             </span>
           )}
@@ -219,7 +219,7 @@ export default function ConversationGame() {
           <div className="space-y-3 text-center">
             <div className="text-lg font-semibold">{reaction}</div>
             {current.note && (
-              <div className="rounded-lg bg-amber-50 p-2 text-xs text-amber-900">
+              <div className="rounded-lg border border-mint-500/20 bg-mint-50 p-2 text-xs text-mint-800">
                 💡 {current.note}
               </div>
             )}

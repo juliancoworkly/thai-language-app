@@ -61,11 +61,11 @@ export default function AccountPage() {
           <span
             className={`rounded-full px-3 py-1 text-xs ${
               syncing
-                ? "bg-amber-100 text-amber-800"
-                : "bg-green-100 text-green-800"
+                ? "border border-mint-500/30 bg-mint-50 text-mint-800"
+                : "border border-mint-500/40 bg-mint-100 text-mint-800"
             }`}
           >
-            {syncing ? "⏳ Syncing…" : "✅ Synced"}
+            {syncing ? "Syncing…" : "Synced"}
           </span>
         </div>
       </div>
@@ -101,14 +101,6 @@ export default function AccountPage() {
           </dl>
         </div>
       )}
-
-      <div className="card text-sm text-stone-600">
-        <p>
-          Your progress lives in this device's storage and in your Supabase
-          account. Log in on another device with the same email to pick up
-          where you left off.
-        </p>
-      </div>
 
       <button
         onClick={signOut}

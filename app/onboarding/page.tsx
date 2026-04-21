@@ -21,6 +21,7 @@ export default function OnboardingPage() {
   const [step, setStep] = useState<Step>("mode");
   const [draft, setDraft] = useState<Partial<Profile>>({});
   const [name, setName] = useState("");
+  const [agreed, setAgreed] = useState(false);
 
   useEffect(() => {
     const existing = getProfile();
@@ -201,7 +202,30 @@ export default function OnboardingPage() {
             <Row label="Level" value={draft.level ? `${isThaiSpeaker ? L.levelShort[draft.level as Level] : LEVEL_SHORT[draft.level as Level]}` : ""} />
             <Row label="Mode" value={draft.ageMode === "kid" ? L.kid : L.standard} />
           </div>
-          <button onClick={finish} className="btn-primary mt-4 w-full">
+          <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-xl border border-stone-200 bg-white p-3 text-sm text-stone-700">
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+              className="mt-0.5 h-4 w-4 flex-none accent-mint-500"
+            />
+            <span className="thai">
+              {L.agreePrefix}{" "}
+              <Link href="/terms" className="text-mint-700 underline">
+                {L.terms}
+              </Link>{" "}
+              {L.and}{" "}
+              <Link href="/privacy" className="text-mint-700 underline">
+                {L.privacy}
+              </Link>
+              .
+            </span>
+          </label>
+          <button
+            onClick={finish}
+            disabled={!agreed}
+            className="btn-primary mt-4 w-full disabled:cursor-not-allowed"
+          >
             {L.start} →
           </button>
           <button onClick={() => setStep("mode")} className="mt-2 block w-full text-center text-xs text-stone-500">
@@ -239,6 +263,10 @@ const EN = {
   standard: "Standard",
   start: "Start learning",
   changeSomething: "Change something",
+  agreePrefix: "I agree to the",
+  terms: "Terms of Service",
+  privacy: "Privacy Policy",
+  and: "and the",
 };
 
 const TH = {
@@ -277,6 +305,10 @@ const TH = {
   standard: "มาตรฐาน",
   start: "เริ่มเรียน",
   changeSomething: "แก้ไขบางอย่าง",
+  agreePrefix: "ฉันยอมรับ",
+  terms: "ข้อตกลงการใช้งาน",
+  privacy: "นโยบายความเป็นส่วนตัว",
+  and: "และ",
 };
 
 // --- UI atoms ---
@@ -339,11 +371,20 @@ function ProgressBar({ step, stepOrder }: { step: Step; stepOrder: Step[] }) {
   const idx = stepOrder.indexOf(step);
   const pct = Math.round(((idx + 1) / stepOrder.length) * 100);
   return (
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-stone-200">
-      <div
-        className="h-full rounded-full bg-gradient-to-r from-mint-500 to-mint-700 transition-all"
-        style={{ width: `${pct}%` }}
-      />
+    <div>
+      <div className="mb-2 flex items-center justify-between text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+        <span className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-mint-500" />
+          Step {idx + 1} of {stepOrder.length}
+        </span>
+        <span className="text-stone-400">{pct}%</span>
+      </div>
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-stone-200">
+        <div
+          className="h-full rounded-full bg-mint-500 shadow-[0_0_8px_rgba(52,211,153,.5)] transition-all"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
     </div>
   );
 }

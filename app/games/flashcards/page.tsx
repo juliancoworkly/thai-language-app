@@ -127,25 +127,25 @@ export default function FlashcardsPage() {
             <div className="mt-6 flex flex-wrap justify-center gap-2">
               <button
                 onClick={() => handleGrade(0)}
-                className="btn bg-red-100 text-red-800 hover:bg-red-200"
+                className="btn bg-stone-200 text-stone-800 hover:bg-stone-300"
               >
                 😵 Again
               </button>
               <button
                 onClick={() => handleGrade(1)}
-                className="btn bg-amber-100 text-amber-800 hover:bg-amber-200"
+                className="btn bg-stone-100 text-stone-700 hover:bg-stone-200"
               >
                 😬 Hard
               </button>
               <button
                 onClick={() => handleGrade(2)}
-                className="btn bg-green-100 text-green-800 hover:bg-green-200"
+                className="btn bg-mint-100 text-mint-800 hover:bg-mint-200"
               >
                 🙂 Good
               </button>
               <button
                 onClick={() => handleGrade(3)}
-                className="btn bg-blue-100 text-blue-800 hover:bg-blue-200"
+                className="btn bg-mint-500 text-ink-900 hover:bg-mint-400"
               >
                 😎 Easy
               </button>
