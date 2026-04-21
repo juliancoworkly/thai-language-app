@@ -39,9 +39,9 @@ export default function ReverseHome() {
           >
             💬 สนทนา
           </Link>
+          <GhostLink href="/reverse/scripts">📜 บทสนทนา</GhostLink>
           <GhostLink href="/reverse/flashcards">🃏 บัตรคำ</GhostLink>
           <GhostLink href="/reverse/matching">🪞 จับคู่</GhostLink>
-          <GhostLink href="/reverse/builder">🧩 เรียงประโยค</GhostLink>
           <GhostLink href="/reverse/words">📚 คลังประโยค ({total})</GhostLink>
         </div>
       </section>

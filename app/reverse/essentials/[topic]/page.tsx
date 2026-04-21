@@ -12,6 +12,10 @@ import { FoodContent } from "./content/food";
 import { WeatherContent } from "./content/weather";
 import { GreetingsContent } from "./content/greetings";
 import { ActionsContent } from "./content/actions";
+import { GrammarContent } from "./content/grammar";
+import { SchoolContent } from "./content/school";
+import { ClothesContent } from "./content/clothes";
+import { JobsContent } from "./content/jobs";
 
 export function generateStaticParams() {
   return reverseEssentials.map((e) => ({ topic: e.id }));
@@ -29,6 +33,10 @@ const CONTENT: Record<string, () => JSX.Element> = {
   weather: WeatherContent,
   greetings: GreetingsContent,
   actions: ActionsContent,
+  grammar: GrammarContent,
+  school: SchoolContent,
+  clothes: ClothesContent,
+  jobs: JobsContent,
 };
 
 export default function ReverseEssentialPage({
