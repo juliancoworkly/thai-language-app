@@ -81,11 +81,14 @@ function TrialEndedScreen({ profile: _profile }: { profile: Profile }) {
 }
 
 export function TrialBanner() {
+  const pathname = usePathname() ?? "/";
   const [profile, setProfile] = useState<Profile | null>(null);
   useEffect(() => {
     setProfile(getProfile());
   }, []);
 
+  // Landing page uses an absolute-positioned header that would overlap the banner.
+  if (pathname === "/") return null;
   if (!profile || profile.mode !== "thai") return null;
   const days = trialDaysLeft(profile);
   if (days === null) return null;

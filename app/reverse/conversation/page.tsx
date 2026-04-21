@@ -80,13 +80,13 @@ export default function ReverseConversationGame() {
     if (difficulty) setQueue(shuffle(pool));
   }, [difficulty, pool]);
 
-  if (!difficulty) return <DifficultyPicker onPick={setDifficulty} />;
-
   const current = queue[i];
   const options = useMemo(
     () => (current ? pickOptions(current, pool) : []),
     [current, pool]
   );
+
+  if (!difficulty) return <DifficultyPicker onPick={setDifficulty} />;
 
   if (!current) return <div className="card text-center">Loading…</div>;
 
