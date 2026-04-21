@@ -594,7 +594,7 @@ function PriceCard({
     >
       {highlighted && (
         <span className="absolute -top-3 left-6 rounded-full bg-ink-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-mint-300">
-          Most popular
+          Recommended
         </span>
       )}
       <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">

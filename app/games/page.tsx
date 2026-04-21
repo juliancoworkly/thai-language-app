@@ -79,7 +79,7 @@ export default function GamesPage() {
               <h3 className="font-semibold text-stone-900">{g.title}</h3>
               {g.featured && (
                 <span className="rounded-full bg-mint-500 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-900">
-                  New
+                  Start here
                 </span>
               )}
             </div>

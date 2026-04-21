@@ -326,6 +326,49 @@ export const words: Word[] = [
   { id: "muea-waan", thai: "เมื่อวาน", phonetic: "mɯ̂ɯa-waan", meaning: "yesterday", pos: "adverb" },
   { id: "phrung-nii", thai: "พรุ่งนี้", phonetic: "phrûng-níi", meaning: "tomorrow", pos: "adverb" },
   { id: "muea-rai", thai: "เมื่อไหร่", phonetic: "mɯ̂ɯa-rài", meaning: "when?", pos: "question", tone: "falling" },
+
+  // Prepositions — spatial and relational
+  { id: "bon", thai: "บน", phonetic: "bon", meaning: "on / above", pos: "preposition", tone: "mid" },
+  { id: "laang", thai: "ล่าง", phonetic: "lâang", meaning: "under / below", pos: "preposition", tone: "falling" },
+  { id: "naa-front", thai: "หน้า", phonetic: "nâa", meaning: "in front of", pos: "preposition", tone: "falling" },
+  { id: "lang-back", thai: "หลัง", phonetic: "lǎng", meaning: "behind", pos: "preposition", tone: "rising" },
+  { id: "khaang", thai: "ข้าง", phonetic: "khâang", meaning: "beside / next to", pos: "preposition", tone: "falling" },
+  { id: "nai-in", thai: "ใน", phonetic: "nai", meaning: "in / inside", pos: "preposition", tone: "mid" },
+  { id: "nɔɔk", thai: "นอก", phonetic: "nɔ̂ɔk", meaning: "outside", pos: "preposition", tone: "falling" },
+  { id: "rawaang", thai: "ระหว่าง", phonetic: "rá-wàang", meaning: "between / during", pos: "preposition" },
+  { id: "glai", thai: "ใกล้", phonetic: "glâi", meaning: "near", pos: "preposition", tone: "falling" },
+  { id: "klai", thai: "ไกล", phonetic: "glai", meaning: "far", pos: "preposition", tone: "mid" },
+  { id: "thueng", thai: "ถึง", phonetic: "thɯ̌ng", meaning: "to / until / arrive at", pos: "preposition", tone: "rising" },
+  { id: "tangtae", thai: "ตั้งแต่", phonetic: "dtâng-dtɛ̀ɛ", meaning: "since / from", pos: "preposition" },
+
+  // Question words — completion
+  { id: "khrai", thai: "ใคร", phonetic: "khrai", meaning: "who?", pos: "question", tone: "mid" },
+  { id: "yaangrai", thai: "อย่างไร", phonetic: "yàang-rai", meaning: "how? / in what way?", pos: "question" },
+  { id: "kii", thai: "กี่", phonetic: "gìi", meaning: "how many? (with classifier)", pos: "question", tone: "low" },
+
+  // Mood particles — the sentence-final flavour
+  { id: "la-q", thai: "ล่ะ", phonetic: "lâ", meaning: "so then? / what about…?", pos: "particle", tone: "falling" },
+  { id: "si", thai: "สิ", phonetic: "sì", meaning: "come on / emphatic nudge", pos: "particle", tone: "low" },
+  { id: "roer", thai: "เหรอ", phonetic: "rə̌ə", meaning: "really? / is that so?", pos: "particle", tone: "rising" },
+  { id: "jang", thai: "จัง", phonetic: "jang", meaning: "so much / very (warm emphasis)", pos: "particle", tone: "mid" },
+  { id: "ngai", thai: "ไง", phonetic: "ngai", meaning: "you know / right? (casual)", pos: "particle", tone: "mid" },
+
+  // Transport — beyond generic rot
+  { id: "rot-fai", thai: "รถไฟ", phonetic: "rót-fai", meaning: "train", pos: "noun" },
+  { id: "rot-mee", thai: "รถเมล์", phonetic: "rót-mee", meaning: "city bus", pos: "noun" },
+  { id: "rot-tua", thai: "รถทัวร์", phonetic: "rót-thua", meaning: "long-distance coach", pos: "noun" },
+  { id: "khrueang-bin", thai: "เครื่องบิน", phonetic: "khrɯ̂ang-bin", meaning: "plane", pos: "noun" },
+  { id: "ruea", thai: "เรือ", phonetic: "rɯa", meaning: "boat", pos: "noun" },
+  { id: "songthaew", thai: "สองแถว", phonetic: "sɔ̌ɔng-thɛ̌ɛo", meaning: "shared-taxi pickup (songthaew)", pos: "noun" },
+  { id: "tuk-tuk", thai: "ตุ๊กตุ๊ก", phonetic: "dtúk-dtúk", meaning: "tuk-tuk (three-wheeler)", pos: "noun" },
+
+  // Emotions — expansion beyond happy/sad/tired
+  { id: "groht", thai: "โกรธ", phonetic: "gròot", meaning: "angry", pos: "adjective", tone: "low" },
+  { id: "glua", thai: "กลัว", phonetic: "glua", meaning: "afraid / scared", pos: "adjective", tone: "mid" },
+  { id: "buea", thai: "เบื่อ", phonetic: "bɯ̀a", meaning: "bored / fed up", pos: "adjective", tone: "low" },
+  { id: "dtok-jai", thai: "ตกใจ", phonetic: "dtòk-jai", meaning: "startled / shocked", pos: "adjective" },
+  { id: "sapsɔn", thai: "สับสน", phonetic: "sàp-sǒn", meaning: "confused", pos: "adjective" },
+  { id: "witokgangwon", thai: "วิตกกังวล", phonetic: "wí-dtòk-gang-won", meaning: "worried / anxious", pos: "adjective" },
 ];
 
 export const wordById: Record<string, Word> = Object.fromEntries(
