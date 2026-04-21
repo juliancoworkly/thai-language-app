@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { scenarios } from "@/data/scenarios";
 import { sentences } from "@/data/sentences";
+import { scripts } from "@/data/scripts";
 import { SentenceBreakdown } from "@/components/SentenceBreakdown";
 import { load, markSentenceSeen, save, type Store } from "@/lib/storage";
 
@@ -98,6 +99,40 @@ export default function LearnClient({ scenario }: { scenario: string }) {
           </Link>
         )}
       </div>
+
+      <ScenarioScripts scenarioId={scenario} />
     </div>
+  );
+}
+
+function ScenarioScripts({ scenarioId }: { scenarioId: string }) {
+  const matching = scripts.filter((s) => s.scenario === scenarioId);
+  if (matching.length === 0) return null;
+
+  return (
+    <section className="rounded-2xl border border-mint-500/30 bg-mint-50 p-5">
+      <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+        Ready for a full dialogue?
+      </div>
+      <h2 className="mt-2 text-xl font-black tracking-tight text-stone-900">
+        See how it plays out end to end.
+      </h2>
+      <p className="mt-2 text-sm text-stone-700">
+        Scripts show the complete exchange: what they say, what you reply,
+        what to expect next. Faster than piecing it together from single
+        sentences.
+      </p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {matching.map((s) => (
+          <Link
+            key={s.id}
+            href={`/scripts/${s.id}`}
+            className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-800 transition hover:border-mint-400 hover:bg-white"
+          >
+            {s.emoji} {s.title} →
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }

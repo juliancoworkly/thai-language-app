@@ -7,6 +7,10 @@ import { ColorsEssential } from "./content/colors";
 import { FamilyEssential } from "./content/family";
 import { ClassifiersEssential } from "./content/classifiers";
 import { TonesEssential } from "./content/tones";
+import { TensesEssential } from "./content/tenses";
+import { NegationEssential } from "./content/negation";
+import { ComparativesEssential } from "./content/comparatives";
+import { PossessionEssential } from "./content/possession";
 import { EssentialShell } from "./content/shell";
 
 export function generateStaticParams() {
@@ -21,6 +25,10 @@ const CONTENT: Record<string, () => JSX.Element> = {
   family: FamilyEssential,
   classifiers: ClassifiersEssential,
   tones: TonesEssential,
+  tenses: TensesEssential,
+  negation: NegationEssential,
+  comparatives: ComparativesEssential,
+  possession: PossessionEssential,
 };
 
 export default function EssentialTopicPage({

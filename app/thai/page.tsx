@@ -40,6 +40,19 @@ export default function Home() {
     return scenarios.find((sc) => sc.id === last.scenario) ?? null;
   }, [store]);
 
+  // Days since last activity (falls back to 0 if never reviewed)
+  const daysAway = useMemo(() => {
+    if (!store) return 0;
+    const last = Object.values(store.cards).reduce(
+      (max, c) => Math.max(max, c.lastReviewedAt ?? 0),
+      0
+    );
+    if (!last) return 0;
+    return Math.floor((Date.now() - last) / 86_400_000);
+  }, [store]);
+
+  const isNewLearner = store ? store.seenSentences.length === 0 : true;
+
   return (
     <div className="space-y-12 py-4">
       {/* HERO ===================================================== */}
@@ -111,7 +124,68 @@ export default function Home() {
         </section>
       )}
 
-      {/* CONTINUE WHERE YOU LEFT OFF ============================= */}
+      {/* SMART NUDGE ============================================== */}
+      {isNewLearner && (
+        <section>
+          <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+            Start here
+          </div>
+          <h2 className="mt-2 text-xl font-black tracking-tight text-stone-900 sm:text-2xl">
+            Two places to begin.
+          </h2>
+          <p className="mt-1 text-sm text-stone-600">
+            Get your ear tuned to the five tones first, then grab the easiest
+            phrases in the catalogue.
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <Link
+              href="/essentials/tones"
+              className="group rounded-2xl border border-mint-500/30 bg-mint-50 p-5 transition hover:border-mint-500 hover:bg-mint-100"
+            >
+              <div className="flex items-center gap-3">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl shadow-sm">
+                  🎵
+                </div>
+                <div>
+                  <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+                    Step 1
+                  </div>
+                  <div className="font-semibold text-stone-900">
+                    The 5 tones
+                  </div>
+                </div>
+              </div>
+              <p className="mt-3 text-sm text-stone-700">
+                The hardest bit first. 3-minute read. Then your ear knows what to
+                listen for.
+              </p>
+            </Link>
+            <Link
+              href="/learn/greetings"
+              className="group rounded-2xl border border-stone-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-mint-300 hover:shadow-sm"
+            >
+              <div className="flex items-center gap-3">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-mint-50 text-2xl">
+                  👋
+                </div>
+                <div>
+                  <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-stone-500">
+                    Step 2
+                  </div>
+                  <div className="font-semibold text-stone-900">
+                    Greetings
+                  </div>
+                </div>
+              </div>
+              <p className="mt-3 text-sm text-stone-600">
+                Hello, thanks, sorry, no worries. Build your first 10 real
+                phrases today.
+              </p>
+            </Link>
+          </div>
+        </section>
+      )}
+
       {continueScenario && (
         <section>
           <Link
@@ -124,7 +198,7 @@ export default function Home() {
               </div>
               <div>
                 <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
-                  Continue
+                  {daysAway >= 3 ? `Welcome back, ${daysAway} days away` : "Continue"}
                 </div>
                 <div className="font-semibold text-stone-900">
                   {continueScenario.title}
@@ -219,7 +293,7 @@ export default function Home() {
             href="/essentials"
             className="hidden text-sm font-semibold text-mint-700 hover:text-mint-800 sm:inline"
           >
-            See all 7 →
+            See all 11 →
           </Link>
         </div>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

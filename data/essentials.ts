@@ -74,4 +74,44 @@ export const essentials: Essential[] = [
     level: 1,
     order: 7,
   },
+  {
+    id: "tenses",
+    title: "Tenses & time words",
+    titleThai: "กาล",
+    emoji: "⏱️",
+    description:
+      "Thai doesn't conjugate verbs. It just drops a time word next to them. Five markers unlock past, present, and future.",
+    level: 2,
+    order: 8,
+  },
+  {
+    id: "negation",
+    title: "Saying no",
+    titleThai: "ปฏิเสธ",
+    emoji: "🚫",
+    description:
+      "ไม่, ไม่ได้, ยังไม่, ไม่เคย. Four negatives that look similar and mean totally different things.",
+    level: 2,
+    order: 9,
+  },
+  {
+    id: "comparatives",
+    title: "More, most, very",
+    titleThai: "เปรียบเทียบ",
+    emoji: "📈",
+    description:
+      "How to compare things: spicier, cheapest, the most delicious noodles on the street.",
+    level: 3,
+    order: 10,
+  },
+  {
+    id: "possession",
+    title: "Possession & word order",
+    titleThai: "ของใคร",
+    emoji: "🧩",
+    description:
+      "My friend's brother's car. How ของ glues nouns together and how Thai sentence order actually works.",
+    level: 2,
+    order: 11,
+  },
 ];

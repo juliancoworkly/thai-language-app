@@ -2,9 +2,23 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { conversations, type ConversationTurn } from "@/data/conversations";
+import {
+  conversations,
+  levelOf,
+  type ConversationTurn,
+} from "@/data/conversations";
 import { PhoneticText } from "@/components/PhoneticText";
 import { speakThai, speakEnglish } from "@/lib/tts";
+import type { Level } from "@/lib/types";
+
+type Difficulty = "easy" | "medium" | "hard" | "mixed";
+
+const DIFFICULTY_RANGES: Record<Difficulty, [Level, Level]> = {
+  easy: [1, 2],
+  medium: [3, 3],
+  hard: [4, 5],
+  mixed: [1, 5],
+};
 
 const ENCOURAGEMENTS = [
   "🔥 Nailed it!",
@@ -15,7 +29,7 @@ const ENCOURAGEMENTS = [
 ];
 
 const COMMISERATIONS = [
-  "😬 Close — try the next one",
+  "😬 Close, try the next one",
   "💡 Good guess, wrong context",
   "📝 One to remember",
   "🤏 So close",
@@ -30,12 +44,22 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-function pickOptions(correct: ConversationTurn): string[] {
-  // Prefer distractors from same category; fill with random if not enough
-  const sameCat = conversations.filter(
+function filterByDifficulty(d: Difficulty): ConversationTurn[] {
+  const [min, max] = DIFFICULTY_RANGES[d];
+  return conversations.filter((c) => {
+    const lvl = levelOf(c);
+    return lvl >= min && lvl <= max;
+  });
+}
+
+function pickOptions(
+  correct: ConversationTurn,
+  pool: ConversationTurn[]
+): string[] {
+  const sameCat = pool.filter(
     (c) => c.id !== correct.id && c.category === correct.category
   );
-  const others = conversations.filter(
+  const others = pool.filter(
     (c) => c.id !== correct.id && c.category !== correct.category
   );
   const distractors = [
@@ -46,6 +70,7 @@ function pickOptions(correct: ConversationTurn): string[] {
 }
 
 export default function ConversationGame() {
+  const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [queue, setQueue] = useState<ConversationTurn[]>([]);
   const [i, setI] = useState(0);
   const [lives, setLives] = useState(3);
@@ -56,12 +81,24 @@ export default function ConversationGame() {
   const [reaction, setReaction] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
 
+  const pool = useMemo(
+    () => (difficulty ? filterByDifficulty(difficulty) : []),
+    [difficulty]
+  );
+
   useEffect(() => {
-    setQueue(shuffle(conversations));
-  }, []);
+    if (difficulty) setQueue(shuffle(pool));
+  }, [difficulty, pool]);
+
+  if (!difficulty) {
+    return <DifficultyPicker onPick={setDifficulty} />;
+  }
 
   const current = queue[i];
-  const options = useMemo(() => (current ? pickOptions(current) : []), [current]);
+  const options = useMemo(
+    () => (current ? pickOptions(current, pool) : []),
+    [current, pool]
+  );
 
   if (!current)
     return (
@@ -79,13 +116,17 @@ export default function ConversationGame() {
       const newStreak = streak + 1;
       setStreak(newStreak);
       if (newStreak > best) setBest(newStreak);
-      setReaction(ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]);
+      setReaction(
+        ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]
+      );
       speakEnglish(opt);
     } else {
       const remaining = lives - 1;
       setLives(remaining);
       setStreak(0);
-      setReaction(COMMISERATIONS[Math.floor(Math.random() * COMMISERATIONS.length)]);
+      setReaction(
+        COMMISERATIONS[Math.floor(Math.random() * COMMISERATIONS.length)]
+      );
       if (remaining <= 0) {
         setTimeout(() => setGameOver(true), 900);
       }
@@ -96,13 +137,13 @@ export default function ConversationGame() {
     setPicked(null);
     setReaction(null);
     if (i + 1 >= queue.length) {
-      setQueue(shuffle(conversations));
+      setQueue(shuffle(pool));
       setI(0);
     } else setI(i + 1);
   }
 
   function restart() {
-    setQueue(shuffle(conversations));
+    setQueue(shuffle(pool));
     setI(0);
     setLives(3);
     setScore(0);
@@ -118,12 +159,19 @@ export default function ConversationGame() {
         <div className="text-6xl">💀</div>
         <h1 className="text-2xl font-bold">Out of lives!</h1>
         <div className="text-stone-600">
-          Final score: <strong className="text-2xl text-mint-700">{score}</strong>
+          Final score:{" "}
+          <strong className="text-2xl text-mint-700">{score}</strong>
         </div>
         <div className="text-sm text-stone-500">Best streak: {best}</div>
         <div className="flex justify-center gap-2 pt-2">
           <button onClick={restart} className="btn-primary">
             🔄 Try again
+          </button>
+          <button
+            onClick={() => setDifficulty(null)}
+            className="btn-secondary"
+          >
+            Change level
           </button>
           <Link href="/games" className="btn-secondary">
             Back to games
@@ -136,8 +184,17 @@ export default function ConversationGame() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <Link href="/games" className="btn-ghost">← Games</Link>
+        <Link href="/games" className="btn-ghost">
+          ← Games
+        </Link>
         <div className="flex items-center gap-3 text-sm">
+          <button
+            onClick={() => setDifficulty(null)}
+            className="rounded-full border border-stone-300 bg-white px-3 py-1 text-xs font-semibold text-stone-700 hover:bg-stone-50"
+            title="Change difficulty"
+          >
+            {difficultyLabel(difficulty)}
+          </button>
           <span className="text-xl">
             {"❤️".repeat(lives)}
             <span className="opacity-20">{"🖤".repeat(3 - lives)}</span>
@@ -154,9 +211,7 @@ export default function ConversationGame() {
       </div>
 
       <div>
-        <h1 className="text-2xl font-bold text-stone-800">
-          💬 Conversation
-        </h1>
+        <h1 className="text-2xl font-bold text-stone-800">💬 Conversation</h1>
         <p className="text-stone-600">
           Someone says this in Thai. What do you reply in English?
         </p>
@@ -181,7 +236,11 @@ export default function ConversationGame() {
             {current.thai}
           </div>
           <div className="mt-2">
-            <PhoneticText phonetic={current.thaiPhonetic} size="lg" bold />
+            <PhoneticText
+              phonetic={current.thaiPhonetic}
+              size="lg"
+              bold
+            />
           </div>
         </div>
 
@@ -228,6 +287,101 @@ export default function ConversationGame() {
             </button>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function difficultyLabel(d: Difficulty): string {
+  switch (d) {
+    case "easy":
+      return "Easy · L1-2";
+    case "medium":
+      return "Medium · L3";
+    case "hard":
+      return "Hard · L4-5";
+    case "mixed":
+      return "Mixed";
+  }
+}
+
+function DifficultyPicker({
+  onPick,
+}: {
+  onPick: (d: Difficulty) => void;
+}) {
+  const options: {
+    id: Difficulty;
+    label: string;
+    desc: string;
+    count: number;
+    emoji: string;
+  }[] = (["easy", "medium", "hard", "mixed"] as Difficulty[]).map((d) => ({
+    id: d,
+    label:
+      d === "easy"
+        ? "Easy"
+        : d === "medium"
+        ? "Medium"
+        : d === "hard"
+        ? "Hard"
+        : "Mixed",
+    desc:
+      d === "easy"
+        ? "Greetings, food, basics · Level 1-2"
+        : d === "medium"
+        ? "Directions, service, taxi · Level 3"
+        : d === "hard"
+        ? "Fluency territory · Level 4-5"
+        : "Everything at once · Level 1-5",
+    count: filterByDifficulty(d).length,
+    emoji:
+      d === "easy"
+        ? "🌱"
+        : d === "medium"
+        ? "🌿"
+        : d === "hard"
+        ? "🌳"
+        : "🎲",
+  }));
+
+  return (
+    <div className="space-y-6 py-4">
+      <Link href="/games" className="btn-ghost inline-flex">
+        ← Games
+      </Link>
+
+      <div>
+        <span className="eyebrow-pill-light">Conversation</span>
+        <h1 className="display-h2 mt-4 text-stone-900">
+          Pick your{" "}
+          <span className="serif-i text-mint-700">difficulty</span>.
+        </h1>
+        <p className="mt-3 max-w-xl text-stone-600">
+          3 lives, streak bonuses. Start where you're comfortable. You can
+          change level anytime from the game header.
+        </p>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        {options.map((o) => (
+          <button
+            key={o.id}
+            onClick={() => onPick(o.id)}
+            className="group relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-mint-300 hover:shadow-md"
+          >
+            <div className="flex items-start justify-between">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-mint-50 text-2xl">
+                {o.emoji}
+              </div>
+              <span className="rounded-full border border-mint-500/25 bg-mint-50 px-2.5 py-1 text-[11px] font-mono text-mint-700">
+                {o.count} prompts
+              </span>
+            </div>
+            <div className="mt-4 text-xl font-bold text-stone-900">{o.label}</div>
+            <div className="mt-1 text-sm text-stone-500">{o.desc}</div>
+          </button>
+        ))}
       </div>
     </div>
   );

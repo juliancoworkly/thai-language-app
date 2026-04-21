@@ -1,6 +1,8 @@
 // Conversation pairs: a prompt in one language and the appropriate reply
 // in the other. Used by the Conversation game (3 lives, pick the correct
 // reply from 4 options).
+import type { Level } from "@/lib/types";
+
 export interface ConversationTurn {
   id: string;
   // Shown as the prompt
@@ -11,8 +13,28 @@ export interface ConversationTurn {
   // Short category for distractor grouping variety
   category: string;
   emoji: string;
+  // Optional difficulty. If omitted, levelOf() falls back to category default.
+  level?: Level;
   // Optional short note explaining the exchange
   note?: string;
+}
+
+// Category -> default level so we don't have to annotate every line.
+// New entries can override with an explicit `level`.
+const LEVEL_BY_CATEGORY: Record<string, Level> = {
+  greeting: 1,
+  food: 2,
+  weather: 2,
+  directions: 2,
+  taxi: 2,
+  shopping: 2,
+  service: 3,
+  emergency: 3,
+  smalltalk: 3,
+};
+
+export function levelOf(c: ConversationTurn): Level {
+  return c.level ?? LEVEL_BY_CATEGORY[c.category] ?? 2;
 }
 
 export const conversations: ConversationTurn[] = [
