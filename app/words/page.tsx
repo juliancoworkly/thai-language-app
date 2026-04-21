@@ -24,16 +24,28 @@ const POS_LABEL: Record<PartOfSpeech, string> = {
 export default function WordBank() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [activePos, setActivePos] = useState<PartOfSpeech | "all">("all");
+
+  // Available parts of speech sorted by how many words we have
+  const availablePos = useMemo(() => {
+    const counts: Partial<Record<PartOfSpeech, number>> = {};
+    for (const w of words) counts[w.pos] = (counts[w.pos] ?? 0) + 1;
+    return (Object.entries(counts) as [PartOfSpeech, number][])
+      .sort((a, b) => b[1] - a[1]);
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return words.filter((w) =>
-      !q ||
-      w.phonetic.toLowerCase().includes(q) ||
-      w.meaning.toLowerCase().includes(q) ||
-      w.thai.includes(q)
-    );
-  }, [query]);
+    return words.filter((w) => {
+      if (activePos !== "all" && w.pos !== activePos) return false;
+      if (!q) return true;
+      return (
+        w.phonetic.toLowerCase().includes(q) ||
+        w.meaning.toLowerCase().includes(q) ||
+        w.thai.includes(q)
+      );
+    });
+  }, [query, activePos]);
 
   const groups = useMemo(() => {
     const g: Partial<Record<PartOfSpeech, typeof words>> = {};
@@ -66,6 +78,27 @@ export default function WordBank() {
           placeholder="Search Thai, phonetic, or meaning…"
           className="w-full rounded-full border border-stone-300 bg-white px-5 py-3 text-sm shadow-sm focus:border-mint-500 focus:outline-none focus:ring-2 focus:ring-mint-500/20 sm:w-72"
         />
+      </div>
+
+      {/* Part-of-speech filter chips */}
+      <div className="-mx-1 flex flex-wrap gap-2">
+        <FilterChip
+          active={activePos === "all"}
+          onClick={() => setActivePos("all")}
+          count={words.length}
+        >
+          All
+        </FilterChip>
+        {availablePos.map(([pos, n]) => (
+          <FilterChip
+            key={pos}
+            active={activePos === pos}
+            onClick={() => setActivePos(pos)}
+            count={n}
+          >
+            {POS_LABEL[pos]}
+          </FilterChip>
+        ))}
       </div>
 
       {selectedId && (
@@ -128,5 +161,37 @@ export default function WordBank() {
         </div>
       )}
     </div>
+  );
+}
+
+function FilterChip({
+  active,
+  count,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  count: number;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
+        active
+          ? "border-mint-500 bg-mint-500 text-ink-900"
+          : "border-stone-200 bg-white text-stone-700 hover:border-mint-300 hover:bg-mint-50"
+      }`}
+    >
+      {children}
+      <span
+        className={`rounded-full px-1.5 py-0.5 text-[10px] font-mono tabular-nums ${
+          active ? "bg-ink-900 text-mint-300" : "bg-stone-100 text-stone-500"
+        }`}
+      >
+        {count}
+      </span>
+    </button>
   );
 }

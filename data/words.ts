@@ -253,6 +253,79 @@ export const words: Word[] = [
   { id: "raan", thai: "ร้าน", phonetic: "ráan", meaning: "shop / store", pos: "noun", tone: "high" },
   { id: "chaai-haat", thai: "ชายหาด", phonetic: "chaai-hàat", meaning: "beach", pos: "noun" },
   { id: "wat", thai: "วัด", phonetic: "wát", meaning: "temple", pos: "noun", tone: "high" },
+
+  // Numbers — fill the gap (0 and 20-90 multiples)
+  { id: "suun", thai: "ศูนย์", phonetic: "sǔun", meaning: "zero (0)", pos: "number", tone: "rising" },
+  { id: "et", thai: "เอ็ด", phonetic: "èt", meaning: "one (used in 11, 21, 31…)", pos: "number", tone: "low" },
+  { id: "yi-sip", thai: "ยี่สิบ", phonetic: "yîi-sìp", meaning: "twenty (20)", pos: "number" },
+  { id: "saam-sip", thai: "สามสิบ", phonetic: "sǎam-sìp", meaning: "thirty (30)", pos: "number" },
+  { id: "sii-sip", thai: "สี่สิบ", phonetic: "sìi-sìp", meaning: "forty (40)", pos: "number" },
+  { id: "haa-sip", thai: "ห้าสิบ", phonetic: "hâa-sìp", meaning: "fifty (50)", pos: "number" },
+  { id: "hok-sip", thai: "หกสิบ", phonetic: "hòk-sìp", meaning: "sixty (60)", pos: "number" },
+  { id: "jet-sip", thai: "เจ็ดสิบ", phonetic: "jèt-sìp", meaning: "seventy (70)", pos: "number" },
+  { id: "paet-sip", thai: "แปดสิบ", phonetic: "bpàet-sìp", meaning: "eighty (80)", pos: "number" },
+  { id: "gao-sip", thai: "เก้าสิบ", phonetic: "gâao-sìp", meaning: "ninety (90)", pos: "number" },
+  { id: "muen", thai: "หมื่น", phonetic: "mɯ̀ɯn", meaning: "ten thousand", pos: "number", tone: "low" },
+  { id: "saen", thai: "แสน", phonetic: "sɛ̌ɛn", meaning: "hundred thousand", pos: "number", tone: "rising" },
+  { id: "laan", thai: "ล้าน", phonetic: "láan", meaning: "million", pos: "number", tone: "high" },
+
+  // Classifiers — the missing grammar layer
+  { id: "khon-cl", thai: "คน", phonetic: "khon", meaning: "classifier: people", pos: "classifier", tone: "mid" },
+  { id: "dtua", thai: "ตัว", phonetic: "dtua", meaning: "classifier: animals, shirts, furniture", pos: "classifier", tone: "mid" },
+  { id: "an", thai: "อัน", phonetic: "an", meaning: "classifier: small generic things", pos: "classifier", tone: "mid" },
+  { id: "bai", thai: "ใบ", phonetic: "bai", meaning: "classifier: leaves, tickets, plates", pos: "classifier", tone: "mid" },
+  { id: "luuk-cl", thai: "ลูก", phonetic: "lûuk", meaning: "classifier: round fruit, balls, hills", pos: "classifier", tone: "falling" },
+  { id: "gaew", thai: "แก้ว", phonetic: "gɛ̂ɛo", meaning: "classifier: glass of (drinks)", pos: "classifier", tone: "falling" },
+  { id: "thuai", thai: "ถ้วย", phonetic: "thûai", meaning: "classifier: cup/bowl of", pos: "classifier", tone: "falling" },
+  { id: "khuat", thai: "ขวด", phonetic: "khùat", meaning: "classifier: bottles", pos: "classifier", tone: "low" },
+  { id: "jaan-cl", thai: "จาน", phonetic: "jaan", meaning: "classifier: plates of food", pos: "classifier", tone: "mid" },
+  { id: "khan-cl", thai: "คัน", phonetic: "khan", meaning: "classifier: cars, bikes", pos: "classifier", tone: "mid" },
+  { id: "lem", thai: "เล่ม", phonetic: "lêm", meaning: "classifier: books, knives", pos: "classifier", tone: "falling" },
+  { id: "chin", thai: "ชิ้น", phonetic: "chín", meaning: "classifier: pieces, slices", pos: "classifier", tone: "high" },
+  { id: "phaen", thai: "แผ่น", phonetic: "phɛ̀ɛn", meaning: "classifier: flat things (paper, tiles)", pos: "classifier", tone: "low" },
+  { id: "duang", thai: "ดวง", phonetic: "duang", meaning: "classifier: stars, stamps, lamps", pos: "classifier", tone: "mid" },
+  { id: "khuu", thai: "คู่", phonetic: "khûu", meaning: "classifier: pairs", pos: "classifier", tone: "falling" },
+
+  // Days of the week
+  { id: "wan-jan", thai: "วันจันทร์", phonetic: "wan-jan", meaning: "Monday", pos: "noun" },
+  { id: "wan-angkaan", thai: "วันอังคาร", phonetic: "wan-ang-khaan", meaning: "Tuesday", pos: "noun" },
+  { id: "wan-phut", thai: "วันพุธ", phonetic: "wan-phút", meaning: "Wednesday", pos: "noun" },
+  { id: "wan-pharuehat", thai: "วันพฤหัสบดี", phonetic: "wan-phá-rɯ́-hàt", meaning: "Thursday", pos: "noun" },
+  { id: "wan-suk", thai: "วันศุกร์", phonetic: "wan-sùk", meaning: "Friday", pos: "noun" },
+  { id: "wan-sao", thai: "วันเสาร์", phonetic: "wan-sǎo", meaning: "Saturday", pos: "noun" },
+  { id: "wan-aathit", thai: "วันอาทิตย์", phonetic: "wan-aa-thít", meaning: "Sunday", pos: "noun" },
+  { id: "sut-sapdaa", thai: "สุดสัปดาห์", phonetic: "sùt-sàp-daa", meaning: "weekend", pos: "noun" },
+
+  // Months
+  { id: "mokaraakhom", thai: "มกราคม", phonetic: "má-gà-raa-khom", meaning: "January", pos: "noun" },
+  { id: "kumphaaphan", thai: "กุมภาพันธ์", phonetic: "gum-phaa-phan", meaning: "February", pos: "noun" },
+  { id: "miinaakhom", thai: "มีนาคม", phonetic: "mii-naa-khom", meaning: "March", pos: "noun" },
+  { id: "meesaayon", thai: "เมษายน", phonetic: "mee-sǎa-yon", meaning: "April", pos: "noun" },
+  { id: "phruetsaphaakhom", thai: "พฤษภาคม", phonetic: "phrɯ́t-sà-phaa-khom", meaning: "May", pos: "noun" },
+  { id: "mithunaayon", thai: "มิถุนายน", phonetic: "mí-thù-naa-yon", meaning: "June", pos: "noun" },
+  { id: "karakadaakhom", thai: "กรกฎาคม", phonetic: "gà-rá-gà-daa-khom", meaning: "July", pos: "noun" },
+  { id: "singhaakhom", thai: "สิงหาคม", phonetic: "sǐng-hǎa-khom", meaning: "August", pos: "noun" },
+  { id: "kanyaayon", thai: "กันยายน", phonetic: "gan-yaa-yon", meaning: "September", pos: "noun" },
+  { id: "dtulaakhom", thai: "ตุลาคม", phonetic: "dtù-laa-khom", meaning: "October", pos: "noun" },
+  { id: "phruetsajikaayon", thai: "พฤศจิกายน", phonetic: "phrɯ́t-sà-jì-gaa-yon", meaning: "November", pos: "noun" },
+  { id: "thanwaakhom", thai: "ธันวาคม", phonetic: "than-waa-khom", meaning: "December", pos: "noun" },
+
+  // Extended family
+  { id: "bpuu", thai: "ปู่", phonetic: "bpùu", meaning: "grandfather (father's side)", pos: "noun", tone: "low" },
+  { id: "yaa-gm", thai: "ย่า", phonetic: "yâa", meaning: "grandmother (father's side)", pos: "noun", tone: "falling" },
+  { id: "dtaa-gf", thai: "ตา", phonetic: "dtaa", meaning: "grandfather (mother's side)", pos: "noun", tone: "mid" },
+  { id: "yaai", thai: "ยาย", phonetic: "yaai", meaning: "grandmother (mother's side)", pos: "noun", tone: "mid" },
+  { id: "lung", thai: "ลุง", phonetic: "lung", meaning: "uncle (older than parent)", pos: "noun", tone: "mid" },
+  { id: "bpaa", thai: "ป้า", phonetic: "bpâa", meaning: "aunt (older than parent)", pos: "noun", tone: "falling" },
+  { id: "naa-rel", thai: "น้า", phonetic: "náa", meaning: "aunt/uncle younger than mother", pos: "noun", tone: "high" },
+  { id: "aa", thai: "อา", phonetic: "aa", meaning: "aunt/uncle younger than father", pos: "noun", tone: "mid" },
+
+  // Time words
+  { id: "dtɔɔn-nii", thai: "ตอนนี้", phonetic: "dtɔɔn-níi", meaning: "now", pos: "adverb" },
+  { id: "wan-nii", thai: "วันนี้", phonetic: "wan-níi", meaning: "today", pos: "adverb" },
+  { id: "muea-waan", thai: "เมื่อวาน", phonetic: "mɯ̂ɯa-waan", meaning: "yesterday", pos: "adverb" },
+  { id: "phrung-nii", thai: "พรุ่งนี้", phonetic: "phrûng-níi", meaning: "tomorrow", pos: "adverb" },
+  { id: "muea-rai", thai: "เมื่อไหร่", phonetic: "mɯ̂ɯa-rài", meaning: "when?", pos: "question", tone: "falling" },
 ];
 
 export const wordById: Record<string, Word> = Object.fromEntries(

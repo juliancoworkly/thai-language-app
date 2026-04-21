@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { scenarios } from "@/data/scenarios";
 import { sentences } from "@/data/sentences";
+import { essentials } from "@/data/essentials";
 import { load, type Store } from "@/lib/storage";
 
 export default function Home() {
@@ -25,6 +26,19 @@ export default function Home() {
     : 0;
 
   const sortedScenarios = scenarios.slice().sort((a, b) => a.order - b.order);
+  const topEssentials = useMemo(
+    () => essentials.slice().sort((a, b) => a.order - b.order).slice(0, 4),
+    []
+  );
+
+  // "Continue where you left off" — most recently-met sentence's scenario
+  const continueScenario = useMemo(() => {
+    if (!store?.seenSentences.length) return null;
+    const lastId = store.seenSentences[store.seenSentences.length - 1];
+    const last = sentences.find((s) => s.id === lastId);
+    if (!last) return null;
+    return scenarios.find((sc) => sc.id === last.scenario) ?? null;
+  }, [store]);
 
   return (
     <div className="space-y-12 py-4">
@@ -91,6 +105,36 @@ export default function Home() {
         </section>
       )}
 
+      {/* CONTINUE WHERE YOU LEFT OFF ============================= */}
+      {continueScenario && (
+        <section>
+          <Link
+            href={`/learn/${continueScenario.id}`}
+            className="group flex items-center justify-between gap-4 rounded-2xl border border-mint-500/30 bg-mint-50 p-5 transition hover:border-mint-500 hover:bg-mint-100"
+          >
+            <div className="flex items-center gap-4">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-2xl shadow-sm">
+                {continueScenario.emoji}
+              </div>
+              <div>
+                <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+                  Continue
+                </div>
+                <div className="font-semibold text-stone-900">
+                  {continueScenario.title}
+                </div>
+                <div className="text-sm text-stone-600">
+                  {continueScenario.description}
+                </div>
+              </div>
+            </div>
+            <span className="text-mint-700 transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
+        </section>
+      )}
+
       {/* SCENARIOS ================================================ */}
       <section>
         <div className="flex items-end justify-between gap-4">
@@ -151,23 +195,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHY IT'S DIFFERENT ====================================== */}
-      <section className="rounded-2xl border border-stone-200 bg-white p-6 sm:p-8">
-        <span className="eyebrow-pill-light">Why it works</span>
-        <h2 className="mt-5 text-2xl font-black tracking-tight text-stone-900 sm:text-3xl">
-          Six habits baked into every lesson.
-        </h2>
-        <ul className="mt-5 grid gap-2 text-sm text-stone-700 sm:grid-cols-2">
-          <WhyLi>Sentence-first. Learn whole phrases you'll use today.</WhyLi>
-          <WhyLi>Tap any word to see its meaning, role, and tone.</WhyLi>
-          <WhyLi>Tone-coloured phonetics so your mouth knows what to do.</WhyLi>
-          <WhyLi>
-            Five memory games: flashcards, tone trainer, builder, pairs,
-            conversation.
-          </WhyLi>
-          <WhyLi>Spaced repetition. Hard words come back, easy ones don't.</WhyLi>
-          <WhyLi>Works offline. Progress syncs across your devices.</WhyLi>
-        </ul>
+      {/* ESSENTIALS ============================================== */}
+      <section>
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <span className="section-label text-mint-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-mint-500" />
+              Essentials
+            </span>
+            <h2 className="mt-2 text-2xl font-black tracking-tight text-stone-900 sm:text-3xl">
+              The{" "}
+              <span className="serif-i text-mint-700">foundations</span> everyone
+              hits early.
+            </h2>
+          </div>
+          <Link
+            href="/essentials"
+            className="hidden text-sm font-semibold text-mint-700 hover:text-mint-800 sm:inline"
+          >
+            See all 7 →
+          </Link>
+        </div>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {topEssentials.map((e) => (
+            <Link
+              key={e.id}
+              href={`/essentials/${e.id}`}
+              className="group rounded-2xl border border-stone-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-mint-300 hover:shadow-sm"
+            >
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-mint-50 text-xl">
+                {e.emoji}
+              </div>
+              <div className="mt-3 font-semibold text-stone-900">{e.title}</div>
+              {e.titleThai && (
+                <div className="thai mt-0.5 text-xs text-mint-700">
+                  {e.titleThai}
+                </div>
+              )}
+            </Link>
+          ))}
+        </div>
+        <Link
+          href="/essentials"
+          className="mt-4 inline-flex text-sm font-semibold text-mint-700 hover:text-mint-800 sm:hidden"
+        >
+          See all 7 essentials →
+        </Link>
       </section>
     </div>
   );
@@ -193,11 +266,3 @@ function HomeStat({
   );
 }
 
-function WhyLi({ children }: { children: React.ReactNode }) {
-  return (
-    <li className="flex items-start gap-2">
-      <span className="mt-0.5 text-mint-600">✓</span>
-      <span>{children}</span>
-    </li>
-  );
-}
