@@ -22,13 +22,19 @@ const FEMALE_EN = [
   "Microsoft Hazel", "Microsoft Eva", "Microsoft Jessa",
 ];
 
+// Google's Thai voice (same engine powering Google Translate) is preferred
+// first so the output sounds like Translate across Chrome / Android / Edge.
+// Apple and Microsoft native voices remain as fallbacks.
 const FEMALE_TH = [
+  // Google (Chrome / Android / Edge) — same voice family as Google Translate
+  "Google \u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22",
+  "Google Thai",
+  "Google th-TH",
+  "Google th",
   // Apple
   "Kanya", "Narisa",
   // Microsoft
-  "Microsoft Pattara",
-  // Google
-  "Google \u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22",
+  "Microsoft Pattara", "Microsoft Premwadee", "Microsoft Achara",
 ];
 
 function matchByNames(voices: SpeechSynthesisVoice[], names: string[]) {
@@ -47,6 +53,8 @@ function refreshCache() {
     if (!chosenThai) {
       chosenThai =
         matchByNames(cachedVoices, FEMALE_TH) ??
+        // Any Google Thai voice (same engine family as Google Translate)
+        cachedVoices.find((v) => v.lang.startsWith("th") && /google/i.test(v.name)) ??
         cachedVoices.find((v) => v.lang === "th-TH" && /female|woman|Kanya|Narisa/i.test(v.name)) ??
         cachedVoices.find((v) => v.lang === "th-TH") ??
         cachedVoices.find((v) => v.lang.startsWith("th")) ??
@@ -75,17 +83,17 @@ function speak(text: string, lang: Lang, rate: number) {
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang === "th" ? "th-TH" : "en-US";
   u.rate = rate;
-  // Clarity tweaks: full volume, slightly higher pitch than default to cut
-  // through the muffled low end some voices default to.
   u.volume = 1.0;
-  u.pitch = 1.1;
+  // Thai is tonal — use natural pitch so tones aren't shifted (matching
+  // Google Translate's playback). English keeps a slight lift for clarity.
+  u.pitch = lang === "th" ? 1.0 : 1.1;
   const voice = lang === "th" ? chosenThai : chosenEnglish;
   if (voice) u.voice = voice;
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(u);
 }
 
-export function speakThai(text: string, rate = 0.95): void {
+export function speakThai(text: string, rate = 1.0): void {
   speak(text, "th", rate);
 }
 
