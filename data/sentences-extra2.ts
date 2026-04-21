@@ -110,4 +110,45 @@ export const extraSentences2: Sentence[] = [
   { id: "l5-so3", scenario: "smalltalk", level: 5, emoji: "👨‍👩‍👧", thai: "ว่าจะพาครอบครัวกลับมาเที่ยวอีก", phonetic: "wâa jà phaa khrɔ̂ɔp-khrua glàp maa thîao ìik", meaning: "Thinking of bringing the family back for another trip", words: [] },
   { id: "l5-so4", scenario: "smalltalk", level: 5, emoji: "🙇", thai: "ขอบคุณนะครับ ซึ้งใจจริงๆ", phonetic: "khɔ̀ɔp-khun ná khráp, sɯ̂ng-jai jing-jing", meaning: "Thank you, I truly appreciate it (male)", words: [{ wordId: "khopkhun" }, { wordId: "na" }, { wordId: "khrap" }] },
   { id: "l5-so5", scenario: "smalltalk", level: 5, emoji: "⏳", thai: "ถ้ามีอะไรให้ช่วยบอกได้เลยนะ", phonetic: "thâa mii à-rai hâi chûai, bɔ̀ɔk dâai ləəi ná", meaning: "If there's anything I can help with, just say", words: [{ wordId: "loei" }, { wordId: "na" }] },
+
+  // ============== LEVEL 4 EXPANSION — conversational range ==============
+  { id: "l4-s1", scenario: "smalltalk", level: 4, emoji: "🏝️", thai: "ช่วงนี้ฝนตกเกือบทุกวันเลย", phonetic: "chûang-níi fǒn-dtòk gɯ̀ap thúk wan ləəi", meaning: "It's been raining almost every day lately", words: [{ wordId: "fon" }, { wordId: "loei" }] },
+  { id: "l4-s2", scenario: "smalltalk", level: 4, emoji: "🤔", thai: "คิดว่าจะอยู่ต่ออีกสักพัก", phonetic: "khít wâa jà yùu dtɔ̀ɔ ìik sàk phák", meaning: "I think I'll stay on a bit longer", words: [{ wordId: "khit" }] },
+  { id: "l4-s3", scenario: "smalltalk", level: 4, emoji: "😌", thai: "ทำงานที่บ้าน สะดวกดี", phonetic: "tham-ngaan thîi bâan, sà-dùak dii", meaning: "I work from home, it's convenient", words: [{ wordId: "dii" }] },
+  { id: "l4-s4", scenario: "smalltalk", level: 4, emoji: "🎉", thai: "เมื่อวานไปงานวันเกิดเพื่อน สนุกมาก", phonetic: "mɯ̂ɯa-waan bpai ngaan wan-gə̀ət phɯ̂an, sà-nùk mâak", meaning: "Yesterday I went to a friend's birthday, it was great fun", words: [{ wordId: "muea-waan" }, { wordId: "maak" }] },
+  { id: "l4-s5", scenario: "smalltalk", level: 4, emoji: "🚶", thai: "พรุ่งนี้จะไปเดินตลาดนัด", phonetic: "phrûng-níi jà bpai dəən dtà-làat-nát", meaning: "Tomorrow I'm going to walk the weekend market", words: [{ wordId: "phrung-nii" }] },
+  { id: "l4-s6", scenario: "smalltalk", level: 4, emoji: "😅", thai: "อากาศร้อนจนนอนไม่หลับเลย", phonetic: "aa-gàat rɔ́ɔn jon nɔɔn mâi làp ləəi", meaning: "The weather's so hot I couldn't sleep", words: [{ wordId: "rawn" }, { wordId: "mai-neg" }, { wordId: "loei" }] },
+
+  { id: "l4-f1", scenario: "food", level: 4, emoji: "🍲", thai: "มีเมนูแนะนำไหมครับ?", phonetic: "mii mee-nuu nɛ́-nam mǎi khráp?", meaning: "Do you have a recommended dish? (male)", words: [{ wordId: "mii" }, { wordId: "mai-q" }, { wordId: "khrap" }] },
+  { id: "l4-f2", scenario: "food", level: 4, emoji: "🥜", thai: "ผมแพ้ถั่วครับ", phonetic: "phǒm phɛ́ɛ thùa khráp", meaning: "I'm allergic to peanuts (male)", words: [{ wordId: "phom" }, { wordId: "khrap" }] },
+  { id: "l4-f3", scenario: "food", level: 4, emoji: "🛍️", thai: "ห่อกลับบ้านได้ไหมครับ?", phonetic: "hɔ̀ɔ glàp bâan dâai mǎi khráp?", meaning: "Can I take it away? (male)", words: [{ wordId: "baan" }, { wordId: "mai-q" }, { wordId: "khrap" }] },
+  { id: "l4-f4", scenario: "food", level: 4, emoji: "🌶️", thai: "ขอพริกน้ำปลาเพิ่มหน่อยครับ", phonetic: "khɔ̌ɔ phrík-náam-bplaa phə̂əm nɔ̀ɔi khráp", meaning: "A bit more chili fish sauce please (male)", words: [{ wordId: "khrap" }] },
+
+  { id: "l4-sh1", scenario: "shopping", level: 4, emoji: "💳", thai: "รับบัตรเครดิตไหมครับ?", phonetic: "ráp bàt-khree-dìt mǎi khráp?", meaning: "Do you take credit cards? (male)", words: [{ wordId: "mai-q" }, { wordId: "khrap" }] },
+  { id: "l4-sh2", scenario: "shopping", level: 4, emoji: "👕", thai: "มีไซส์อื่นไหมครับ?", phonetic: "mii sái ɯ̀ɯn mǎi khráp?", meaning: "Do you have another size? (male)", words: [{ wordId: "mii" }, { wordId: "mai-q" }, { wordId: "khrap" }] },
+  { id: "l4-sh3", scenario: "shopping", level: 4, emoji: "🧾", thai: "ขอใบเสร็จด้วยครับ", phonetic: "khɔ̌ɔ bai-sèt dûai khráp", meaning: "Receipt please (male)", words: [{ wordId: "bai" }, { wordId: "duai" }, { wordId: "khrap" }] },
+
+  { id: "l4-h1", scenario: "hotel", level: 4, emoji: "🔑", thai: "ลืมกุญแจไว้ในห้องครับ", phonetic: "lɯɯm gun-jɛɛ wái nai hɔ̂ng khráp", meaning: "I've left the key in the room (male)", words: [{ wordId: "nai-in" }, { wordId: "khrap" }] },
+  { id: "l4-h2", scenario: "hotel", level: 4, emoji: "📶", thai: "ไวไฟใช้ไม่ได้ครับ", phonetic: "wai-fai chái mâi dâai khráp", meaning: "The WiFi isn't working (male)", words: [{ wordId: "mai-neg" }, { wordId: "khrap" }] },
+
+  // ============== NUMBERS SCENARIO — thin -> fuller ==============
+  { id: "num-x1", scenario: "numbers", level: 1, emoji: "📞", thai: "เบอร์โทรศัพท์ของคุณคืออะไร?", phonetic: "bəə thoo-rá-sàp khɔ̌ɔng khun khɯɯ à-rai?", meaning: "What's your phone number?", words: [{ wordId: "khun" }, { wordId: "arai" }] },
+  { id: "num-x2", scenario: "numbers", level: 2, emoji: "🕐", thai: "ตอนนี้กี่โมงแล้ว?", phonetic: "dtɔɔn-níi gìi moong lɛ́ɛo?", meaning: "What time is it now?", words: [{ wordId: "dtɔɔn-nii" }, { wordId: "kii" }, { wordId: "laew" }] },
+  { id: "num-x3", scenario: "numbers", level: 2, emoji: "🎂", thai: "ผมอายุสามสิบปี", phonetic: "phǒm aa-yú sǎam-sìp bpii", meaning: "I'm 30 years old (male)", words: [{ wordId: "phom" }, { wordId: "saam-sip" }] },
+  { id: "num-x4", scenario: "numbers", level: 2, emoji: "🏠", thai: "บ้านเลขที่ 45", phonetic: "bâan lêek-thîi sìi-sìp-hâa", meaning: "House number 45", words: [{ wordId: "baan" }, { wordId: "sii-sip" }, { wordId: "haa" }] },
+  { id: "num-x5", scenario: "numbers", level: 3, emoji: "💰", thai: "ราคาห้าร้อยบาท", phonetic: "raa-khaa hâa-rɔ́ɔi bàat", meaning: "Five hundred baht", words: [{ wordId: "haa" }, { wordId: "roi" }, { wordId: "baht" }] },
+
+  // ============== DIRECTIONS SCENARIO — fuller with prepositions ==============
+  { id: "dir-x1", scenario: "directions", level: 2, emoji: "⬆️", thai: "ตรงไปข้างหน้า", phonetic: "dtrong bpai khâang nâa", meaning: "Straight ahead", words: [{ wordId: "khaang" }, { wordId: "naa-front" }] },
+  { id: "dir-x2", scenario: "directions", level: 2, emoji: "📍", thai: "อยู่ใกล้นี่เองครับ", phonetic: "yùu glâi nîi eeng khráp", meaning: "It's nearby (male)", words: [{ wordId: "yuu" }, { wordId: "glai" }, { wordId: "khrap" }] },
+  { id: "dir-x3", scenario: "directions", level: 3, emoji: "🏧", thai: "ตู้เอทีเอ็มอยู่ข้างร้านสะดวกซื้อ", phonetic: "dtûu ee-thii-em yùu khâang ráan sà-dùak-sɯ́ɯ", meaning: "The ATM is next to the convenience store", words: [{ wordId: "yuu" }, { wordId: "khaang" }, { wordId: "raan" }] },
+  { id: "dir-x4", scenario: "directions", level: 3, emoji: "🏢", thai: "ขึ้นลิฟต์ไปชั้นสาม", phonetic: "khɯ̂n líp bpai chán sǎam", meaning: "Take the lift to the third floor", words: [{ wordId: "bpai" }, { wordId: "saam" }] },
+  { id: "dir-x5", scenario: "directions", level: 3, emoji: "🌉", thai: "ข้ามสะพานแล้วเลี้ยวขวา", phonetic: "khâam sà-phaan lɛ́ɛo líao khwǎa", meaning: "Cross the bridge then turn right", words: [{ wordId: "laew" }] },
+
+  // ============== MEDICAL SCENARIO — fuller ==============
+  { id: "med-x1", scenario: "medical", level: 2, emoji: "🤒", thai: "ผมไม่สบายครับ", phonetic: "phǒm mâi sà-baai khráp", meaning: "I'm not feeling well (male)", words: [{ wordId: "phom" }, { wordId: "mai-neg" }, { wordId: "sabai" }, { wordId: "khrap" }] },
+  { id: "med-x2", scenario: "medical", level: 3, emoji: "🤧", thai: "ปวดท้องมาสองวันแล้วครับ", phonetic: "bpùat-thɔ́ɔng maa sɔ̌ɔng wan lɛ́ɛo khráp", meaning: "My stomach has hurt for two days (male)", words: [{ wordId: "song" }, { wordId: "laew" }, { wordId: "khrap" }] },
+  { id: "med-x3", scenario: "medical", level: 3, emoji: "💊", thai: "ยานี้กินก่อนอาหารหรือหลังครับ?", phonetic: "yaa níi gin gɔ̀ɔn aa-hǎan rɯ̌ɯ lǎng khráp?", meaning: "Take this before or after food? (male)", words: [{ wordId: "aahaan" }, { wordId: "lang-back" }, { wordId: "khrap" }] },
+  { id: "med-x4", scenario: "medical", level: 4, emoji: "🩺", thai: "ผมแพ้ยาปฏิชีวนะครับ", phonetic: "phǒm phɛ́ɛ yaa bpà-dtì-chii-wá-ná khráp", meaning: "I'm allergic to antibiotics (male)", words: [{ wordId: "phom" }, { wordId: "khrap" }] },
+  { id: "med-x5", scenario: "medical", level: 4, emoji: "🏥", thai: "โรงพยาบาลที่ใกล้ที่สุดอยู่ที่ไหนครับ?", phonetic: "roong-phá-yaa-baan thîi glâi thîi-sùt yùu thîi-nǎi khráp?", meaning: "Where's the nearest hospital? (male)", words: [{ wordId: "glai" }, { wordId: "yuu" }, { wordId: "khrap" }] },
 ];

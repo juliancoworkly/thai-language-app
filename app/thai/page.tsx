@@ -61,6 +61,12 @@ export default function Home() {
             🎮 Start a game
           </Link>
           <Link
+            href="/scripts"
+            className="rounded-full border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 transition hover:bg-stone-50"
+          >
+            📜 Read a script
+          </Link>
+          <Link
             href="/words"
             className="rounded-full border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 transition hover:bg-stone-50"
           >

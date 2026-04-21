@@ -117,7 +117,8 @@ export function Header() {
           ) : (
             <>
               <Link href="/essentials" className="btn-ghost">Essentials</Link>
-              <Link href="/words" className="btn-ghost">Word bank</Link>
+              <Link href="/scripts" className="btn-ghost">Scripts</Link>
+              <Link href="/words" className="btn-ghost">Words</Link>
               <Link href="/games" className="btn-ghost">Games</Link>
               {authLink}
               <Link href="/" className="btn-ghost">🏠</Link>
