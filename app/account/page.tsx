@@ -45,6 +45,9 @@ export default function AccountPage() {
   const cardsDue = store
     ? Object.values(store.cards).filter((c) => c.dueAt <= Date.now()).length
     : 0;
+  const profile = store?.profile;
+  const onboarded = profile?.onboarded === true;
+  const learnHref = profile?.mode === "english" ? "/reverse" : "/thai";
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
@@ -69,6 +72,38 @@ export default function AccountPage() {
           </span>
         </div>
       </div>
+
+      {!onboarded ? (
+        <div className="rounded-2xl border-2 border-mint-500/40 bg-mint-50 p-6 shadow-sm">
+          <div className="text-xs uppercase tracking-wide text-mint-800">
+            Finish setting up
+          </div>
+          <h2 className="mt-1 text-xl font-bold text-stone-900">
+            Your account is ready — let's pick your learning mode.
+          </h2>
+          <p className="mt-2 text-sm text-stone-700">
+            Lessons stay locked until you choose whether you want to learn Thai
+            or English. Takes about 30 seconds.
+          </p>
+          <Link href="/onboarding" className="btn-primary mt-4 w-full">
+            Continue setup →
+          </Link>
+        </div>
+      ) : (
+        <div className="rounded-2xl border-2 border-mint-500/40 bg-mint-50 p-6 shadow-sm">
+          <div className="text-xs uppercase tracking-wide text-mint-800">
+            Ready to learn
+          </div>
+          <h2 className="mt-1 text-xl font-bold text-stone-900">
+            {cardsDue > 0
+              ? `You have ${cardsDue} card${cardsDue === 1 ? "" : "s"} due.`
+              : "Jump back into your lessons."}
+          </h2>
+          <Link href={learnHref} className="btn-primary mt-4 w-full">
+            Resume learning →
+          </Link>
+        </div>
+      )}
 
       {store && (
         <div className="card">

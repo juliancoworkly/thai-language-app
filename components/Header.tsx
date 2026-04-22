@@ -14,9 +14,11 @@ export function Header() {
   const inOnboarding = pathname.startsWith("/onboarding");
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     setProfile(getProfile());
+    setMenuOpen(false);
   }, [pathname]);
 
   if (inOnboarding) {
@@ -81,15 +83,31 @@ export function Header() {
     <Link href="/login" className="btn-ghost">Sign in</Link>
   );
 
+  const navLinks = inReverse ? (
+    <>
+      <Link href="/reverse/essentials" className="btn-ghost thai">พื้นฐาน</Link>
+      <Link href="/reverse/scripts" className="btn-ghost thai">บทสนทนา</Link>
+      <Link href="/reverse/words" className="btn-ghost thai">คลังประโยค</Link>
+      <Link href="/reverse" className="btn-ghost">🎮</Link>
+    </>
+  ) : (
+    <>
+      <Link href="/essentials" className="btn-ghost">Essentials</Link>
+      <Link href="/scripts" className="btn-ghost">Scripts</Link>
+      <Link href="/words" className="btn-ghost">Words</Link>
+      <Link href="/games" className="btn-ghost">Games</Link>
+    </>
+  );
+
   return (
     <header className="sticky top-0 z-10 border-b border-stone-200 bg-white/80 backdrop-blur">
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href={homeHref} className="flex items-center gap-2">
+      <nav className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-3">
+        <Link href={homeHref} className="flex min-w-0 items-center gap-2">
           <span
-            className="h-2 w-2 rounded-full bg-mint-500 shadow-[0_0_8px_1px_rgba(52,211,153,.6)]"
+            className="h-2 w-2 flex-none rounded-full bg-mint-500 shadow-[0_0_8px_1px_rgba(52,211,153,.6)]"
             aria-hidden
           />
-          <span className="font-bold tracking-tight text-stone-900">
+          <span className="truncate font-bold tracking-tight text-stone-900">
             {inReverse ? (
               <span className="thai">{title}</span>
             ) : (
@@ -99,33 +117,42 @@ export function Header() {
             )}
           </span>
           {profile?.level && !inReverse && (
-            <span className="ml-1 rounded-full border border-mint-500/30 bg-mint-50 px-2 py-0.5 text-[10px] font-semibold text-mint-700">
+            <span className="ml-1 flex-none rounded-full border border-mint-500/30 bg-mint-50 px-2 py-0.5 text-[10px] font-semibold text-mint-700">
               L{profile.level}
             </span>
           )}
         </Link>
-        <div className="flex items-center gap-1 text-sm">
-          {inReverse ? (
-            <>
-              <Link href="/reverse/essentials" className="btn-ghost thai">พื้นฐาน</Link>
-              <Link href="/reverse/scripts" className="btn-ghost thai">บทสนทนา</Link>
-              <Link href="/reverse/words" className="btn-ghost thai">คลังประโยค</Link>
-              <Link href="/reverse" className="btn-ghost">🎮</Link>
-              {authLink}
-              <Link href="/" className="btn-ghost">🏠</Link>
-            </>
-          ) : (
-            <>
-              <Link href="/essentials" className="btn-ghost">Essentials</Link>
-              <Link href="/scripts" className="btn-ghost">Scripts</Link>
-              <Link href="/words" className="btn-ghost">Words</Link>
-              <Link href="/games" className="btn-ghost">Games</Link>
-              {authLink}
-              <Link href="/" className="btn-ghost">🏠</Link>
-            </>
-          )}
+
+        <div className="hidden items-center gap-1 text-sm md:flex">
+          {navLinks}
+          {authLink}
+          <Link href="/" className="btn-ghost">🏠</Link>
+        </div>
+
+        <div className="flex items-center gap-1 text-sm md:hidden">
+          {authLink}
+          <button
+            type="button"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            className="btn-ghost text-lg leading-none"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
         </div>
       </nav>
+
+      {menuOpen && (
+        <div className="border-t border-stone-200 bg-white md:hidden">
+          <div
+            className="mx-auto flex max-w-5xl flex-col gap-1 px-4 py-3 text-sm [&>a]:w-full [&>a]:justify-start"
+          >
+            {navLinks}
+            <Link href="/" className="btn-ghost">🏠 Home</Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

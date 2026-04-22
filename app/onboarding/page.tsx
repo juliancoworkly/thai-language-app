@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/components/AuthProvider";
 import { getProfile, saveProfile } from "@/lib/storage";
 import {
   LEVEL_LABEL,
@@ -18,6 +19,7 @@ type Step = "mode" | "gender" | "level" | "age" | "name" | "done";
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const { user } = useAuth();
   const [step, setStep] = useState<Step>("mode");
   const [draft, setDraft] = useState<Partial<Profile>>({});
   const [name, setName] = useState("");
@@ -35,6 +37,12 @@ export default function OnboardingPage() {
     ? ["mode", "level", "age", "name", "done"]
     : ["mode", "gender", "level", "age", "name", "done"];
 
+  function orderFor(d: Partial<Profile>): Step[] {
+    return d.mode === "english"
+      ? ["mode", "level", "age", "name", "done"]
+      : ["mode", "gender", "level", "age", "name", "done"];
+  }
+
   function next() {
     const idx = stepOrder.indexOf(step);
     if (idx < stepOrder.length - 1) setStep(stepOrder[idx + 1]);
@@ -46,8 +54,18 @@ export default function OnboardingPage() {
   }
 
   function pick(field: keyof Profile, value: string | number) {
-    setDraft((d) => ({ ...d, [field]: value }));
-    setTimeout(next, 200);
+    // Compute the next step from the updated draft synchronously — picking
+    // "mode" changes the stepOrder (Thai speakers skip the gender step), so
+    // relying on a closed-over stepOrder inside a setTimeout would advance to
+    // a step that no longer exists in the new order and leave the UI blank.
+    const updated = { ...draft, [field]: value };
+    setDraft(updated);
+    const nextOrder = orderFor(updated);
+    const idx = nextOrder.indexOf(step);
+    if (idx >= 0 && idx < nextOrder.length - 1) {
+      const target = nextOrder[idx + 1];
+      setTimeout(() => setStep(target), 200);
+    }
   }
 
   function finish() {
@@ -68,6 +86,12 @@ export default function OnboardingPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6 py-4">
+      {user && step !== "done" && (
+        <div className="rounded-2xl border border-mint-500/30 bg-mint-50 px-4 py-3 text-sm text-stone-700">
+          <span className="font-semibold text-mint-800">Signed in as {user.email}.</span>{" "}
+          Lessons unlock after you finish this quick setup.
+        </div>
+      )}
       <ProgressBar step={step} stepOrder={stepOrder} />
 
       {step === "mode" && (
@@ -189,6 +213,21 @@ export default function OnboardingPage() {
               {name.trim() ? `${L.continue} →` : `${L.skip} →`}
             </button>
           </div>
+        </Card>
+      )}
+
+      {!stepOrder.includes(step) && (
+        <Card
+          title={isThaiSpeaker ? "เริ่มใหม่อีกครั้ง" : "Let's start over"}
+          subtitle={
+            isThaiSpeaker
+              ? "เลือกภาษาเพื่อเริ่มตั้งค่าใหม่"
+              : "Pick your language to restart setup."
+          }
+        >
+          <button onClick={() => setStep("mode")} className="btn-primary w-full">
+            {isThaiSpeaker ? "เริ่มใหม่" : "Start over"} →
+          </button>
         </Card>
       )}
 
@@ -368,7 +407,8 @@ function Row({ label, value }: { label: string; value: string }) {
 }
 
 function ProgressBar({ step, stepOrder }: { step: Step; stepOrder: Step[] }) {
-  const idx = stepOrder.indexOf(step);
+  const rawIdx = stepOrder.indexOf(step);
+  const idx = rawIdx === -1 ? 0 : rawIdx;
   const pct = Math.round(((idx + 1) / stepOrder.length) * 100);
   return (
     <div>
