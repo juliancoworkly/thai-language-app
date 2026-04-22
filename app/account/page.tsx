@@ -1,17 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
-import { load, type Store } from "@/lib/storage";
+import { load, saveProfile, type Store } from "@/lib/storage";
 import { isPaidActive, trialDaysLeft } from "@/lib/subscription";
-import { LEVEL_SHORT } from "@/lib/types";
+import {
+  LEVEL_SHORT,
+  resolveUiLanguage,
+  type Mode,
+  type Profile,
+  type UiLanguage,
+} from "@/lib/types";
 
 export default function AccountPage() {
   const { user, loading, syncing } = useAuth();
+  const router = useRouter();
   const [store, setStore] = useState<Store | null>(null);
   const [signingOut, setSigningOut] = useState(false);
+  const [switching, setSwitching] = useState(false);
 
   useEffect(() => {
     setStore(load());
@@ -22,6 +31,29 @@ export default function AccountPage() {
     setSigningOut(true);
     await supabase.auth.signOut();
     setSigningOut(false);
+  }
+
+  function setUiLanguage(lang: UiLanguage) {
+    const current = store?.profile;
+    if (!current) return;
+    const updated: Profile = { ...current, uiLanguage: lang };
+    saveProfile(updated);
+    setStore((s) => (s ? { ...s, profile: updated } : s));
+  }
+
+  function confirmModeSwitch() {
+    const current = store?.profile;
+    if (!current) return;
+    const nextMode: Mode = current.mode === "thai" ? "english" : "thai";
+    const updated: Profile = {
+      ...current,
+      mode: nextMode,
+      onboarded: false,
+      modeSwitchCount: (current.modeSwitchCount ?? 0) + 1,
+      lastModeSwitchAt: Date.now(),
+    };
+    saveProfile(updated);
+    router.push("/onboarding");
   }
 
   if (loading) {
@@ -51,10 +83,19 @@ export default function AccountPage() {
   const onboarded = profile?.onboarded === true;
   const learnHref = profile?.mode === "english" ? "/reverse" : "/thai";
   const modeLabel =
-    profile?.mode === "english" ? "English (free)" : profile?.mode === "thai" ? "Thai" : "—";
+    profile?.mode === "english"
+      ? "Learning English (free)"
+      : profile?.mode === "thai"
+        ? "Learning Thai"
+        : "—";
+  const switchTargetLabel =
+    profile?.mode === "thai"
+      ? "Switch to English-for-Thai-speakers"
+      : "Switch to Thai-for-English-speakers";
   const levelLabel = profile?.level ? LEVEL_SHORT[profile.level] : "—";
   const daysLeft = trialDaysLeft(profile ?? null);
   const needsBilling = profile?.mode === "thai" && !isPaidActive(profile ?? null);
+  const activeUiLang = resolveUiLanguage(profile ?? null);
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
@@ -112,7 +153,7 @@ export default function AccountPage() {
         </div>
       )}
 
-      {onboarded && (
+      {onboarded && profile && (
         <div className="card">
           <div className="text-xs uppercase tracking-wide text-stone-500">
             Setup
@@ -127,12 +168,90 @@ export default function AccountPage() {
               <dd className="font-semibold text-stone-800">{levelLabel}</dd>
             </div>
           </dl>
-          <Link
-            href="/onboarding"
-            className="mt-3 inline-flex text-xs font-semibold text-mint-700 hover:text-mint-800"
-          >
-            Change settings →
-          </Link>
+
+          <div className="mt-4 flex items-center justify-between rounded-xl border border-stone-200 bg-stone-50 p-3">
+            <div>
+              <div className="text-xs uppercase tracking-wide text-stone-500">
+                Interface language
+              </div>
+              <div className="mt-0.5 text-xs text-stone-500">
+                Affects onboarding and account copy.
+              </div>
+            </div>
+            <div className="inline-flex rounded-full border border-stone-300 bg-white p-0.5 text-xs font-semibold">
+              <button
+                type="button"
+                onClick={() => setUiLanguage("en")}
+                className={`rounded-full px-3 py-1 transition ${
+                  activeUiLang === "en"
+                    ? "bg-mint-500 text-ink-900"
+                    : "text-stone-600 hover:text-stone-800"
+                }`}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setUiLanguage("th")}
+                className={`thai rounded-full px-3 py-1 transition ${
+                  activeUiLang === "th"
+                    ? "bg-mint-500 text-ink-900"
+                    : "text-stone-600 hover:text-stone-800"
+                }`}
+              >
+                ไทย
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-3 flex flex-wrap gap-3 text-xs">
+            <Link
+              href="/onboarding"
+              className="font-semibold text-mint-700 hover:text-mint-800"
+            >
+              Change level or kid mode →
+            </Link>
+            {!switching && (
+              <button
+                type="button"
+                onClick={() => setSwitching(true)}
+                className="font-semibold text-stone-600 hover:text-stone-800"
+              >
+                {switchTargetLabel} →
+              </button>
+            )}
+          </div>
+
+          {switching && (
+            <div className="mt-4 rounded-xl border border-stone-300 bg-stone-50 p-4 text-sm">
+              <div className="font-semibold text-stone-900">
+                {switchTargetLabel}?
+              </div>
+              <p className="mt-1 text-stone-600">
+                You'll redo the quick setup for the other side. Your progress
+                stays saved on this device and in your account
+                {profile.mode === "english"
+                  ? " — Thai learning starts with a 3-day free trial."
+                  : " — English for Thai speakers is free forever."}
+              </p>
+              <div className="mt-3 flex gap-2">
+                <button
+                  type="button"
+                  onClick={confirmModeSwitch}
+                  className="btn-primary"
+                >
+                  Yes, switch
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSwitching(false)}
+                  className="btn-secondary"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

@@ -8,6 +8,7 @@ import { getProfile, saveProfile } from "@/lib/storage";
 import {
   LEVEL_LABEL,
   LEVEL_SHORT,
+  resolveUiLanguage,
   type AgeMode,
   type Gender,
   type Level,
@@ -31,6 +32,10 @@ export default function OnboardingPage() {
   }, []);
 
   const isThaiSpeaker = draft.mode === "english";
+  // UI language defaults to Thai for the Thai-speaker branch and English for
+  // the English-speaker branch, but a user-set override takes precedence so
+  // e.g. a bilingual Thai speaker can go through Thai-learning setup in Thai.
+  const showThaiCopy = resolveUiLanguage(draft) === "th";
   // Thai speakers don't need to pick gender (they already know the particles
   // ครับ/ค่ะ) and level is their English level. Simpler flow.
   const stepOrder: Step[] = isThaiSpeaker
@@ -76,13 +81,21 @@ export default function OnboardingPage() {
       ageMode: (draft.ageMode ?? "adult") as AgeMode,
       name: name.trim() || undefined,
       onboarded: true,
+      // Preserve the mode-switch history and any explicit UI-language
+      // override set in a previous session so a bilingual user keeps
+      // their preferred interface language across setups.
+      uiLanguage: draft.uiLanguage,
+      modeSwitchCount: draft.modeSwitchCount,
+      lastModeSwitchAt: draft.lastModeSwitchAt,
+      subscription: draft.subscription,
+      trialStartedAt: draft.trialStartedAt,
     };
     saveProfile(profile);
     router.push(profile.mode === "thai" ? "/thai" : "/reverse");
   }
 
   // Labels in the right language for each step
-  const L = isThaiSpeaker ? TH : EN;
+  const L = showThaiCopy ? TH : EN;
 
   return (
     <div className="mx-auto max-w-2xl space-y-6 py-4">
@@ -164,10 +177,10 @@ export default function OnboardingPage() {
                 </div>
                 <div>
                   <div className="font-semibold text-stone-800">
-                    {isThaiSpeaker ? L.levelShort[lvl] : LEVEL_SHORT[lvl]}
+                    {showThaiCopy ? L.levelShort[lvl] : LEVEL_SHORT[lvl]}
                   </div>
                   <div className="text-sm text-stone-500">
-                    {isThaiSpeaker ? L.levelLabel[lvl] : LEVEL_LABEL[lvl]}
+                    {showThaiCopy ? L.levelLabel[lvl] : LEVEL_LABEL[lvl]}
                   </div>
                 </div>
               </button>
@@ -218,15 +231,15 @@ export default function OnboardingPage() {
 
       {!stepOrder.includes(step) && (
         <Card
-          title={isThaiSpeaker ? "เริ่มใหม่อีกครั้ง" : "Let's start over"}
+          title={showThaiCopy ? "เริ่มใหม่อีกครั้ง" : "Let's start over"}
           subtitle={
-            isThaiSpeaker
+            showThaiCopy
               ? "เลือกภาษาเพื่อเริ่มตั้งค่าใหม่"
               : "Pick your language to restart setup."
           }
         >
           <button onClick={() => setStep("mode")} className="btn-primary w-full">
-            {isThaiSpeaker ? "เริ่มใหม่" : "Start over"} →
+            {showThaiCopy ? "เริ่มใหม่" : "Start over"} →
           </button>
         </Card>
       )}
@@ -238,7 +251,7 @@ export default function OnboardingPage() {
             {!isThaiSpeaker && (
               <Row label="Pronoun" value={draft.gender === "female" ? "ฉัน / ค่ะ" : "ผม / ครับ"} />
             )}
-            <Row label="Level" value={draft.level ? `${isThaiSpeaker ? L.levelShort[draft.level as Level] : LEVEL_SHORT[draft.level as Level]}` : ""} />
+            <Row label="Level" value={draft.level ? `${showThaiCopy ? L.levelShort[draft.level as Level] : LEVEL_SHORT[draft.level as Level]}` : ""} />
             <Row label="Mode" value={draft.ageMode === "kid" ? L.kid : L.standard} />
           </div>
           <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-xl border border-stone-200 bg-white p-3 text-sm text-stone-700">
