@@ -8,7 +8,7 @@ import { ServiceWorkerBoot } from "@/components/ServiceWorkerBoot";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Thai & English — Phuut Thai",
+  title: "Thai & English · Phuut Thai",
   description:
     "Real, everyday Thai you'll actually use. With memory games, word-by-word breakdowns, and a free English mode for Thai nationals.",
   manifest: "/manifest.json",
