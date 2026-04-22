@@ -26,9 +26,39 @@ export default function ReverseHome() {
   const isNewLearner = store
     ? Object.keys(store.cards).length === 0 && store.seenSentences.length === 0
     : true;
+  const isOnboarded = store?.profile?.onboarded === true;
 
   return (
     <div className="space-y-12 py-4">
+      {store !== null && !isOnboarded && (
+        <section className="rounded-2xl border-2 border-mint-500/40 bg-mint-50 p-5 shadow-sm">
+          <div className="thai text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+            ฟรีสำหรับคนไทย
+          </div>
+          <h2 className="thai mt-2 text-xl font-bold text-stone-900">
+            ตั้งค่า 30 วิ แล้วเริ่มเรียนได้เลย
+          </h2>
+          <p className="thai mt-1 text-sm text-stone-700">
+            บันทึกความคืบหน้าบนทุกอุปกรณ์ เลือกระดับและอายุ
+            แล้วเริ่มเรียนภาษาอังกฤษฟรีตลอดไป
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Link
+              href="/onboarding"
+              className="thai rounded-full bg-mint-500 px-5 py-2.5 text-sm font-semibold text-ink-900 shadow-glow transition hover:scale-[1.02] hover:bg-mint-400"
+            >
+              เริ่มฟรี →
+            </Link>
+            <Link
+              href="/login"
+              className="thai rounded-full border border-stone-300 bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 hover:bg-stone-50"
+            >
+              เข้าสู่ระบบ
+            </Link>
+          </div>
+        </section>
+      )}
+
       {/* HERO ===================================================== */}
       <section>
         <span className="eyebrow-pill-light">ฟรีตลอดไป · Free forever</span>

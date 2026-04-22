@@ -93,17 +93,42 @@ export function speakEnglish(text: string, rate = 1.0): void {
   speak(text, "en", rate);
 }
 
+// Cache which audio ids exist so we don't fire a request for every miss.
+const audioStatus = new Map<string, boolean>();
+
 export async function playAudio(id: string, thaiText: string): Promise<void> {
   if (typeof window === "undefined") return;
-  try {
-    const res = await fetch(`/audio/${id}.mp3`, { method: "HEAD" });
-    if (res.ok) {
-      const audio = new Audio(`/audio/${id}.mp3`);
-      await audio.play();
-      return;
-    }
-  } catch {
-    // fall through
+  // If we already know this id has no mp3, skip straight to TTS and avoid
+  // an extra HTTP request that shows up as noise in the network tab.
+  if (audioStatus.get(id) === false) {
+    speakThai(thaiText);
+    return;
   }
-  speakThai(thaiText);
+  const audio = new Audio(`/audio/${id}.mp3`);
+  const played = await new Promise<boolean>((resolve) => {
+    const onError = () => {
+      cleanup();
+      resolve(false);
+    };
+    const onCanPlay = () => {
+      audio
+        .play()
+        .then(() => {
+          cleanup();
+          resolve(true);
+        })
+        .catch(() => {
+          cleanup();
+          resolve(false);
+        });
+    };
+    function cleanup() {
+      audio.removeEventListener("error", onError);
+      audio.removeEventListener("canplaythrough", onCanPlay);
+    }
+    audio.addEventListener("error", onError, { once: true });
+    audio.addEventListener("canplaythrough", onCanPlay, { once: true });
+  });
+  audioStatus.set(id, played);
+  if (!played) speakThai(thaiText);
 }
