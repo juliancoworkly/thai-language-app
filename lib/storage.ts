@@ -52,8 +52,99 @@ export function load(): Store {
 let currentUserId: string | null = null;
 let pushTimer: ReturnType<typeof setTimeout> | null = null;
 
+// Some production deployments of Supabase haven't yet run the migration
+// that adds user_progress.profile. Detect the schema error once, remember
+// it in localStorage, and retry every so often so the app recovers
+// automatically when the migration lands.
+const PROFILE_SUPPORT_KEY = "phuut-thai:profile-col-v1";
+const PROFILE_RETRY_AFTER_MS = 24 * 60 * 60 * 1000;
+
+interface ProfileSupport {
+  supported: boolean;
+  checkedAt: number;
+}
+
+function loadProfileSupport(): boolean {
+  if (typeof window === "undefined") return true;
+  try {
+    const raw = window.localStorage.getItem(PROFILE_SUPPORT_KEY);
+    if (!raw) return true;
+    const parsed = JSON.parse(raw) as ProfileSupport;
+    if (parsed.supported) return true;
+    if (Date.now() - parsed.checkedAt > PROFILE_RETRY_AFTER_MS) return true;
+    return false;
+  } catch {
+    return true;
+  }
+}
+
+function saveProfileSupport(supported: boolean): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(
+      PROFILE_SUPPORT_KEY,
+      JSON.stringify({ supported, checkedAt: Date.now() })
+    );
+  } catch {
+    /* ignore storage quota errors */
+  }
+}
+
+let profileColumnSupported = loadProfileSupport();
+let warnedAboutMissingProfile = false;
+
+function isProfileColumnError(err: unknown): boolean {
+  if (!err || typeof err !== "object") return false;
+  const e = err as { code?: string; message?: string };
+  // 42703: PostgREST passes through Postgres "undefined_column"
+  if (e.code === "42703") return true;
+  // PGRST204: PostgREST schema cache miss on write
+  if (e.code === "PGRST204" && e.message?.toLowerCase().includes("profile")) {
+    return true;
+  }
+  return false;
+}
+
+function markProfileUnsupported(): void {
+  profileColumnSupported = false;
+  saveProfileSupport(false);
+  if (!warnedAboutMissingProfile && typeof console !== "undefined") {
+    warnedAboutMissingProfile = true;
+    console.warn(
+      "[thai-language-app] user_progress.profile column missing in Supabase. " +
+        "Profile will not sync across devices until the migration is applied:\n" +
+        "  alter table public.user_progress add column if not exists profile jsonb;"
+    );
+  }
+}
+
 export function setCloudUser(userId: string | null): void {
   currentUserId = userId;
+}
+
+async function upsertWithFallback(store: Store, uid: string): Promise<void> {
+  if (!supabase) return;
+  const base = {
+    user_id: uid,
+    cards: store.cards,
+    seen_sentences: store.seenSentences,
+    seen_words: store.seenWords,
+    stats: store.stats,
+  };
+  const payload = profileColumnSupported
+    ? { ...base, profile: store.profile ?? null }
+    : base;
+  const { error } = await supabase.from("user_progress").upsert(payload);
+  if (error && isProfileColumnError(error) && profileColumnSupported) {
+    markProfileUnsupported();
+    await supabase.from("user_progress").upsert(base);
+    return;
+  }
+  if (!error && !profileColumnSupported) {
+    // Migration has landed — clear the flag so profile syncs again.
+    profileColumnSupported = true;
+    saveProfileSupport(true);
+  }
 }
 
 function scheduleCloudPush(store: Store): void {
@@ -62,14 +153,7 @@ function scheduleCloudPush(store: Store): void {
   const uid = currentUserId;
   pushTimer = setTimeout(async () => {
     try {
-      await supabase!.from("user_progress").upsert({
-        user_id: uid,
-        cards: store.cards,
-        seen_sentences: store.seenSentences,
-        seen_words: store.seenWords,
-        stats: store.stats,
-        profile: store.profile ?? null,
-      });
+      await upsertWithFallback(store, uid);
     } catch {
       // Offline or transient error — next save will retry.
     }
@@ -84,24 +168,41 @@ export function save(store: Store): void {
 
 // --- Cloud pull + merge ---
 
+const SELECT_WITH_PROFILE = "cards, seen_sentences, seen_words, stats, profile";
+const SELECT_NO_PROFILE = "cards, seen_sentences, seen_words, stats";
+
 export async function pullFromCloud(userId: string): Promise<Store | null> {
   if (!supabase) return null;
-  const { data, error } = await supabase
+  const cols = profileColumnSupported ? SELECT_WITH_PROFILE : SELECT_NO_PROFILE;
+  let { data, error } = await supabase
     .from("user_progress")
-    .select("cards, seen_sentences, seen_words, stats, profile")
+    .select(cols)
     .eq("user_id", userId)
     .maybeSingle();
+  if (error && isProfileColumnError(error) && profileColumnSupported) {
+    markProfileUnsupported();
+    ({ data, error } = await supabase
+      .from("user_progress")
+      .select(SELECT_NO_PROFILE)
+      .eq("user_id", userId)
+      .maybeSingle());
+  }
   if (error || !data) return null;
+  if (!error && profileColumnSupported === false && "profile" in data) {
+    profileColumnSupported = true;
+    saveProfileSupport(true);
+  }
+  const row = data as unknown as Record<string, unknown>;
   return {
-    cards: (data.cards as Record<string, CardState>) ?? {},
-    seenSentences: (data.seen_sentences as string[]) ?? [],
-    seenWords: (data.seen_words as string[]) ?? [],
-    stats: (data.stats as Store["stats"]) ?? {
+    cards: (row.cards as Record<string, CardState>) ?? {},
+    seenSentences: (row.seen_sentences as string[]) ?? [],
+    seenWords: (row.seen_words as string[]) ?? [],
+    stats: (row.stats as Store["stats"]) ?? {
       reviewsToday: 0,
       lastReviewDay: today(),
       totalReviews: 0,
     },
-    profile: (data.profile as Profile) ?? undefined,
+    profile: (row.profile as Profile | undefined) ?? undefined,
   };
 }
 
