@@ -264,6 +264,137 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* LIVE PREVIEW ============================================= */}
+      <section className="relative bg-stone-50 px-6 py-20 text-stone-900">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-end">
+            <div>
+              <span className="eyebrow-pill-light">A quick look</span>
+              <h2 className="display-h2 mt-4 max-w-2xl">
+                What the{" "}
+                <span className="serif-i text-stone-500">app</span> actually
+                looks like.
+              </h2>
+            </div>
+            <p className="max-w-md text-stone-600">
+              Real content, not mock-ups. Tap words to break them down, tap
+              audio to hear native-style pronunciation.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {/* Word-by-word breakdown preview */}
+            <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+                  Word by word
+                </span>
+                <span className="rounded-full border border-stone-200 bg-stone-50 px-2 py-0.5 text-[10px] font-semibold text-stone-600">
+                  Level 2
+                </span>
+              </div>
+              <div className="mt-4 thai text-3xl font-bold text-stone-900">
+                ฉัน อยาก กิน ข้าวผัด
+              </div>
+              <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm font-mono">
+                <span className="tone-mid">chǎn</span>
+                <span className="tone-low">yàak</span>
+                <span className="tone-mid">gin</span>
+                <span className="tone-falling">khâao-phàt</span>
+              </div>
+              <div className="mt-3 text-base text-stone-600">
+                &ldquo;I want to eat fried rice.&rdquo;
+              </div>
+              <div className="mt-5 grid grid-cols-4 gap-2">
+                {[
+                  { th: "ฉัน", roman: "chǎn", en: "I (female)", tone: "tone-rising" },
+                  { th: "อยาก", roman: "yàak", en: "want", tone: "tone-low" },
+                  { th: "กิน", roman: "gin", en: "eat", tone: "tone-mid" },
+                  { th: "ข้าวผัด", roman: "khâao-phàt", en: "fried rice", tone: "tone-falling" },
+                ].map((w) => (
+                  <div
+                    key={w.th}
+                    className="rounded-xl border border-stone-200 bg-stone-50 p-2 text-center"
+                  >
+                    <div className="thai text-base font-semibold text-stone-900">
+                      {w.th}
+                    </div>
+                    <div className={`text-[11px] font-mono ${w.tone}`}>
+                      {w.roman}
+                    </div>
+                    <div className="mt-1 text-[11px] text-stone-500">{w.en}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex items-center gap-2 text-xs text-stone-500">
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-mint-500/10 text-mint-700">
+                  🔊
+                </span>
+                Tap to hear the whole sentence or any single word.
+              </div>
+            </div>
+
+            {/* Conversation drill preview */}
+            <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-mint-700">
+                  Conversation
+                </span>
+                <div className="flex items-center gap-1 text-xs text-stone-500">
+                  <span>❤️ ❤️ 🤍</span>
+                  <span className="ml-2 rounded-full bg-mint-500/10 px-2 py-0.5 text-mint-700">
+                    Streak 4
+                  </span>
+                </div>
+              </div>
+              <div className="mt-4 rounded-2xl border border-stone-200 bg-stone-50 p-4">
+                <div className="text-[11px] uppercase tracking-wider text-stone-500">
+                  They said
+                </div>
+                <div className="thai mt-1 text-xl font-semibold text-stone-900">
+                  เอาเผ็ดไหม
+                </div>
+                <div className="mt-1 text-sm font-mono text-stone-600">
+                  ao phèt mái?
+                </div>
+              </div>
+              <div className="mt-4 text-[11px] uppercase tracking-wider text-stone-500">
+                You reply
+              </div>
+              <div className="mt-2 space-y-2">
+                <div className="rounded-xl border-2 border-mint-500 bg-mint-50 p-3 text-sm text-stone-900">
+                  <span className="mr-2 font-bold text-mint-700">A</span>
+                  Yes, but not too spicy please.
+                  <span className="ml-2 text-mint-700">✓</span>
+                </div>
+                <div className="rounded-xl border border-stone-200 bg-white p-3 text-sm text-stone-600">
+                  <span className="mr-2 font-bold text-stone-500">B</span>
+                  The bus stops here.
+                </div>
+                <div className="rounded-xl border border-stone-200 bg-white p-3 text-sm text-stone-600">
+                  <span className="mr-2 font-bold text-stone-500">C</span>
+                  I&apos;ve already paid.
+                </div>
+              </div>
+              <div className="mt-4 text-xs text-stone-500">
+                3 lives, streak bonuses, pulls from the same 400+ sentences you
+                practice everywhere else.
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href={startHref}
+              className="inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-ink-800"
+            >
+              Try it yourself{" "}
+              <span className="transition-transform">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* OTHER APPS =============================================== */}
       <section className="relative bg-stone-50 px-6 py-20 text-stone-900">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12">

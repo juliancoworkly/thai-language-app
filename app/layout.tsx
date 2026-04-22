@@ -57,7 +57,7 @@ export default function RootLayout({
               </div>
               <div className="flex flex-wrap justify-center gap-4 text-[11px]">
                 <a href="/" className="hover:text-white">Home</a>
-                <a href="/thai" className="hover:text-white">Learn Thai</a>
+                <a href="/onboarding" className="hover:text-white">Learn Thai</a>
                 <a href="/reverse" className="hover:text-white">Free for Thais</a>
                 <a href="/login" className="hover:text-white">Sign in</a>
               </div>

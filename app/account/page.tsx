@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import { load, type Store } from "@/lib/storage";
+import { isPaidActive, trialDaysLeft } from "@/lib/subscription";
+import { LEVEL_SHORT } from "@/lib/types";
 
 export default function AccountPage() {
   const { user, loading, syncing } = useAuth();
@@ -48,6 +50,11 @@ export default function AccountPage() {
   const profile = store?.profile;
   const onboarded = profile?.onboarded === true;
   const learnHref = profile?.mode === "english" ? "/reverse" : "/thai";
+  const modeLabel =
+    profile?.mode === "english" ? "English (free)" : profile?.mode === "thai" ? "Thai" : "—";
+  const levelLabel = profile?.level ? LEVEL_SHORT[profile.level] : "—";
+  const daysLeft = trialDaysLeft(profile ?? null);
+  const needsBilling = profile?.mode === "thai" && !isPaidActive(profile ?? null);
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
@@ -105,6 +112,30 @@ export default function AccountPage() {
         </div>
       )}
 
+      {onboarded && (
+        <div className="card">
+          <div className="text-xs uppercase tracking-wide text-stone-500">
+            Setup
+          </div>
+          <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <dt className="text-stone-500">Mode</dt>
+              <dd className="font-semibold text-stone-800">{modeLabel}</dd>
+            </div>
+            <div>
+              <dt className="text-stone-500">Level</dt>
+              <dd className="font-semibold text-stone-800">{levelLabel}</dd>
+            </div>
+          </dl>
+          <Link
+            href="/onboarding"
+            className="mt-3 inline-flex text-xs font-semibold text-mint-700 hover:text-mint-800"
+          >
+            Change settings →
+          </Link>
+        </div>
+      )}
+
       {store && (
         <div className="card">
           <div className="text-xs uppercase tracking-wide text-stone-500">
@@ -135,6 +166,27 @@ export default function AccountPage() {
             </div>
           </dl>
         </div>
+      )}
+
+      {profile?.mode === "thai" && (
+        <Link
+          href="/account/billing"
+          className="card flex items-center justify-between hover:border-mint-400 hover:shadow-md"
+        >
+          <div>
+            <div className="text-xs uppercase tracking-wide text-stone-500">
+              Billing
+            </div>
+            <div className="mt-1 font-semibold text-stone-800">
+              {needsBilling
+                ? daysLeft !== null
+                  ? `Trial — ${daysLeft} day${daysLeft === 1 ? "" : "s"} left`
+                  : "Subscribe to keep learning"
+                : "Subscription active"}
+            </div>
+          </div>
+          <span className="text-mint-700">Manage →</span>
+        </Link>
       )}
 
       <button

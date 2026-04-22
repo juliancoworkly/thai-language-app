@@ -1,9 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
+
+const RESEND_SECONDS = 60;
+
+function friendlyError(raw: string): string {
+  const msg = raw.toLowerCase();
+  if (msg.includes("rate limit")) {
+    return "You've requested a few links in a row. Give it a minute, then check your inbox (and spam) before trying again.";
+  }
+  if (msg.includes("invalid") && msg.includes("email")) {
+    return "That email address doesn't look right. Double-check it and try again.";
+  }
+  if (msg.includes("network") || msg.includes("fetch")) {
+    return "Couldn't reach the server. Check your connection and try again.";
+  }
+  return raw;
+}
 
 export default function LoginPage() {
   const { user, loading } = useAuth();
@@ -12,6 +28,13 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const id = setTimeout(() => setCooldown((c) => Math.max(0, c - 1)), 1000);
+    return () => clearTimeout(id);
+  }, [cooldown]);
 
   async function signIn(e: React.FormEvent) {
     e.preventDefault();
@@ -26,8 +49,25 @@ export default function LoginPage() {
       options: { emailRedirectTo: window.location.origin + "/account/" },
     });
     setSubmitting(false);
-    if (error) setError(error.message);
-    else setSent(true);
+    if (error) {
+      setError(friendlyError(error.message));
+    } else {
+      setSent(true);
+      setCooldown(RESEND_SECONDS);
+    }
+  }
+
+  async function resend() {
+    if (cooldown > 0 || submitting || !supabase) return;
+    setError(null);
+    setSubmitting(true);
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email.trim(),
+      options: { emailRedirectTo: window.location.origin + "/account/" },
+    });
+    setSubmitting(false);
+    if (error) setError(friendlyError(error.message));
+    else setCooldown(RESEND_SECONDS);
   }
 
   if (!isSupabaseConfigured) {
@@ -95,12 +135,44 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=&lt;your-anon-key&gt;
           <div className="rounded-2xl border border-mint-500/30 bg-mint-50 p-5 text-mint-800">
             <div className="text-2xl">📬</div>
             <p className="mt-2 font-semibold text-stone-900">
-              Check your email
+              Link sent — check your email
             </p>
             <p className="mt-1 text-sm text-stone-700">
-              We sent a login link to <strong>{email}</strong>. Open it on this
-              device, it'll sign you in and sync your progress to the cloud.
+              We sent a one-tap login link to <strong>{email}</strong>. Open it
+              on this device and you'll be signed in.
             </p>
+            <p className="mt-2 text-xs text-stone-600">
+              Didn't get it? Check your spam folder, or resend below.
+            </p>
+            {error && (
+              <div className="mt-3 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-900">
+                {error}
+              </div>
+            )}
+            <div className="mt-3 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={resend}
+                disabled={cooldown > 0 || submitting}
+                className="btn-secondary disabled:cursor-not-allowed"
+              >
+                {submitting
+                  ? "Sending…"
+                  : cooldown > 0
+                  ? `Resend in ${cooldown}s`
+                  : "Resend link"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setSent(false);
+                  setError(null);
+                }}
+                className="btn-ghost"
+              >
+                Use a different email
+              </button>
+            </div>
           </div>
         ) : (
           <form onSubmit={signIn} className="space-y-4">
