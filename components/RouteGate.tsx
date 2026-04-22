@@ -28,8 +28,18 @@ function matchesAny(pathname: string, prefixes: string[]) {
   return prefixes.some((p) => pathname === p || pathname.startsWith(p + "/"));
 }
 
+// next.config.js sets trailingSlash: true, so usePathname() returns "/reverse/"
+// not "/reverse". Strip the trailing slash so exact-path checks still work.
+function stripTrailing(pathname: string): string {
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
+  }
+  return pathname;
+}
+
 export function RouteGate({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname() ?? "/";
+  const raw = usePathname() ?? "/";
+  const pathname = stripTrailing(raw);
   const router = useRouter();
 
   useEffect(() => {
