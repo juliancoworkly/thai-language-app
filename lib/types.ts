@@ -4,6 +4,7 @@ export type Gender = "male" | "female";
 export type Level = 1 | 2 | 3 | 4 | 5;
 export type AgeMode = "kid" | "adult";
 export type Mode = "thai" | "english";
+export type UiLanguage = "en" | "th";
 
 export type SubscriptionStatus =
   | "trialing"   // 3-day free trial
@@ -32,6 +33,22 @@ export interface Profile {
   onboarded: boolean;
   subscription?: Subscription;
   trialStartedAt?: number; // first time they entered the paid mode
+  uiLanguage?: UiLanguage; // explicit override; otherwise derived from mode
+  modeSwitchCount?: number; // number of times the user has switched sides
+  lastModeSwitchAt?: number; // ms timestamp of most recent switch
+}
+
+// Default UI language for a given learning mode. Thai speakers (learning
+// English) default to Thai UI; everyone else defaults to English UI. The
+// explicit profile.uiLanguage field overrides this when set.
+export function defaultUiLanguage(mode: Mode | undefined): UiLanguage {
+  return mode === "english" ? "th" : "en";
+}
+
+export function resolveUiLanguage(
+  profile: { mode?: Mode; uiLanguage?: UiLanguage } | null | undefined
+): UiLanguage {
+  return profile?.uiLanguage ?? defaultUiLanguage(profile?.mode);
 }
 
 export const LEVEL_LABEL: Record<Level, string> = {
